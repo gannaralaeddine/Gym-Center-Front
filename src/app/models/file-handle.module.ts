@@ -1,12 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {SafeUrl} from "@angular/platform-browser";
 
+export interface FileHandleModule {
 
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class FileHandleModule { }
+  file: File,
+  url: SafeUrl
+}

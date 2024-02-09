@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import {UserService} from "../services/user.service";
 import {NgForOf} from "@angular/common";
 import {UtilsService} from "../utils/utils.service";
+import {CarouselModule} from "ngx-owl-carousel-o";
+import {OfferService} from "../services/offer.service";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    CarouselModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -15,31 +18,45 @@ import {UtilsService} from "../utils/utils.service";
 export class HomeComponent
 {
     coaches: any
+    offers: any
+    customOptions: any
 
-    constructor(private userService: UserService, private utilsService: UtilsService)
+    constructor(private userService: UserService, private offerService: OfferService, private utilsService: UtilsService)
     {
-      this.getAllCoaches()
+        this.customOptions = utilsService.customOptions
+        this.getAllCoaches()
+        this.getAllOffers()
     }
 
 
 
-  getAllCoaches()
-  {
-    this.userService.getAllCoaches().subscribe({
-      next: (coaches) => this.coaches = coaches,
-      error: (err) => console.error(err)
-    })
-  }
+    getAllCoaches()
+    {
+        this.userService.getAllCoaches().subscribe({
+          next: (coaches) => this.coaches = coaches,
+          error: (err) => console.error(err)
+        })
+    }
 
-  getImage(imageName: string): string
-  {
-    if (imageName)
+
+    getAllOffers()
     {
-      return this.utilsService.getImage(imageName)
+        this.offerService.getAllOffers().subscribe({
+          next: (offer) => this.offers = offer,
+          error: (err) => console.error(err)
+        })
     }
-    else
+
+    getImage(imageName: string): string
     {
-      return "../assets/img/icons/ic_person.png"
+      if (imageName)
+      {
+        return this.utilsService.getImage(imageName)
+      }
+      else
+      {
+        return "../assets/img/icons/ic_person.png"
+      }
     }
-  }
+
 }
