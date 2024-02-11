@@ -3,13 +3,18 @@ import {HomeComponent} from "./home/home.component";
 import {CoursesComponent} from "./courses/courses.component";
 import {SubscriptionComponent} from "./subscription/subscription.component";
 import {OfferComponent} from "./offer/offer.component";
+import {CoachesComponent} from "./coaches/coaches.component";
+import {LoginComponent} from "./login/login.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 export const routes: Routes = [
 
   {path: '', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: 'courses', component: CoursesComponent},
   {path: 'subscription', component: SubscriptionComponent},
-  {path: 'pricing', component: OfferComponent},
-
+  {path: 'offers', component: OfferComponent},
+  {path: 'coaches', component: CoachesComponent},
 
 ];

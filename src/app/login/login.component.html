@@ -1,0 +1,37 @@
+
+<div class="position-relative">
+  <div class="slider-active">
+    <!-- Single Slider -->
+    <div class="single-slider slider-height d-inline-flex p-2 align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-9 col-lg-9 col-md-10">
+            <div class="hero__caption" >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <form>
+    <h3>Identifiez-vous</h3>
+
+    <label for="userEmail">E-Mail</label>
+    <input type="text" class="input-type" placeholder="Saisir votre adresse E-mail" id="userEmail">
+
+    <label for="userPassword">Mot de passe</label>
+    <input type="{{ isPasswordVisible ? 'text' : 'password' }}" placeholder="Saisir votre mot de passe" class="input-type" id="userPassword" name="userPassword" ngModel #password="ngModel" required>
+
+    <br>
+    <input type="checkbox" id="showPassword" name="showPassword" width="20px" height="110px" class="accent-color checkbox" (click)="togglePasswordVisibility()"/>
+    <span> Afficher le mot de passe</span>
+
+    <button type="button">Se Connecter</button>
+
+  </form>

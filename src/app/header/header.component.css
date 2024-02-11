@@ -1,0 +1,26 @@
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 0 10px;
+  width: 200px;
+  padding: 10px 0;
+  box-shadow: 0 0 20px #dc3545;
+  transition: 0.4s;
+}
+
+
+.log {
+  color: #dc3545;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid #dc3545;
+}
+
+button:hover {
+  color: white;
+  /*width:;*/
+  box-shadow: 0 0 20px #dc3545;
+  background-color: red;
+}
+

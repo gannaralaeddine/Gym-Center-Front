@@ -4,13 +4,15 @@ import {NgForOf} from "@angular/common";
 import {UtilsService} from "../utils/utils.service";
 import {CarouselModule} from "ngx-owl-carousel-o";
 import {OfferService} from "../services/offer.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     NgForOf,
-    CarouselModule
+    CarouselModule,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

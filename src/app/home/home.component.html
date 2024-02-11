@@ -11,7 +11,6 @@
               <div class="hero__caption" >
                 <span data-animation="fadeInLeft" data-delay="0.1s">Bienvenue chez notre</span>
                 <h1 data-animation="fadeInLeft" data-delay="0.4s">Gym Centre</h1>
-                <a href="#" class="border-btn hero-btn" data-animation="fadeInLeft" data-delay="0.8s">Nos Classes</a>
               </div>
             </div>
           </div>
@@ -33,9 +32,9 @@
               <img src="assets/img/gallery/cat1.png" alt="">
               <div class="topic-content-box">
                 <div class="topic-content">
-                  <h3>Personal training</h3>
+                  <h3>ENTRAÎNEMENT PERSONNEL</h3>
                   <p>You’ll look at graphs and charts in Task One, how to approach the task and <br> the language needed for a successful answer.</p>
-                  <a href="#" class="border-btn">View Courses</a>
+                  <a routerLink="coaches" class="border-btn">Voir les coaches</a>
                 </div>
               </div>
             </div>
@@ -47,9 +46,9 @@
               <img src="assets/img/gallery/cat2.png" alt="">
               <div class="topic-content-box">
                 <div class="topic-content">
-                  <h3>Group training</h3>
+                  <h3>FORMATION DE GROUPE</h3>
                   <p>You’ll look at graphs and charts in Task One, how to approach the task and <br> the language needed for a successful answer.</p>
-                  <a href="#" class="btn">View Courses</a>
+                  <a routerLink="courses" class="border-btn">Voir les classes</a>
                 </div>
               </div>
             </div>
@@ -77,14 +76,15 @@
           <ng-container *ngFor="let coach of coaches">
             <ng-template carouselSlide >
 
-                <div class="single-cat text-center mb-30 wow fadeInUp mr-3" data-wow-duration="1s" data-wow-delay=".2s"  >
+                <div class="single-cat text-center mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s"  >
                   <div class="cat-icon">
-                    <img [src]="getImage(coach.userPicture)" alt="">
+                    <img [src]="getImage(coach.userPicture)" width="320" height="430" alt="">
                   </div>
                   <div class="cat-cap">
                     <h5><a href="#">{{ coach.userFirstName }} {{ coach.userLastName }}</a></h5>
-                    <p>{{ coach.userDescription }} </p>
+                    <p>{{ coach.userDescription }}</p>
                   </div>
+                  <a href="#" class="border-btn border-btn2 mt-10">Réserver maintenant</a>
                 </div>
 
             </ng-template>
@@ -175,7 +175,7 @@
 
 
   <!-- Pricing -->
-  <section class="pricing-area section-padding40 fix">
+  <section class="pricing-area section-padding30 fix">
     <div class="container">
       <div class="row">
         <div class="col-xl-12">
@@ -188,18 +188,20 @@
 
         <owl-carousel-o [options]="customOptions">
 
-          <ng-container *ngFor="let offer of offers">
+          <ng-container *ngFor="let offer of offers" >
             <ng-template carouselSlide >
 
-              <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="properties mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+
+              <div class="properties mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
                   <div class="properties__card">
-                    <div class="about-icon">
-                      <img src="assets/img/icon/price.svg" alt="">
-                    </div>
+
+                    <p class="color-white">Abonnement de {{ offer.offerActivity.actName }}</p>
+
+                    <img [src]="getImage(offer.offerActivity.actImage)" width="275" height="155" alt="">
+
                     <div class="properties__caption">
-                      <span class="month">offer.offerPeriod</span>
-                      <p class="mb-25">offer.offerPrice</p>
+                      <span class="month">{{ offer.offerPeriod }} Mois</span>
+                      <p class="mb-25">{{ offer.offerPrice }} TND</p>
 
                       <div class="single-features">
                         <div class="features-icon">
@@ -245,12 +247,9 @@
                           <p>Month to mouth</p>
                         </div>
                       </div>
-
-                      <a href="#" class="border-btn border-btn2">Join Now</a>
                     </div>
                   </div>
                 </div>
-              </div>
 
             </ng-template>
           </ng-container>

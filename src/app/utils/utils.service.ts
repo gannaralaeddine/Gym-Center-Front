@@ -21,9 +21,9 @@ export class UtilsService
     touchDrag: true,
     pullDrag: true,
     dots: false,
-
+    autoWidth: true,
+    margin: 5,
     navSpeed: 1000,
-    navText: ['', ''],
     responsive: {
       0: {
         items: 1
@@ -38,7 +38,8 @@ export class UtilsService
         items: 4
       }
     },
-    nav: true,
-    autoplay: true
+    nav: false,
+    autoplay: true,
+    autoplayHoverPause: true
   }
 }
