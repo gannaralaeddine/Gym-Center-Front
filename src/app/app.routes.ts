@@ -6,13 +6,15 @@ import {OfferComponent} from "./offer/offer.component";
 import {CoachesComponent} from "./coaches/coaches.component";
 import {LoginComponent} from "./login/login.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {DetailsSessionComponent} from "./courses/details-session/details-session.component";
 
 export const routes: Routes = [
 
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: 'courses', component: CoursesComponent},
+  {path: 'sessions', component: CoursesComponent},
+  {path: 'session-details', component: DetailsSessionComponent},
   {path: 'subscription', component: SubscriptionComponent},
   {path: 'offers', component: OfferComponent},
   {path: 'coaches', component: CoachesComponent},

@@ -34,28 +34,26 @@
     </div>
   </section>
 
-  <section class="team-area fix">
+
+  <section class="blog_area section-padding">
     <div class="container">
       <div class="row">
 
-        <mat-grid-list cols="4" rowHeight="1:2" >
-          <mat-grid-tile *ngFor="let session of sessions">
-
-            <div class="single-cat text-center mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s"  >
-              <div class="cat-icon">
-                <img [src]="getImage(session.sessionImage)" width="320" height="430" alt="">
-              </div>
-              <div class="cat-cap">
-                <h5><a href="#">{{ session.sessionName }}</a></h5>
-              </div>
-              <div class="text-white">
-                <h4><a href="#">Coach {{ session.sessionCoach.userFirstName }} {{ session.sessionCoach.userLastName }}</a></h4>
-              </div>
-              <a href="#" class="border-btn border-btn2 mt-10">Détails</a>
+        <article class="blog_item" *ngFor="let session of sessions">
+          <div class="blog_item_img">
+            <img class="card-img rounded-0" [src]="getImage(session.sessionImage)" width="1000" height="650" alt="">
+            <div class="blog_item_date">
+              <h3>{{ session.sessionDeadline | date:"dd MMM yyyy" }}</h3>
             </div>
+          </div>
+          <div class="blog_details">
+            <a class="d-inline-block">
+              <h1 class="blog-head" style="color: #fff;">{{ session.sessionName }}</h1>
+            </a>
+            <p style="color: #fff;">>{{ session.sessionDescription }}</p>
+          </div>
+        </article>
 
-          </mat-grid-tile>
-        </mat-grid-list>
       </div>
     </div>
   </section>
