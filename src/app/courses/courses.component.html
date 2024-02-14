@@ -1,5 +1,8 @@
 
 
+
+
+
   <div class="slider-area2">
     <div class="slider-height2 d-flex align-items-center">
       <div class="container">
@@ -14,10 +17,11 @@
     </div>
   </div>
 
+
   <section class="traning-categories black-bg">
     <div class="container-fluid">
-      <div class="row">
-        <div>
+      <div class="d-flex justify-content-center">
+        <div class="col-xl-6">
           <div class="single-topic text-center mb-30">
             <div class="topic-img">
               <img src="assets/img/gallery/cat2.png" alt="">
@@ -29,32 +33,29 @@
               </div>
             </div>
           </div>
-        </div >
+        </div>
       </div>
     </div>
   </section>
 
-
-  <section class="blog_area section-padding">
-    <div class="container">
-      <div class="row">
-
-        <article class="blog_item" *ngFor="let session of sessions">
-          <div class="blog_item_img">
-            <img class="card-img rounded-0" [src]="getImage(session.sessionImage)" width="1000" height="650" alt="">
-            <div class="blog_item_date">
-              <h3>{{ session.sessionDeadline | date:"dd MMM yyyy" }}</h3>
-            </div>
-          </div>
-          <div class="blog_details">
-            <a class="d-inline-block">
-              <h1 class="blog-head" style="color: #fff;">{{ session.sessionName }}</h1>
-            </a>
-            <p style="color: #fff;">>{{ session.sessionDescription }}</p>
-          </div>
-        </article>
-
-      </div>
+  <div class="d-flex justify-content-center">
+    <div class="col-10 p-3" style="background-color: white;" >
+          <full-calendar [options]="calendarOptions"></full-calendar>
     </div>
-  </section>
+  </div>
+
+
+<!--    <div id="calendar-container" class="col-10 p-3" style="background-color: white;">-->
+
+<!--      <div id="cal-buttons">-->
+<!--        <div id="cal-date-nav-button">-->
+<!--          <button id="previous" mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view"> Previous</button>-->
+<!--          <button id="today" mwlCalendarToday [(viewDate)]="viewDate">Today</button>-->
+<!--          <button id="next" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view">Next</button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <mwl-calendar-week-view [viewDate]="viewDate"></mwl-calendar-week-view>-->
+
+<!--    </div>-->
 
