@@ -7,6 +7,7 @@ import {CoachesComponent} from "./coaches/coaches.component";
 import {LoginComponent} from "./login/login.component";
 import {ProfileComponent} from "./profile/profile.component";
 import { CategoriesComponent } from './categories/categories.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 export const routes: Routes = [
 
@@ -17,5 +18,6 @@ export const routes: Routes = [
   {path: 'subscription', component: SubscriptionComponent},
   {path: 'offers', component: OfferComponent},
   {path: 'coaches', component: CoachesComponent},
-  {path: 'categories', component: CategoriesComponent}
+  {path: 'categories', component: CategoriesComponent},
+  {path: 'activities', component: ActivitiesComponent}
 ];
