@@ -35,8 +35,6 @@ export class CoursesComponent
 {
     sessions: any
 
-    viewDate: Date = new Date
-    view: CalendarView = CalendarView.Week
     calendarOptions: CalendarOptions = {
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin],

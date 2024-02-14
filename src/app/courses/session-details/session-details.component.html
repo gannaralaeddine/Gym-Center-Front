@@ -1,16 +1,15 @@
 
 
-<article class="blog_item" style="height: 100%; width: 100%; background-color: #0b0b0b">
-  <div class="blog_item_img">
-    <img class="card-img rounded-0" [src]="getImage(session.sessionImage)" height="450px" alt="">
-    <div class="blog_item_date">
-      <h3>{{ session.sessionDeadline | date:"dd MMM yyyy" }}</h3>
+
+    <div class="styles">
+      <div class="blog_item_img">
+        <img class="card-img" [src]="getImage(session.sessionImage)" height="450px" alt="">
+        <div class="blog_item_date">
+          <h3>{{ session.sessionDeadline | date:"dd MMM yyyy" }}</h3>
+        </div>
+      </div>
+      <div class="details_blog">
+        <h1 class="text-white" >{{ session.sessionName }}</h1>
+        <p class="text-white">{{ session.sessionDescription }}</p>
+      </div>
     </div>
-  </div>
-  <div class="blog_details">
-    <a class="d-inline-block">
-      <h1 class="blog-head" style="color: #fff;">{{ session.sessionName }}</h1>
-    </a>
-    <p style="color: #fff;">>{{ session.sessionDescription }}</p>
-  </div>
-</article>
