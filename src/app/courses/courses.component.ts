@@ -10,7 +10,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import  interactionPlugin  from '@fullcalendar/interaction';
 import {MatDialog} from "@angular/material/dialog";
 import {SessionDetailsComponent} from "./session-details/session-details.component";
-import {CalendarModule, CalendarView, CalendarWeekModule} from "angular-calendar";
+import {CalendarModule, CalendarWeekModule} from "angular-calendar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 
 
