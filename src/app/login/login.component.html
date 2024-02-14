@@ -19,19 +19,26 @@
     <div class="shape"></div>
     <div class="shape"></div>
   </div>
-  <form>
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="padding-bottom: 33.5%;">
     <h3>Identifiez-vous</h3>
 
     <label for="userEmail">E-Mail</label>
-    <input type="text" class="input-type" placeholder="Saisir votre adresse E-mail" id="userEmail">
+    <input type="text" class="input-type" placeholder="Saisir votre adresse E-mail" id="userEmail" name="userEmail" ngModel #email="ngModel" required email>
+    <span class="error" *ngIf="email.touched">
+      <h5 class="text-danger text-bold ml-1" style="margin-top: 2%;" *ngIf="email.errors?.['required']">Le champs email est obligatoire</h5>
+      <h5 class="text-danger text-bold ml-1" style="margin-top: 2%;" *ngIf="email.errors?.['email']">Merci de saisir un email valide</h5>
+    </span>
 
     <label for="userPassword">Mot de passe</label>
     <input type="{{ isPasswordVisible ? 'text' : 'password' }}" placeholder="Saisir votre mot de passe" class="input-type" id="userPassword" name="userPassword" ngModel #password="ngModel" required>
+    <span class="error" *ngIf="password.touched">
+      <h5 class="text-danger text-bold ml-1" style="margin-top: 2%;" *ngIf="password.errors?.['required']">Le champs mot de passe est obligatoire</h5>
+    </span>
 
     <br>
     <input type="checkbox" id="showPassword" name="showPassword" width="20px" height="110px" class="accent-color checkbox" (click)="togglePasswordVisibility()"/>
     <span> Afficher le mot de passe</span>
 
-    <button type="button">Se Connecter</button>
+      <button type="button">Se Connecter</button>
 
   </form>

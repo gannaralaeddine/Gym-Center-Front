@@ -1,11 +1,13 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -13,8 +15,6 @@ import {FormsModule} from "@angular/forms";
 export class LoginComponent {
 
   isPasswordVisible = false
-
-
 
   togglePasswordVisibility()
   {
@@ -25,4 +25,10 @@ export class LoginComponent {
       this.isPasswordVisible = showPassword.checked
     }
   }
+
+  login(_t15: NgForm) 
+  {
+    
+  }
+    
 }
