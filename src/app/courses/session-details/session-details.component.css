@@ -8,3 +8,49 @@
 .details_blog{
   padding: 30px 0 30px 10px;
 }
+
+.blog_item_coach{
+  bottom: -20px;
+  right: 40px;
+  padding: 13px 30px;
+  position: absolute;
+  display: block;
+  color: #fff;
+  background-color: #FF0000;
+  border-radius: 5px;
+}
+
+.btn-hover:hover{
+  background-color: #FF0000;
+  color: #fff;
+}
+
+.btn-participate{
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid #fff;
+  color: #fff;
+  background: none;
+  text-transform: uppercase;
+  -moz-user-select: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: color 0.4s linear;
+  overflow: hidden;
+  margin: 0;
+  top: 20px;
+  right: 20px;
+  padding: 13px 30px;
+  position: absolute;
+  display: block;
+  border-radius: 5px;
+}
+
+.blog_item_coach-btn{
+  top: 20px;
+  right: 20px;
+  padding: 13px 30px;
+  position: absolute;
+  display: block;
+  border-radius: 5px;
+}
