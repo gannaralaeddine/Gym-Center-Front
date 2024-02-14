@@ -8,6 +8,8 @@ import {LoginComponent} from "./login/login.component";
 import {ProfileComponent} from "./profile/profile.component";
 import { CategoriesComponent } from './categories/categories.component';
 import { ActivitiesComponent } from './activities/activities.component';
+import { CategoryDetailsComponent } from './categories/category-details/category-details.component';
+import { ActivityDetailsComponent } from './activities/activity-details/activity-details.component';
 
 export const routes: Routes = [
 
@@ -19,5 +21,7 @@ export const routes: Routes = [
   {path: 'offers', component: OfferComponent},
   {path: 'coaches', component: CoachesComponent},
   {path: 'categories', component: CategoriesComponent},
-  {path: 'activities', component: ActivitiesComponent}
+  {path: 'category-details', component: CategoryDetailsComponent},
+  {path: 'activities', component: ActivitiesComponent},
+  {path: 'activity-details', component: ActivityDetailsComponent}
 ];
