@@ -1,17 +1,26 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
+import {Component} from '@angular/core';
 import {User} from "../models/User";
 import {UtilsService} from "../utils/utils.service";
-import {DomSanitizer} from "@angular/platform-browser";
-import {DatePipe, isPlatformBrowser} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
+import {DatePipe, NgForOf} from "@angular/common";
 import {UserService} from "../services/user.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {FullCalendarModule} from "@fullcalendar/angular";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {RouterLink} from "@angular/router";
+import {CardFlipComponent} from "../card-flip/card-flip.component";
+import {FileHandleModule} from "../models/file-handle.module";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
-    DatePipe
+    DatePipe,
+    FullCalendarModule,
+    MatGridList,
+    MatGridTile,
+    NgForOf,
+    RouterLink,
+    CardFlipComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -20,20 +29,16 @@ export class ProfileComponent
 {
   user = new User()
   accountType!: string
+  userImages: any
 
-  constructor(private userService: UserService, private utilsService: UtilsService, @Inject(PLATFORM_ID) private platformId: Object,
-              private router: ActivatedRoute, @Inject(MAT_DIALOG_DATA) public data: any)
+  constructor(private userService: UserService, private utilsService: UtilsService, private sanitizer: DomSanitizer)
   {
-    if(data.email)
-    {
-      this.getUserByEmail(data.email)
-    }
 
   }
 
   ngOnInit()
   {
-
+      this.getUserByEmail("gannarala@gmail.com")
   }
 
   getUserByEmail(email: string)
@@ -65,7 +70,7 @@ export class ProfileComponent
     this.user.userZipCode = user.userZipCode
     this.user.userBirthDate = user.userBirthDate
     this.user.userPicture = user.userPicture
-    // this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture)
+    this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture)
 
   }
 
@@ -86,5 +91,82 @@ export class ProfileComponent
     this.utilsService.displayImages(imageName, isOneImage)
   }
 
+  detectChanges(isDataChanges: boolean)
+  {
+    if (isDataChanges)
+    {
+      this.userService.getUserById(this.user.userId).subscribe(
+        {
+          next: (user) => this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture),
+          error: (err) => console.error(err)
+        }
+      )
+    }
+  }
+
+  displayImages(images: any, isOneImage: boolean)
+  {
+    this.utilsService.displayImages(images, isOneImage)
+  }
+
+  onFileSelected(event: any)
+  {
+    this.user.userImages = []
+
+    if (event.target.files)
+    {
+
+      for (let i= 0 ; i < event.target.files.length ; i++)
+      {
+        const file = event.target.files[i]
+
+        const fileHandle: FileHandleModule = {
+          file: file,
+          url: this.sanitizer.bypassSecurityTrustUrl(
+            window.URL.createObjectURL(file)
+          )
+        }
+
+        this.user.userImages.push(fileHandle)
+
+      }
+    }
+
+    this.updateProfileImage()
+  }
+
+  updateProfileImage()
+  {
+    const formData = this.prepareFormData(this.user)
+
+    this.userService.updateProfilePicture(formData).subscribe({
+      complete: () => {
+        this.getUserByEmail("gannarala@gmail.com")
+        this.utilsService.successDialog("Opération réussite", "Votre image a été éditer avec succès", true)
+      },
+      error:(err)=> this.utilsService.successDialog("Opération échouée", err.message, false)
+    })
+
+  }
+
+  prepareFormData(user: User): FormData
+  {
+    const formData = new FormData()
+
+    formData.append(
+      "user", new Blob( [ JSON.stringify(user) ], { type: "application/json" } )
+    )
+
+    for ( let i = 0 ; i < user.userImages.length ; i++ )
+    {
+      formData.append(
+        "imageFile",
+        user.userImages[i].file,
+        user.userImages[i].file.name
+      )
+    }
+
+    return formData
+  }
 
 }

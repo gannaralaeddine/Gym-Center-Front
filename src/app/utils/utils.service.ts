@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {OwlOptions} from "ngx-owl-carousel-o";
 import {MatDialog} from "@angular/material/dialog";
 import {ImagesPopupComponent} from "../images-popup/images-popup.component";
+import {AlertDeleteComponent} from "../alert-delete/alert-delete.component";
+import {AlertSuccessComponent} from "../alert-success/alert-success.component";
 
 @Injectable({
   providedIn: 'root'
@@ -56,4 +58,28 @@ export class UtilsService
     })
   }
 
+  deletePopup(){
+    return  this.matDialog.open(AlertDeleteComponent, {
+      width: "40%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "500ms",
+      data: { title:  "Supprimer image", message: "Voulez-vous vraiment supprimer cette image ?" }
+    })
+  }
+
+  public deleteItemFromArray(array: any, imageName: any)
+  {
+    return array.filter((element: any) => {
+      return element.imageName !== imageName;
+    });
+  }
+
+  successDialog(title: string, message: string, operationStatus: boolean){
+    this.matDialog.open(AlertSuccessComponent, {
+      width: "40%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { title:  title, message: message, operationStatus: operationStatus }
+    })
+  }
 }

@@ -1,42 +1,125 @@
 
 
-<div class="container rounded bg-white mt-5 mb-5">
-  <div class="row">
-    <div class="col-md-3 border-right">
-      <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" height="150px" [src]="getImage(user.userPicture)" alt=""><span class="font-weight-bold">{{ user.userFirstName }}</span><span class="text-black-50">edogarumail.com.my</span><span> </span></div>
-    </div>
-    <div class="col-md-5 border-right">
-      <div class="p-3 py-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4 class="text-right">Mon Profil</h4>
+<section class="pricing-area section-padding30 fix">
+
+  <div class="container">
+    <div class="row gutters">
+      <div class="card h-100">
+          <div class="card-body">
+            <div class="account-settings">
+              <div class="user-profile">
+                <div class="user-avatar">
+                  <div style="position: relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" (click)="inputFile.click()" class="btn-update-profile-image" height="24" viewBox="0 -960 960 960" width="24"><path fill="#fff" d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>
+                    <img [src]="getImage(user.userPicture)" height="300" width="300" alt="profile picture" (click)="previewProfileImage(user.userPicture, true)">
+                  </div>
+                  <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden="hidden">
+                </div>
+                <h3 class="user-name text-white">{{ user.userFirstName }} {{ user.userLastName }}</h3>
+                <h4 class="user-email text-white">{{ accountType }}</h4>
+              </div>
+              <div class="about">
+                <h3 class="mb-2 text-white">Bio</h3>
+                <p class=" text-white">{{ user.userDescription }}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="row mt-2">
-          <div class="col-md-6"><label class="labels">Prénom</label><input type="text" class="form-control" placeholder="Saisir votre prénom" [value]="user.userFirstName"></div>
-          <div class="col-md-6"><label class="labels">Nom</label><input type="text" class="form-control" placeholder="Saisir votre nom" [value]="user.userLastName"></div>
+
+      <div class="card h-100">
+          <div class="card-body">
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h3 class="mb-3 text-white">Informations personnelles</h3>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="fullName" class="text-fonts">Prénom</label>
+                  <input type="text" class="form-control text-input" id="fullName" placeholder="Enter prénom" [value]="user.userFirstName">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="eMail" class="text-fonts ">Nom</label>
+                  <input type="email" class="form-control text-input" size="50" id="eMail" placeholder="Saisir votre nom">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group text-fonts">
+                  <label for="birthDate">Date de naissance</label>
+                  <input type="date" class="form-control text-input" id="birthDate" placeholder="Saisir votre numéro de téléphone">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group text-fonts">
+                  <label for="phone">Téléphone</label>
+                  <input type="text" class="form-control text-input" id="phone" placeholder="Saisir votre numéro de téléphone">
+                </div>
+              </div>
+            </div>
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mb-3 text-fonts">Adresse</h6>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group text-fonts">
+                  <label for="country">Pays</label>
+                  <input type="text" class="form-control text-input" id="country" placeholder="Saisir votre pays">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group text-fonts">
+                  <label for="city">État</label>
+                  <input type="text" class="form-control text-input" id="city" placeholder="Saisir votre état">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group text-fonts">
+                  <label for="state">Ville</label>
+                  <input type="text" class="form-control text-input" id="state" placeholder="Saisir votre ville">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group text-fonts">
+                  <label for="zip">Code postal</label>
+                  <input type="text" class="form-control text-input" id="zip" placeholder="Saisir votre code postal">
+                </div>
+              </div>
+            </div>
+            <div>
+              <button type="button" class="border-btn" >Modifier mes informations</button>
+            </div>
+          </div>
         </div>
-        <div class="row mt-3">
-          <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-          <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
-          <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-          <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-          <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-          <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-          <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value=""></div>
-          <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
+
+      <div class="card h-100 mt-5">
+        <div class="mb-5 ps-3">
+          <h2 class="mb-1 text-white">Mon album</h2>
+
+          <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; right: 0">
+            <div class="nav-wrapper position-relative end-0" >
+                <button type="button" class="border-btn" >Ajouter des images</button>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; left: 0">
+            <div class="nav-wrapper position-relative end-0" >
+              <button type="button" class="border-btn" (click)="displayImages(userImages, false)">Aperçu les images</button>
+            </div>
+          </div>
         </div>
-        <div class="row mt-3">
-          <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-          <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
-        </div>
-        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+        <mat-grid-list cols="4" rowHeight="2:1" style="margin-top: 8%;">
+          <mat-grid-tile *ngFor="let image of userImages">
+            <app-card-flip [imageName]=image.imageName [classId]=user.userId (onDataChange)="detectChanges($event)"></app-card-flip>
+          </mat-grid-tile>
+        </mat-grid-list>
+
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="p-3 py-5">
-        <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-        <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-        <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
-      </div>
+
     </div>
   </div>
-</div>
+</section>
+
+
+
+
+
