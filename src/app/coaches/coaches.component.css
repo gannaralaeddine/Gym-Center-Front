@@ -1,0 +1,11 @@
+.item-style:hover
+{
+    cursor: pointer; 
+    text-decoration: underline;
+}
+
+.item-style
+{
+    text-transform: uppercase;
+    font-size: x-large;
+}

@@ -46,8 +46,7 @@
               <img [src]="getImage(coach.userPicture)" width="320" height="430" alt="">
             </div>
             <div class="cat-cap">
-              <h5><a href="#">{{ coach.userFirstName }} {{ coach.userLastName }}</a></h5>
-              <p>{{ coach.userDescription }}</p>
+              <h1 class="item-style text-white">{{ coach.userFirstName }} {{ coach.userLastName }}</h1>
             </div>
             <button class="border-btn border-btn2 mt-10" (click)="goToCoachProfile(coach)">Voir profil</button>
           </div>

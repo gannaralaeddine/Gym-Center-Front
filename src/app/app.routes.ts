@@ -8,6 +8,9 @@ import {LoginComponent} from "./login/login.component";
 import {ProfileComponent} from "./profile/profile.component";
 import { CategoriesComponent } from './categories/categories.component';
 import { ActivitiesComponent } from './activities/activities.component';
+import { CategoryDetailsComponent } from './categories/category-details/category-details.component';
+import { ActivityDetailsComponent } from './activities/activity-details/activity-details.component';
+import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 
 export const routes: Routes = [
 

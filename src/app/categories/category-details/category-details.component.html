@@ -35,27 +35,18 @@
             </div>
         </div>
 
-            <!-- <div class="card" style="width: 14rem; margin-top: 5%;" *ngFor="let activity of categoryActivities">
-              <img class="card-img-top" [src]="getImage(activity.actImage)" height="150" width="288" alt="Card image cap" (click)="goToActivityDetails(activity.actId)">
-              <div class="card-body">
-                <a class="card-text" href="javascript:" (click)="goToActivityDetails(activity.actId)"><h3 class="text-center">{{activity.actName}}</h3></a>
-              </div>
-            </div> -->
-
             <mat-grid-list cols="4" rowHeight="40rem">
-                <mat-grid-tile *ngFor="let activity of categoryActivities">
-        
-                  <div class="single-cat text-center wow fadeInUp mr-10" data-wow-duration="1s" data-wow-delay=".2s">
-                    <div class="cat-icon" style="padding-left: 2%;">
-                      <img [src]="getImage(activity.actImage)" width="430" height="320" alt="">
-                    </div>
-                    <div class="cat-cap" style="padding-bottom: 5%;">
-                      <h5><a href="javascript:" (click)="goToActivityDetails(activity.actId)" style="font-size: large;">{{ activity.actName }}</a></h5>
-                    </div>
+              <mat-grid-tile *ngFor="let activity of categoryActivities">
+                <div class="single-cat text-center wow fadeInUp mr-10" data-wow-duration="1s" data-wow-delay=".2s">
+                  <div class="cat-icon" style="padding-left: 2%;">
+                    <img [src]="getImage(activity.actImage)" width="430" height="320" alt="">
                   </div>
-        
-                </mat-grid-tile>
-              </mat-grid-list>
+                  <div class="cat-cap" style="padding-bottom: 5%;">
+                    <h5><a href="javascript:" (click)="goToActivityDetails(activity.actId)" style="font-size: large;">{{ activity.actName }}</a></h5>
+                  </div>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
 
     </div>
   </section>
