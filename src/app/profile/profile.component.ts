@@ -9,18 +9,22 @@ import {RouterLink} from "@angular/router";
 import {CardFlipComponent} from "../card-flip/card-flip.component";
 import {FileHandleModule} from "../models/file-handle.module";
 import {DomSanitizer} from "@angular/platform-browser";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     DatePipe,
     FullCalendarModule,
     MatGridList,
     MatGridTile,
     NgForOf,
     RouterLink,
-    CardFlipComponent
+    CardFlipComponent,
+    FormsModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -30,22 +34,43 @@ export class ProfileComponent
   user = new User()
   accountType!: string
   userImages: any
+  profileFormValue !: FormGroup
 
-  constructor(private userService: UserService, private utilsService: UtilsService, private sanitizer: DomSanitizer)
+  constructor(private userService: UserService, private utilsService: UtilsService, private sanitizer: DomSanitizer,
+              private profileFormBuilder: FormBuilder)
   {
 
   }
 
   ngOnInit()
   {
-      this.getUserByEmail("gannarala@gmail.com")
+
+      this.profileFormValue = this.profileFormBuilder.group({
+        userFirstName : ['',Validators.required],
+        userLastName : ['',Validators.required],
+        userDescription : ['',Validators.required],
+        userPhoneNumber:['',Validators.required],
+        userCountry:['',Validators.required],
+        userCity:['',Validators.required],
+        userState:['',Validators.required],
+        userZipCode:['',Validators.required],
+        userHeight:['',Validators.required],
+        userWeight:['',Validators.required],
+        userGender: ['',Validators.required],
+        userBirthDate: ['',Validators.required],
+        userPicture: ""
+      })
+    this.getUserByEmail("gannarala@gmail.com")
   }
 
   getUserByEmail(email: string)
   {
     this.userService.retrieveUserByEmail(email).subscribe(
       {
-        next: (val) => this.populateUserData(val),
+        next: (user) => {
+          this.populateUserData(user);
+          this.populateForm(user)
+        },
         error: (err) => console.error(err)
       }
     )
@@ -169,4 +194,34 @@ export class ProfileComponent
     return formData
   }
 
+  populateForm(user: any)
+  {
+    if (user.userGender == "Homme")
+    {
+      this.profileFormValue.controls['userGender'].setValue("Homme")
+    }
+    if (user.userGender == "Femme")
+    {
+      this.profileFormValue.controls['userGender'].setValue("Femme")
+    }
+    this.profileFormValue.controls['userFirstName'].setValue(user.userFirstName)
+    this.profileFormValue.controls['userLastName'].setValue(user.userLastName)
+    this.profileFormValue.controls['userDescription'].setValue(user.userDescription)
+    this.profileFormValue.controls['userPhoneNumber'].setValue(user.userPhoneNumber)
+    this.profileFormValue.controls['userCountry'].setValue(user.userCountry)
+    this.profileFormValue.controls['userCity'].setValue(user.userCity)
+    this.profileFormValue.controls['userState'].setValue(user.userState)
+    this.profileFormValue.controls['userZipCode'].setValue(user.userZipCode)
+    this.profileFormValue.controls['userHeight'].setValue(user.userHeight)
+    this.profileFormValue.controls['userWeight'].setValue(user.userWeight)
+    if (user.userBirthDate)
+    {
+      this.profileFormValue.controls['userBirthDate'].setValue(this.parseDateString(user.userBirthDate))
+    }
+  }
+
+  parseDateString(dateString: string): string {
+    // Extract the date part in 'yyyy-MM-dd' format
+    return  dateString.split('T')[0];
+  }
 }

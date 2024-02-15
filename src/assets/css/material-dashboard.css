@@ -753,7 +753,7 @@ progress {
 }
 
 .col {
-  flex: 1 0 0%;
+  flex: 1 0 0;
 }
 
 .row-cols-auto>* {
@@ -1032,7 +1032,7 @@ progress {
 
 @media (min-width: 576px) {
   .col-sm {
-    flex: 1 0 0%;
+    flex: 1 0 0;
   }
 
   .row-cols-sm-auto>* {
@@ -1316,7 +1316,7 @@ progress {
 
 @media (min-width: 768px) {
   .col-md {
-    flex: 1 0 0%;
+    flex: 1 0 0;
   }
 
   .row-cols-md-auto>* {
@@ -1600,7 +1600,7 @@ progress {
 
 @media (min-width: 992px) {
   .col-lg {
-    flex: 1 0 0%;
+    flex: 1 0 0;
   }
 
   .row-cols-lg-auto>* {
@@ -1884,7 +1884,7 @@ progress {
 
 @media (min-width: 1200px) {
   .col-xl {
-    flex: 1 0 0%;
+    flex: 1 0 0;
   }
 
   .row-cols-xl-auto>* {
@@ -2168,7 +2168,7 @@ progress {
 
 @media (min-width: 1400px) {
   .col-xxl {
-    flex: 1 0 0%;
+    flex: 1 0 0;
   }
 
   .row-cols-xxl-auto>* {
@@ -3877,7 +3877,7 @@ fieldset:disabled .btn {
   --bs-btn-hover-color: #000;
   --bs-btn-hover-bg: #7b809a;
   --bs-btn-hover-border-color: #7b809a;
-  --bs-btn-focus-shadow-rgb: , 128, 154;
+  --bs-btn-focus-shadow-rgb: 128, 154;
   --bs-btn-active-color: #000;
   --bs-btn-active-bg: #7b809a;
   --bs-btn-active-border-color: #7b809a;

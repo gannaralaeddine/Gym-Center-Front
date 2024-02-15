@@ -93,3 +93,15 @@ button {
   padding: 5px;
 }
 
+.child-cell {
+  display: table-cell;
+  width: 33.3%;
+}
+
+.parent-cell {
+  display: table;
+  margin: 1rem;
+  width: 100%;
+}
+
+
