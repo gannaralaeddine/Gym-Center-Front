@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import {FormsModule, NgForm} from "@angular/forms";
+import {FormControl, FormsModule, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -12,9 +12,12 @@ import {FormsModule, NgForm} from "@angular/forms";
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent 
+{
 
   isPasswordVisible = false
+  emailInput = document.getElementById("userEmail") as HTMLInputElement
+  passwordInput = document.getElementById("userPassword") as HTMLInputElement
 
   togglePasswordVisibility()
   {
@@ -30,5 +33,12 @@ export class LoginComponent {
   {
     
   }
-    
+
+  checkFormValidity() 
+  {
+    // if (this.passwordInput.value.match('').)
+    // {
+
+    // }
+  }
 }
