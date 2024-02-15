@@ -8,12 +8,14 @@ import {LoginComponent} from "./login/login.component";
 import {ProfileComponent} from "./profile/profile.component";
 import { CategoriesComponent } from './categories/categories.component';
 import { ActivitiesComponent } from './activities/activities.component';
+import {ProfilePopupComponent} from "./profile-popup/profile-popup.component";
 
 export const routes: Routes = [
 
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'profile-popup', component: ProfilePopupComponent},
   {path: 'sessions', component: CoursesComponent},
   {path: 'subscription', component: SubscriptionComponent},
   {path: 'offers', component: OfferComponent},

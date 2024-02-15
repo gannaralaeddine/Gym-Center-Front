@@ -49,7 +49,7 @@
               <h5><a href="#">{{ coach.userFirstName }} {{ coach.userLastName }}</a></h5>
               <p>{{ coach.userDescription }}</p>
             </div>
-            <button class="border-btn border-btn2 mt-10">Voir profil</button>
+            <button class="border-btn border-btn2 mt-10" (click)="goToCoachProfile(coach)">Voir profil</button>
           </div>
 
         </mat-grid-tile>

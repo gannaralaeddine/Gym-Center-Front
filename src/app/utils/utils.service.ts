@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {OwlOptions} from "ngx-owl-carousel-o";
+import {MatDialog} from "@angular/material/dialog";
+import {ImagesPopupComponent} from "../images-popup/images-popup.component";
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +10,6 @@ export class UtilsService
 {
 
   public API_GYM_CENTER = "http://localhost:8089/gym-center"
-
-  constructor() { }
-
-
-  public getImage(imageName: string): string { return this.API_GYM_CENTER + "/image/get-image/" + imageName }
-
 
   customOptions: OwlOptions = {
     loop: true,
@@ -42,4 +38,22 @@ export class UtilsService
     autoplay: true,
     autoplayHoverPause: true
   }
+
+  constructor(private matDialog: MatDialog) { }
+
+
+  public getImage(imageName: string): string { return this.API_GYM_CENTER + "/image/get-image/" + imageName }
+
+
+  displayImages(images: any, isOneImage: boolean)
+  {
+    return this.matDialog.open(ImagesPopupComponent, {
+      width: "60%",
+      height: "80%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { images: images,  isOneImage: isOneImage}
+    })
+  }
+
 }

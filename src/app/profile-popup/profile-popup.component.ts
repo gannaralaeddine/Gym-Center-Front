@@ -1,33 +1,34 @@
 import {Component, Inject, PLATFORM_ID} from '@angular/core';
-import {User} from "../models/User";
-import {UtilsService} from "../utils/utils.service";
-import {DomSanitizer} from "@angular/platform-browser";
-import {DatePipe, isPlatformBrowser} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../services/user.service";
+import {UtilsService} from "../utils/utils.service";
+import {ActivatedRoute} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
+import {isPlatformBrowser, NgIf} from "@angular/common";
+import {User} from "../models/User";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-profile-popup',
   standalone: true,
   imports: [
-    DatePipe
+    NgIf
   ],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  templateUrl: './profile-popup.component.html',
+  styleUrl: './profile-popup.component.css'
 })
-export class ProfileComponent
+export class ProfilePopupComponent
 {
+
   user = new User()
   accountType!: string
 
   constructor(private userService: UserService, private utilsService: UtilsService, @Inject(PLATFORM_ID) private platformId: Object,
               private router: ActivatedRoute, @Inject(MAT_DIALOG_DATA) public data: any)
   {
-    if(data.email)
-    {
-      this.getUserByEmail(data.email)
-    }
+      if(data.email)
+      {
+        this.getUserByEmail(data.email)
+      }
 
   }
 
@@ -67,6 +68,8 @@ export class ProfileComponent
     this.user.userPicture = user.userPicture
     // this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture)
 
+    this.user.userSpeciality = user.userSpeciality
+
   }
 
   getImage(userPicture: any)
@@ -85,6 +88,4 @@ export class ProfileComponent
   {
     this.utilsService.displayImages(imageName, isOneImage)
   }
-
-
 }

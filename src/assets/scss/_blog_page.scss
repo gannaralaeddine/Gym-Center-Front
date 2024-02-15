@@ -47,7 +47,7 @@
                         @media #{$xs}{
                             font-size: 19px;
                         }
-                       
+
                     }
                 }
             }
@@ -91,7 +91,7 @@
 .single-blog {
     overflow: hidden;
     margin-bottom: 30px;
-   
+
     &:hover {
         box-shadow: 0px 10px 20px 0px rgba(42, 34, 123, 0.1);
     }
@@ -376,7 +376,7 @@
                     position: absolute;
                     right: -10px;
                     bottom: 0px;
-                    // background: $title-color; 
+                    // background: $title-color;
                     color: #fff;
                     padding: 0px 5px;
                 }
@@ -897,7 +897,7 @@
         ul {
             li {
                 display: inline-block;
-                
+
                 a {
                     display: inline-block;
                     border: 1px solid #eeeeee;
@@ -1496,19 +1496,19 @@
     }
 
     .name {
-        padding-left: 0px;
+        padding-left: 0;
 
         @media(max-width: 767px) {
-            padding-right: 0px;
+            padding-right: 0;
             margin-bottom: 1rem;
         }
     }
 
     .email {
-        padding-right: 0px;
+        padding-right: 0;
 
         @media(max-width: 991px) {
-            padding-left: 0px;
+            padding-left: 0;
         }
     }
 

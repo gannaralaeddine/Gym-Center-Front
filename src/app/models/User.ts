@@ -21,4 +21,6 @@ export class User
   userPassword? : string
   roles?: Array<Role>
   userImages!: FileHandleModule[]
+
+  userSpeciality?: string
 }

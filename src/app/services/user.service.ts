@@ -9,6 +9,12 @@ export class UserService {
 
   constructor(private http: HttpClient, private utils: UtilsService) { }
 
+
+
+
   public getAllCoaches() {return this.http.get(this.utils.API_GYM_CENTER + "/coach/retrieve-all-coaches")}
+
+  public retrieveUserByEmail(email: any)  { return this.http.get(this.utils.API_GYM_CENTER + "/user/retrieve-user-by-email/"+ email) }
+
 
 }

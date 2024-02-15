@@ -4,6 +4,10 @@ import {NgForOf} from "@angular/common";
 import {CarouselModule} from "ngx-owl-carousel-o";
 import {UserService} from "../services/user.service";
 import {UtilsService} from "../utils/utils.service";
+import {User} from "../models/User";
+import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
 
 @Component({
   selector: 'app-coaches',
@@ -22,7 +26,7 @@ export class CoachesComponent
 
     coaches: any
 
-  constructor(private userService: UserService, private utilsService: UtilsService)
+  constructor(private userService: UserService, private utilsService: UtilsService, private router: Router, private matDialog: MatDialog)
   {
     this.getAllCoaches()
   }
@@ -48,4 +52,14 @@ export class CoachesComponent
     }
   }
 
+  goToCoachProfile(user: User)
+  {
+    return this.matDialog.open(ProfilePopupComponent, {
+      width: "70%",
+      height: "80%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { email: user.userEmail}
+    })
+  }
 }
