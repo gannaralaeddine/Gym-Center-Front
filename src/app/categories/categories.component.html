@@ -24,7 +24,7 @@
                 <img [src]="getImage(category.catImage)" width="430" height="320" alt="">
               </div>
               <div class="cat-cap" style="padding-bottom: 5%;">
-                <h5><a href="#">{{ category.catName }}</a></h5>
+                <h5><a href="javascript:" (click)="goToCategoryDetails(category.catId)">{{ category.catName }}</a></h5>
               </div>
             </div>
   

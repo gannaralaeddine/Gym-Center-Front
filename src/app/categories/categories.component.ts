@@ -4,6 +4,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { UtilsService } from '../utils/utils.service';
 import { CategoryService } from '../services/category.service';
 import { NgFor } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -21,12 +22,15 @@ export class CategoriesComponent
 {
   categories: any
 
-  constructor(private utilsService: UtilsService,private categoryService: CategoryService) 
-  {
+  constructor(private utilsService: UtilsService,
+    private router: Router,
+    private categoryService: CategoryService) {
+
     this.categoryService.getAllCategories().subscribe({
       next: (categories) => this.categories = categories,
       error: (err) => console.error(err)
     })
+
   }
 
   getImage(imageName: string): string
@@ -39,6 +43,12 @@ export class CategoriesComponent
     {
       return "../assets/img/icons/ic_person.png"
     }
+  }
+
+  goToCategoryDetails(categoryId: any)
+  {
+    const params = { categoryId: categoryId }
+    this.router.navigate(["category-details"], { queryParams: params  })
   }
 
 }
