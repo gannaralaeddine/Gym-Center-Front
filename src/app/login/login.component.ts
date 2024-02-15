@@ -16,9 +16,7 @@ export class LoginComponent
 {
 
   isPasswordVisible = false
-  emailInput = document.getElementById("userEmail") as HTMLInputElement
-  passwordInput = document.getElementById("userPassword") as HTMLInputElement
-
+  
   togglePasswordVisibility()
   {
     const showPassword = document.getElementById("showPassword") as HTMLInputElement
@@ -34,11 +32,4 @@ export class LoginComponent
     
   }
 
-  checkFormValidity() 
-  {
-    // if (this.passwordInput.value.match('').)
-    // {
-
-    // }
-  }
 }

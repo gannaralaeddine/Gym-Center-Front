@@ -19,18 +19,18 @@
     <div class="shape"></div>
     <div class="shape"></div>
   </div>
-  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="padding-bottom: 33.5%;">
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" style="padding-bottom: 33.5%;">
     <h3>Identifiez-vous</h3>
 
     <label for="userEmail">E-Mail</label>
-    <input type="text" class="input-type" placeholder="Saisir votre adresse E-mail" id="userEmail" name="userEmail" (ngModel)="(emailInput)" #email="ngModel" required email (keyup)="checkFormValidity()" (blur)="checkFormValidity()">
+    <input type="text" class="input-type" placeholder="Saisir votre adresse E-mail" id="userEmail" name="userEmail" ngModel #email="ngModel" required email>
     <span class="error" *ngIf="email.touched">
       <h5 class="text-danger text-bold ml-1" style="margin-top: 2%;" *ngIf="email.errors?.['required']">Le champs email est obligatoire</h5>
       <h5 class="text-danger text-bold ml-1" style="margin-top: 2%;" *ngIf="email.errors?.['email']">Merci de saisir un email valide</h5>
     </span>
 
     <label for="userPassword">Mot de passe</label>
-    <input type="{{ isPasswordVisible ? 'text' : 'password' }}" placeholder="Saisir votre mot de passe" class="input-type" id="userPassword" name="userPassword" (ngModel)="(passwordInput)" #password="ngModel" required (keyup)="checkFormValidity()" (blur)="checkFormValidity()">
+    <input type="{{ isPasswordVisible ? 'text' : 'password' }}" placeholder="Saisir votre mot de passe" class="input-type" id="userPassword" name="userPassword" ngModel #password="ngModel" required>
     <span class="error" *ngIf="password.touched">
       <h5 class="text-danger text-bold ml-1" style="margin-top: 2%;" *ngIf="password.errors?.['required']">Le champs mot de passe est obligatoire</h5>
       <h5 class="text-danger text-bold ml-1" style="margin-top: 2%;" *ngIf="!password.errors?.['required'] && password.value.length < 6">Merci de saisir 6 caractères en minimum</h5>
