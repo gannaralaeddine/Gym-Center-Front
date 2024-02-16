@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {User} from "../models/User";
 import {UtilsService} from "../utils/utils.service";
-import {DatePipe, NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {UserService} from "../services/user.service";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
@@ -24,7 +24,8 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
     NgForOf,
     RouterLink,
     CardFlipComponent,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -35,32 +36,32 @@ export class ProfileComponent
   accountType!: string
   userImages: any
   profileFormValue !: FormGroup
+  maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
 
-  constructor(private userService: UserService, private utilsService: UtilsService, private sanitizer: DomSanitizer,
-              private profileFormBuilder: FormBuilder)
-  {
-
-  }
+  constructor(private userService: UserService, 
+    private utilsService: UtilsService, 
+    private sanitizer: DomSanitizer,
+    private profileFormBuilder: FormBuilder) { }
 
   ngOnInit()
   {
-
-      this.profileFormValue = this.profileFormBuilder.group({
-        userFirstName : ['',Validators.required],
-        userLastName : ['',Validators.required],
-        userDescription : ['',Validators.required],
-        userPhoneNumber:['',Validators.required],
-        userCountry:['',Validators.required],
-        userCity:['',Validators.required],
-        userState:['',Validators.required],
-        userZipCode:['',Validators.required],
-        userHeight:['',Validators.required],
-        userWeight:['',Validators.required],
-        userGender: ['',Validators.required],
-        userBirthDate: ['',Validators.required],
-        userPicture: ""
-      })
-    this.getUserByEmail("gannarala@gmail.com")
+    this.profileFormValue = this.profileFormBuilder.group({
+      userFirstName : ['',Validators.required],
+      userLastName : ['',Validators.required],
+      userDescription : ['',Validators.required],
+      userPhoneNumber:['',Validators.required],
+      userCountry:['',Validators.required],
+      userCity:['',Validators.required],
+      userState:['',Validators.required],
+      userZipCode:['',Validators.required],
+      userHeight:['',Validators.required],
+      userWeight:['',Validators.required],
+      userGender: ['',Validators.required],
+      userBirthDate: ['',Validators.required],
+      userPicture: ""
+    })
+    // this.getUserByEmail("gannarala@gmail.com")
+    this.getUserByEmail("awadighassen@gmail.com")
   }
 
   getUserByEmail(email: string)
