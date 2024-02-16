@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from "../models/User";
 import {UtilsService} from "../utils/utils.service";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
@@ -10,6 +10,7 @@ import {CardFlipComponent} from "../card-flip/card-flip.component";
 import {FileHandleModule} from "../models/file-handle.module";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent
+export class ProfileComponent implements OnInit
 {
   user = new User()
   accountType!: string
@@ -38,10 +39,8 @@ export class ProfileComponent
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
 
-  constructor(private userService: UserService, 
-    private utilsService: UtilsService, 
-    private sanitizer: DomSanitizer,
-    private profileFormBuilder: FormBuilder) { }
+  constructor(private userService: UserService, private utilsService: UtilsService,
+    private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder) { }
 
   ngOnInit()
   {
@@ -61,7 +60,7 @@ export class ProfileComponent
       userPicture: ""
     })
     // this.getUserByEmail("gannarala@gmail.com")
-    this.getUserByEmail("awadighassen@gmail.com")
+    this.getUserByEmail("gannarala@gmail.com")
   }
 
   getUserByEmail(email: string)
@@ -171,6 +170,31 @@ export class ProfileComponent
         this.utilsService.successDialog("Opération réussite", "Votre image a été éditer avec succès", true)
       },
       error:(err)=> this.utilsService.successDialog("Opération échouée", err.message, false)
+    })
+
+  }
+
+  updateProfile()
+  {
+    this.user.userFirstName =  this.profileFormValue.controls['userFirstName'].value
+    this.user.userLastName =  this.profileFormValue.controls['userLastName'].value
+    this.user.userDescription =  this.profileFormValue.controls['userDescription'].value
+    this.user.userPhoneNumber =  this.profileFormValue.controls['userPhoneNumber'].value
+    this.user.userCountry =  this.profileFormValue.controls['userCountry'].value
+    this.user.userCity =  this.profileFormValue.controls['userCity'].value
+    this.user.userState =  this.profileFormValue.controls['userState'].value
+    this.user.userZipCode =  this.profileFormValue.controls['userZipCode'].value
+    this.user.userHeight =  this.profileFormValue.controls['userHeight'].value
+    this.user.userWeight =  this.profileFormValue.controls['userWeight'].value
+    this.user.userBirthDate =  this.profileFormValue.controls['userBirthDate'].value
+    this.user.userGender = this.profileFormValue.controls['userGender'].value
+
+    this.userService.updateUserData(this.user).subscribe({
+      complete: () => {
+        // this.dialogRef.close()
+        this.utilsService.successDialog("Opération réussite", "Vos informations ont été modifié avec succès", true)
+      },
+      error: (err) => this.utilsService.successDialog("Opération échoué", err, false)
     })
 
   }

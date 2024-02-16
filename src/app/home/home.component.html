@@ -84,7 +84,7 @@
                     <h5><a href="#">{{ coach.userFirstName }} {{ coach.userLastName }}</a></h5>
                     <p>{{ coach.userDescription }}</p>
                   </div>
-                  <a href="#" class="border-btn border-btn2 mt-10">Réserver maintenant</a>
+                  <button class="border-btn border-btn2 mt-10" (click)="goToCoachProfile(coach)">Voir profil</button>
                 </div>
 
             </ng-template>
