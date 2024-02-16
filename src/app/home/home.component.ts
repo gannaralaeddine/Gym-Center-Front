@@ -5,6 +5,9 @@ import {UtilsService} from "../utils/utils.service";
 import {CarouselModule} from "ngx-owl-carousel-o";
 import {OfferService} from "../services/offer.service";
 import {RouterLink} from "@angular/router";
+import {User} from "../models/User";
+import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-home',
@@ -23,13 +26,13 @@ export class HomeComponent
     offers: any
     customOptions: any
 
-    constructor(private userService: UserService, private offerService: OfferService, private utilsService: UtilsService)
+    constructor(private userService: UserService, private offerService: OfferService, private utilsService: UtilsService,
+                private matDialog: MatDialog)
     {
         this.customOptions = utilsService.customOptions
         this.getAllCoaches()
         this.getAllOffers()
     }
-
 
 
     getAllCoaches()
@@ -61,4 +64,14 @@ export class HomeComponent
       }
     }
 
+  goToCoachProfile(user: User)
+  {
+    return this.matDialog.open(ProfilePopupComponent, {
+      width: "70%",
+      height: "80%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { email: user.userEmail}
+    })
+  }
 }

@@ -1,6 +1,9 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import {FormControl, FormsModule, NgForm} from "@angular/forms";
+import { FormsModule, NgForm} from "@angular/forms";
+import {UtilsService} from "../utils/utils.service";
+import {Router} from "@angular/router";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -12,11 +15,52 @@ import {FormControl, FormsModule, NgForm} from "@angular/forms";
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent 
+export class LoginComponent
 {
 
   isPasswordVisible = false
-  
+
+  constructor(private authService: AuthService, private router: Router, private utils: UtilsService) {  }
+
+  login(loginForm: NgForm)
+  {
+    this.authService.login(loginForm.value).subscribe({
+      next: (response: any)  => {
+
+
+        if ( response.authorities[0].authority === "ROLE_MEMBER" )
+        {
+          console.log("You are connected as member !!!")
+          console.log("Your email is: " + response.email)
+
+          this.authService.setRolesLS(response.authorities)
+          this.authService.setTokenLS(response.token)
+          this.authService.setEmailLS(response.email)
+
+          this.router.navigate([""]).then(() => window.location.reload())
+        }
+        else
+        {
+
+          this.utils.successDialog("Échec de connexion", "Vous n'avez pas les droit d'accès", false)
+        }
+
+      },
+      error: (err: any)  => {
+        if (err.status == 401)
+        {
+          this.utils.successDialog("Échec de connexion", "Vérifier vos informations d'identification", false)
+        }
+        else
+        {
+          this.utils.successDialog("error is not 401", "error is not 401", false)
+        }
+
+      }
+
+    })
+  }
+
   togglePasswordVisibility()
   {
     const showPassword = document.getElementById("showPassword") as HTMLInputElement
@@ -27,9 +71,6 @@ export class LoginComponent
     }
   }
 
-  login(_t15: NgForm) 
-  {
-    
-  }
+
 
 }

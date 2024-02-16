@@ -19,16 +19,26 @@
                 <li><a routerLink="activities">Nos Activités</a></li>
                 <li><a routerLink="offers">Nos Tarifs</a></li>
                 <li><a href="#">Album</a></li>
-                <li><a routerLink="profile">Contactez-nous</a></li>
-                <li><button type="button" routerLink="login" class="border-btn" style=" width: 200px">Se Connecter</button></li>
+                <li><a href="#">Contactez-nous</a></li>
+                <li *ngIf="userIsLoggedIn">
+                  <div class="account-settings">
+                    <div class="user-profile">
+                      <div class="user-avatar">
+                        <img [src]="getImage(user.userPicture)" height="50" width="50" alt="profile picture">
+                      </div>
+                    </div>
+                    <div class="text-white">{{ user.userFirstName }} {{ user.userLastName }}</div>
+                  </div>
+                  <ul class="submenu">
+                    <li><a routerLink="profile">Profil</a></li>
+                    <li><a (click)="logout()" class="cursor-pointer">Se déconnecter</a></li>
+                  </ul>
+                </li>
+                <li *ngIf="!userIsLoggedIn"><button type="button" routerLink="login" class="border-btn" style=" width: 200px">Se Connecter</button></li>
               </ul>
             </nav>
           </div>
 
-          <!-- Mobile Menu -->
-          <div class="col-12">
-            <div class="mobile_menu d-block d-lg-none"></div>
-          </div>
         </div>
       </div>
     </div>
