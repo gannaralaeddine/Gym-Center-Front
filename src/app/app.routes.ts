@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import {HomeComponent} from "./home/home.component";
-import {CoursesComponent} from "./courses/courses.component";
+import {SessionComponent} from "./session/session.component";
 import {SubscriptionComponent} from "./subscription/subscription.component";
 import {OfferComponent} from "./offer/offer.component";
 import {CoachesComponent} from "./coaches/coaches.component";
@@ -18,7 +18,7 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'profile-popup', component: ProfilePopupComponent},
-  {path: 'sessions', component: CoursesComponent},
+  {path: 'sessions', component: SessionComponent},
   {path: 'subscription', component: SubscriptionComponent},
   {path: 'offers', component: OfferComponent},
   {path: 'coaches', component: CoachesComponent},

@@ -27,11 +27,9 @@ export class LoginComponent
     this.authService.login(loginForm.value).subscribe({
       next: (response: any)  => {
 
-
         if ( response.authorities[0].authority === "ROLE_MEMBER" )
         {
           console.log("You are connected as member !!!")
-          console.log("Your email is: " + response.email)
 
           this.authService.setRolesLS(response.authorities)
           this.authService.setTokenLS(response.token)

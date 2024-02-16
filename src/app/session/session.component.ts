@@ -28,10 +28,10 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     MatDatepickerModule
   ],
   providers: [MatDatepickerModule],
-  templateUrl: './courses.component.html',
-  styleUrl: './courses.component.css'
+  templateUrl: './session.component.html',
+  styleUrl: './session.component.css'
 })
-export class CoursesComponent
+export class SessionComponent
 {
     sessions: any
 
