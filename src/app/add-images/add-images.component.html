@@ -4,14 +4,14 @@
 
   <div class="modal-header">
 
-    <h1 class="modal-title pl-1" >Ajouter des images</h1>
+    <h1 class="modal-title pl-1 mb-3" >Ajouter des images</h1>
 
   </div>
 
-  <div class="drop-zone" appDrag (files)="fileDropped($event)" >
+  <div class="drop-zone" appDrag (files)="fileDropped($event)" style="width: 96%;">
 
     <div  class="modal-body  text-wrapper" (click)="selectFile.click()" >
-      <span class="material-symbols-outlined">add_a_photo</span> Cliquer ou déposer vos images
+      <span class="material-symbols-outlined">add_a_photo</span> <span style="font-size: 12pt;">Cliquer ou déposer vos images</span>
     </div>
 
   </div>
@@ -33,7 +33,7 @@
 
 <div class="row mt-3">
   <div class="col text-center">
-    <button type="button" class="btn btn-primary mr-3" id="addImages" (click)="addImages(classId)" disabled>Ajouter images</button>
+    <button type="button" class="btn btn-dark mr-3" id="addImages" (click)="addImages(classId)" disabled style="padding: 2% 5% 2% 5%; font-size: 12pt;">Ajouter images</button>
   </div>
 </div>
 

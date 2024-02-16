@@ -12,6 +12,12 @@
   text-align: center;
 }
 
+btn-add-images
+{
+  background-color: #0C0404;
+  color: white;
+  text-transform: lowercase;
+}
 .drop-zone {
   align-self: center;
   height: 200px;
