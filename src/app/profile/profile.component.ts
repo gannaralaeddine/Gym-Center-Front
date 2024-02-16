@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {User} from "../models/User";
 import {UtilsService} from "../utils/utils.service";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {UserService} from "../services/user.service";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
@@ -10,7 +10,7 @@ import {CardFlipComponent} from "../card-flip/card-flip.component";
 import {FileHandleModule} from "../models/file-handle.module";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatDialogRef} from "@angular/material/dialog";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -39,8 +39,8 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
 
-  constructor(private userService: UserService, private utilsService: UtilsService,
-    private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder) { }
+  constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService,
+    private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit()
   {
@@ -59,8 +59,10 @@ export class ProfileComponent implements OnInit
       userBirthDate: ['',Validators.required],
       userPicture: ""
     })
-    // this.getUserByEmail("gannarala@gmail.com")
-    this.getUserByEmail("gannarala@gmail.com")
+    if (isPlatformBrowser(this.platformId)) {
+      this.getUserByEmail(this.authService.getEmailLS() as string)
+    }
+
   }
 
   getUserByEmail(email: string)
@@ -166,7 +168,7 @@ export class ProfileComponent implements OnInit
 
     this.userService.updateProfilePicture(formData).subscribe({
       complete: () => {
-        this.getUserByEmail("gannarala@gmail.com")
+        this.getUserByEmail(this.authService.getEmailLS() as string)
         this.utilsService.successDialog("Opération réussite", "Votre image a été éditer avec succès", true)
       },
       error:(err)=> this.utilsService.successDialog("Opération échouée", err.message, false)
