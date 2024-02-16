@@ -11,6 +11,8 @@ import {FileHandleModule} from "../models/file-handle.module";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../auth/auth.service";
+import {AddImagesComponent} from "../add-images/add-images.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-profile',
@@ -39,7 +41,7 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
 
-  constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService,
+  constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService, private dialogRef: MatDialog,
     private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit()
@@ -250,5 +252,19 @@ export class ProfileComponent implements OnInit
   parseDateString(dateString: string): string {
     // Extract the date part in 'yyyy-MM-dd' format
     return  dateString.split('T')[0];
+  }
+
+  addImages()
+  {
+    const popup = this.dialogRef.open(AddImagesComponent, {
+      width: "50%",
+      height: "80%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { imagesTag: "userProfile", id: this.user.userId }
+    })
+    popup.afterClosed().subscribe(() =>{
+      this.getUserByEmail(this.authService.getEmailLS() as string)
+    })
   }
 }
