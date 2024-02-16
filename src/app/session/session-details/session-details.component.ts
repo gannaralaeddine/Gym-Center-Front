@@ -60,8 +60,23 @@ export class SessionDetailsComponent implements OnInit
         if (this.authService.getEmailLS() != null)
         {
           this.sessionService.assignMemberToSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
-            next: (val) => console.log("you are participated to session stay tuned!" + val),
-            error: (err) => console.log(err) })
+            next: (val) => this.utilsService.successDialog("Opération réussite", "Vous avez participer avec succès", true),
+            error: (err) => {
+              switch (err.status)
+              {
+                case 302:
+                { this.utilsService.successDialog("Opération échouée", "Vous avez déja participer à ce classe", false); break }
+                case 404:
+                { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
+                case 406:
+                { this.utilsService.successDialog("Opération échouée", "Il n'ya pas encore des places disponible dans ce classe !", false); break }
+                default:
+                { this.utilsService.successDialog("Opération échouée", err.message, false); break }
+
+              }
+            }
+
+          })
         }
       }
     }
