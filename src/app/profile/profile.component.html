@@ -158,11 +158,20 @@
             </div>
           </div>
         </div>
-        <mat-grid-list cols="4" rowHeight="2:1" style="margin-top: 8%;">
-          <mat-grid-tile *ngFor="let image of userImages">
-            <app-card-flip [imageName]=image.imageName [classId]=user.userId (onDataChange)="detectChanges($event)"></app-card-flip>
-          </mat-grid-tile>
-        </mat-grid-list>
+        <div class="mt-50">
+
+          <div class="d-flex justify-content-center" *ngIf="(!userImages) || (userImages.length === 0)">
+            <h2 class="text-center text-white">Vous n'avez pas encore des photos</h2>
+          </div>
+
+          <mat-grid-list cols="4" rowHeight="2:1" *ngIf="(userImages) && (userImages.length != 0)">
+            <mat-grid-tile *ngFor="let image of userImages">
+              <app-card-flip [imageName]=image.imageName [classId]=user.userId (onDataChange)="detectChanges($event)"></app-card-flip>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+
+        </div>
 
       </div>
     </div>
