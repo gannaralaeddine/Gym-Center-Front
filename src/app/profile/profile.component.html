@@ -10,14 +10,14 @@
 
               <div class="account-settings">
                 <div class="user-profile">
-                  <div class="user-avatar">
+                  <!-- <div class="user-avatar"> -->
                     <div style="position: relative">
                       <svg xmlns="http://www.w3.org/2000/svg" (click)="inputFile.click()" class="btn-update-profile-image" height="24" viewBox="0 -960 960 960" width="24"><path fill="#fff" d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>
-                      <img [src]="getImage(user.userPicture)" height="300" width="300" alt="profile picture" (click)="previewProfileImage(user.userPicture, true)" class="img-profile">
+                      <img [src]="getImage(user.userPicture)" height="150" width="150" alt="profile picture" (click)="previewProfileImage(user.userPicture, true)" class="img-profile">
                     </div>
                     <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden="hidden">
-                  </div>
-                  <h3 class="user-name text-white img-profile" (click)="previewProfileImage(user.userPicture, true)">{{ user.userFirstName }} {{ user.userLastName }}</h3>
+                  <!-- </div> -->
+                  <h3 class="user-name text-white img-profile mt-2">{{ user.userFirstName }} {{ user.userLastName }}</h3>
                   <h4 class="user-email text-white">{{ accountType }}</h4>
                 </div>
                 <div class="about">
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="form-group child-cell">
-                  <label for="userLastName" class="text-fonts ">Nom</label>
+                  <label for="userLastName" class="text-fonts">Nom</label>
                   <input type="email" class="form-control text-input" pattern="^[A-Za-zéèçïîô ]*[A-Za-zéèçïîô ][A-Za-zéèçïîô ]*$" formControlName="userLastName" size="50" id="userLastName" placeholder="Saisir votre nom">
                  <h5 class="text-danger text-bold ml-1 mt-1" *ngIf="profileFormValue.controls['userLastName'].invalid && profileFormValue.controls['userLastName'].touched">Merci de saisir un nom valide</h5>
                 </div>
@@ -63,8 +63,8 @@
               </div>
 
               <div>
-                <div class="form-group text-fonts">
-                  <label for="userDescription">Bio</label>
+                <div class="form-group">
+                  <label for="userDescription" class="text-fonts">Bio</label>
                   <textarea type="text" class="form-control text-input" id="userDescription" placeholder="Saisir votre description(Bio)" formControlName="userDescription"></textarea>
                  <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userDescription'].invalid && profileFormValue.controls['userDescription'].touched">Merci de saisir une description</h5>
                  <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userDescription'].touched && profileFormValue.controls['userDescription'].value && profileFormValue.controls['userDescription'].getRawValue().length > 255">Le nombre maximum des caractères c'est 255</h5>
@@ -72,8 +72,8 @@
               </div>
 
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="form-group text-fonts">
-                  <label for="userBirthDate">Date de naissance</label>
+                <div class="form-group">
+                  <label for="userBirthDate" class="text-fonts">Date de naissance</label>
                   <input type="date" class="form-control text-input" id="userBirthDate" formControlName="userBirthDate" [max]="maxDateInput">
                   <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userBirthDate'].invalid && profileFormValue.controls['userBirthDate'].touched">Merci de choisir une date de naissance</h5>
                 </div>
@@ -81,7 +81,7 @@
 
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group text-fonts">
-                  <label for="userPhoneNumber">Téléphone</label>
+                  <label for="userPhoneNumber" class="text-fonts">Téléphone</label>
                   <input type="text" class="form-control text-input" maxlength="8" id="userPhoneNumber" pattern="^[0-9]*$" placeholder="Saisir votre numéro de téléphone" formControlName="userPhoneNumber">
                  <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userPhoneNumber'].invalid && profileFormValue.controls['userPhoneNumber'].touched">Merci de saisir un numéro valide</h5>
                 </div>
@@ -90,46 +90,46 @@
             </div>
             <div class="row gutters">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <h6 class="mb-3 text-fonts">Adresse</h6>
+                <h3 class="mb-3 text-white">Adresse</h3>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="form-group text-fonts">
-                  <label for="userCountry">Pays</label>
+                <div class="form-group">
+                  <label for="userCountry" class="text-fonts">Pays</label>
                   <input type="text" class="form-control text-input" pattern="^[A-Za-zéèçïîô ]*[A-Za-zéèçïîô ][A-Za-zéèçïîô ]*$" id="userCountry" formControlName="userCountry" placeholder="Saisir votre pays">
                  <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userCountry'].invalid && profileFormValue.controls['userCountry'].touched">Merci de saisir un pays valide</h5>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group text-fonts">
-                  <label for="userState">État</label>
+                  <label for="userState" class="text-fonts">État</label>
                   <input type="text" class="form-control text-input" pattern="^[A-Za-zéèçïîô ]*[A-Za-zéèçïîô ][A-Za-zéèçïîô ]*$" id="userState" placeholder="Saisir votre état" formControlName="userState">
                  <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userState'].invalid && profileFormValue.controls['userState'].touched">Merci de saisir un État valide</h5>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group text-fonts">
-                  <label for="userCity">Ville</label>
+                  <label for="userCity" class="text-fonts">Ville</label>
                   <input type="text" class="form-control text-input" pattern="^[A-Za-zéèçïîô ]*[A-Za-zéèçïîô ][A-Za-zéèçïîô ]*$" id="userCity" placeholder="Saisir votre ville" formControlName="userCity">
                  <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userCity'].invalid && profileFormValue.controls['userCity'].touched">Merci de saisir un nom valide</h5>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group text-fonts">
-                  <label for="userZipCode">Code postal</label>
+                  <label for="userZipCode" class="text-fonts">Code postal</label>
                   <input type="text" class="form-control text-input" pattern="^[0-9]*$" id="userZipCode" placeholder="Saisir votre code postal" formControlName="userZipCode">
                  <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userZipCode'].invalid && profileFormValue.controls['userZipCode'].touched">Merci de saisir un numéro valide</h5>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group text-fonts">
-                  <label for="userHeight">Taille</label>
+                  <label for="userHeight" class="text-fonts">Taille</label>
                   <input type="text" class="form-control text-input" pattern="^[0-9]*$" maxlength="3" id="userHeight" placeholder="Saisir votre taille en cm" formControlName="userHeight">
                  <h5 class="text-danger text-bold ml-2" *ngIf="(profileFormValue.controls['userHeight'].invalid && profileFormValue.controls['userHeight'].touched) || profileFormValue.controls['userHeight'].getRawValue() === '0' ">Merci de saisir un taille valide</h5>
                 </div>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="form-group text-fonts">
-                  <label for="userWeight">Poids</label>
+                  <label for="userWeight" class="text-fonts">Poids</label>
                   <input type="text" class="form-control text-input" pattern="^[0-9]*$" maxlength="3" id="userWeight" placeholder="Saisir votre code poids en kg" formControlName="userWeight">
                  <h5 class="text-danger text-bold ml-2" *ngIf="(profileFormValue.controls['userWeight'].invalid && profileFormValue.controls['userWeight'].touched) || profileFormValue.controls['userWeight'].getRawValue() === '0' ">Merci de saisir un poids valide</h5>
                 </div>

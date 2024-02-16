@@ -54,14 +54,15 @@ body{margin-top:20px;
 }
 
 .text-input{
-  font-size: 10pt;
-  height: 40px;
+  font-size: 13pt;
+  height: 50px;
   width: 100%;
   background-color: #e3e2e2;
   color: black;
 }
 
-.text-fonts{
+.text-fonts
+{
   font-size: 15pt;
   color: white;
 }
