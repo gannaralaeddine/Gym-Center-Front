@@ -64,8 +64,6 @@ export class SessionDetailsComponent implements OnInit
             error: (err) => {
               switch (err.status)
               {
-                case 200:
-                { this.utilsService.successDialog("Opération réussite", "Vous avez participer avec succès", true); break }
                 case 302:
                 { this.utilsService.successDialog("Opération échouée", "Vous avez déja participer à ce classe", false); break }
                 case 404:
