@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { UtilsService } from '../utils/utils.service';
 import { ActivityService } from '../services/activity.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activities',
@@ -19,7 +20,9 @@ export class ActivitiesComponent
 {
   activities: any
 
-  constructor(private utilsService: UtilsService,private activityService: ActivityService) 
+  constructor(private utilsService: UtilsService,
+    private activityService: ActivityService,
+    private router: Router) 
   {
     this.activityService.getAllActivities().subscribe({
       next: (activities) => this.activities = activities,
@@ -37,5 +40,10 @@ export class ActivitiesComponent
     {
       return "../assets/img/icons/ic_person.png"
     }
+  }
+
+  goToActivityDetails(activityId: any)
+  {
+    this.router.navigate(["activity-details"], { queryParams: { activityId: activityId }  })
   }
 }

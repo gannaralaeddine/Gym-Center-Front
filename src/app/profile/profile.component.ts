@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit
     this.userService.retrieveUserByEmail(email).subscribe(
       {
         next: (user) => {
-          this.populateUserData(user);
+          this.populateUserData(user)
           this.populateForm(user)
         },
         error: (err) => console.error(err)
@@ -101,6 +101,7 @@ export class ProfileComponent implements OnInit
     this.user.userPicture = user.userPicture
     this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture)
 
+    console.log(user.userPicture)
   }
 
   getImage(userPicture: any)
@@ -144,7 +145,6 @@ export class ProfileComponent implements OnInit
 
     if (event.target.files)
     {
-
       for (let i= 0 ; i < event.target.files.length ; i++)
       {
         const file = event.target.files[i]
@@ -166,12 +166,13 @@ export class ProfileComponent implements OnInit
 
   updateProfileImage()
   {
+    console.log(this.user.userImages, this.user.userImages.length)
     const formData = this.prepareFormData(this.user)
-
+    
     this.userService.updateProfilePicture(formData).subscribe({
       complete: () => {
         this.getUserByEmail(this.authService.getEmailLS() as string)
-        this.utilsService.successDialog("Opération réussite", "Votre image a été éditer avec succès", true)
+        this.utilsService.successDialog("Opération réussite", "Votre image a été éditée avec succès", true)
       },
       error:(err)=> this.utilsService.successDialog("Opération échouée", err.message, false)
     })

@@ -23,11 +23,13 @@
                 <li *ngIf="userIsLoggedIn">
                   <div class="account-settings">
                     <div class="user-profile">
-                      <div class="user-avatar">
-                        <img [src]="getImage(user.userPicture)" height="50" width="50" alt="profile picture">
+                      <div class="user-avatar img-profile">
+                        <img height="50" width="50" alt="profile picture" [src]="getImage(user.userPicture)" class="rounded-circle">
+                        <span class="text-white text-bold text-uppercase ml-3" style="font-size: small;">{{ user.userFirstName }} {{ user.userLastName }}</span>
                       </div>
+                      
                     </div>
-                    <div class="text-white">{{ user.userFirstName }} {{ user.userLastName }}</div>
+                    
                   </div>
                   <ul class="submenu">
                     <li><a routerLink="profile">Profil</a></li>
