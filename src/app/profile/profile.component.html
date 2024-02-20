@@ -4,9 +4,23 @@
 
   <div class="container">
     <div class="row gutters">
+    
+        <h3 class="mb-3 ml-2 text-white">Profil</h3>
+        <div class="card-profile  ml-2">
+          <span class="topright">
+            <svg xmlns="http://www.w3.org/2000/svg" (click)="inputFile.click()" height="30" viewBox="0 -960 960 960" width="24"><path fill="black" d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>
+          </span>
+          <img [src]="getImage(user.userPicture)" (click)="previewProfileImage(user.userPicture, true)" alt="Avatar" width="100%" class="img-profile">
+          <div class="container-profile">
+            <h3 class="profile-information"><strong>Nom & Prénom: {{ user.userLastName }} {{ user.userFirstName }}</strong></h3> 
+            <h3 class="profile-information"><strong>Rôle: {{ accountType }}</strong></h3> 
+          </div>
+        </div>
+      
+    
+      <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden>
 
-       
-      <div class="card h-100">
+      <!-- <div class="card h-100">
           <div class="card-body">
 
               <div class="account-settings">
@@ -27,7 +41,7 @@
                 </div>
             </div>
           </div>
-      </div>
+      </div> -->
 
       <!-- <div class="row">
         <div style="position: relative">
@@ -37,7 +51,7 @@
         <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden="hidden">
       </div> -->
 
-      <form [formGroup]="profileFormValue">
+      <form [formGroup]="profileFormValue" class="mt-5">
 
         <div class="card h-100">
           <div class="card-body">

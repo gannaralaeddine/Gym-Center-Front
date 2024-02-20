@@ -1,8 +1,3 @@
-.img-profile
-{
-  cursor: pointer;
-}
-
 body{margin-top:20px;
   color: #bcd0f7;
   background: #1A233A;
@@ -109,4 +104,64 @@ button {
   width: 100%;
 }
 
+.card-profile 
+{
+  box-shadow: 0 0 20px #dc3545;
+  background-color: transparent;
+  transition: 0.3s;
+  width: 40%;
+  border-radius: 5%;
+  padding-left: 0%;
+  padding-right: 0%;
+}
 
+.card-profile:hover 
+{
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container-profile
+{
+  margin-top: 4%;
+  padding: 2px 16px 10px;
+  background-color: transparent;
+  text-align: start;
+}
+
+.img-profile
+{
+  margin-top: -5.1%;
+  margin-bottom: 2%;
+  padding-left: 0.05%;
+  padding-top: -0.025%;
+  border-radius: 5%;
+  z-index: 2;
+  cursor: pointer;
+  width: 100%;
+}
+
+.topright 
+{
+  position: sticky;
+  margin-left: 95%;
+  z-index: 1;
+  cursor: pointer;
+}
+
+svg
+{
+	background-color: white;
+  border-radius: 12%;
+}
+
+.profile-information
+{
+  color: white;
+  text-transform: uppercase;
+}
+
+.center {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+}
