@@ -52,10 +52,11 @@
                 <div class="form-group child-cell">
                   <label for="userGender" class="text-fonts">Sexe</label>
                   <select  class="form-control text-fonts text-input text-black" id="userGender" formControlName="userGender">
+                    <option class="text-black" selected>Merci de choisir sexe</option>
                     <option class="text-black">Homme</option>
                     <option class="text-black">Femme</option>
                   </select>
-                 <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userGender'].invalid && profileFormValue.controls['userGender'].touched">Merci de choisir un sexe</h5>
+                 <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userGender'].getRawValue() === 'Merci de choisir sexe' && profileFormValue.controls['userGender'].touched">Merci de choisir un sexe</h5>
                 </div>
 
               </div>

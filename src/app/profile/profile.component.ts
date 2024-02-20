@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit
       userZipCode:['',Validators.required],
       userHeight:['',Validators.required],
       userWeight:['',Validators.required],
-      userGender: ['',Validators.required],
+      userGender: ['Merci de choisir sexe',Validators.required],
       userBirthDate: ['',Validators.required],
       userPicture: ""
     })
