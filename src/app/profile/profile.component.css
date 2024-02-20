@@ -150,7 +150,8 @@ button {
 svg
 {
 	background-color: gray;
-  /* border-radius: 60%; */
+  padding-left: 0.3%; 
+  padding-right: 0.2%;
 }
 
 .profile-information
