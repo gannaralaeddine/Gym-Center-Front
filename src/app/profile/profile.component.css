@@ -109,7 +109,7 @@ button {
   box-shadow: 0 0 20px #dc3545;
   background-color: transparent;
   transition: 0.3s;
-  width: 40%;
+  width: 33%;
   border-radius: 5%;
   padding-left: 0%;
   padding-right: 0%;
@@ -123,7 +123,7 @@ button {
 .container-profile
 {
   margin-top: 4%;
-  margin-left: -5%;
+  margin-left: -20%;
   padding: 2px 16px 10px;
   background-color: transparent;
   text-align: start;
@@ -141,15 +141,16 @@ button {
 .topright 
 {
   position: sticky;
-  margin-left: 95%;
+  margin-left: 95.3%;
+  margin-top: 1%;
   z-index: 1;
   cursor: pointer;
 }
 
 svg
 {
-	background-color: white;
-  border-radius: 12%;
+	background-color: gray;
+  /* border-radius: 60%; */
 }
 
 .profile-information
