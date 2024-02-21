@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UtilsService} from "../utils/utils.service";
 import {User} from "../models/User";
+import {SessionModule} from "../session/session.module";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class UserService {
 
   public getUserById(id:any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/user/retrieve-user/"+id) }
 
+  public getMemberByEmail(email: any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/member/retrieve-member/" + email) }
+
+  public retrieveMemberSessions(email: any)  { return this.http.get<SessionModule>(this.utils.API_GYM_CENTER + "/member/retrieve-member-sessions/" + email) }
 
   public getAllCoaches() {return this.http.get(this.utils.API_GYM_CENTER + "/coach/retrieve-all-coaches")}
 

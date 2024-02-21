@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import {User} from "../models/User";
 import {UtilsService} from "../utils/utils.service";
 import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
@@ -13,6 +13,9 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {AuthService} from "../auth/auth.service";
 import {AddImagesComponent} from "../add-images/add-images.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-profile',
@@ -40,13 +43,19 @@ export class ProfileComponent implements OnInit
   userImages: any
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
+  userSessions: any
+  dataSource!: MatTableDataSource<any>;
+  displayedColumns = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Gestion']
 
-  constructor(private userService: UserService, 
-    private utilsService: UtilsService, 
-    private authService: AuthService, 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(private userService: UserService,
+    private utilsService: UtilsService,
+    private authService: AuthService,
     private dialogRef: MatDialog,
-    private sanitizer: DomSanitizer, 
-    private profileFormBuilder: FormBuilder, 
+    private sanitizer: DomSanitizer,
+    private profileFormBuilder: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit()
@@ -68,13 +77,14 @@ export class ProfileComponent implements OnInit
     })
     if (isPlatformBrowser(this.platformId)) {
       this.getUserByEmail(this.authService.getEmailLS() as string)
+      this.retrieveMemberSessions(this.authService.getEmailLS() as string)
     }
 
   }
 
   getUserByEmail(email: string)
   {
-    this.userService.retrieveUserByEmail(email).subscribe(
+    this.userService.getMemberByEmail(email).subscribe(
       {
         next: (user) => {
           this.populateUserData(user)
@@ -105,8 +115,6 @@ export class ProfileComponent implements OnInit
     this.user.userBirthDate = user.userBirthDate
     this.user.userPicture = user.userPicture
     this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture)
-
-    console.log(user.userPicture)
   }
 
   getImage(userPicture: any)
@@ -258,6 +266,15 @@ export class ProfileComponent implements OnInit
   parseDateString(dateString: string): string {
     // Extract the date part in 'yyyy-MM-dd' format
     return  dateString.split('T')[0];
+  }
+
+
+  retrieveMemberSessions(email: string)
+  {
+      this.userService.retrieveMemberSessions(email).subscribe({
+        next: (sessions) => this.userSessions = sessions,
+        error: (err) => console.error(err)
+      })
   }
 
   addImages()

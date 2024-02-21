@@ -1,5 +1,6 @@
 import {FileHandleModule} from "./file-handle.module";
 import {Role} from "./role.module";
+import {SessionModule} from "../session/session.module";
 
 export class User
 {
@@ -23,4 +24,6 @@ export class User
   userImages!: FileHandleModule[]
 
   userSpeciality?: string
+  memberSessions!: SessionModule[]
+
 }
