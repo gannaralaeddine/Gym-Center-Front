@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {SessionComponent} from "./session/session.component";
-import {SubscriptionComponent} from "./subscription/subscription.component";
-import {OfferComponent} from "./offer/offer.component";
-import {CoachesComponent} from "./coaches/coaches.component";
-import {LoginComponent} from "./login/login.component";
-import {ProfileComponent} from "./profile/profile.component";
+import { HomeComponent } from "./home/home.component";
+import { SessionComponent } from "./session/session.component";
+import { SubscriptionComponent } from "./subscription/subscription.component";
+import { OfferComponent } from "./offer/offer.component";
+import { CoachesComponent } from "./coaches/coaches.component";
+import { LoginComponent } from "./login/login.component";
+import { ProfileComponent } from "./profile/profile.component";
 import { CategoriesComponent } from './categories/categories.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { CategoryDetailsComponent } from './categories/category-details/category-details.component';
@@ -25,5 +25,6 @@ export const routes: Routes = [
   {path: 'categories', component: CategoriesComponent},
   {path: 'category-details', component: CategoryDetailsComponent},
   {path: 'activities', component: ActivitiesComponent},
-  {path: 'activity-details', component: ActivityDetailsComponent}
+  {path: 'activity-details', component: ActivityDetailsComponent},
+  {path: 'coach-profile', component: ProfilePopupComponent}
 ];

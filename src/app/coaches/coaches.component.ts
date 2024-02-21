@@ -7,7 +7,6 @@ import {UtilsService} from "../utils/utils.service";
 import {User} from "../models/User";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
 
 @Component({
   selector: 'app-coaches',
@@ -24,10 +23,12 @@ import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
 export class CoachesComponent
 {
 
-    coaches: any
+  coaches: any
 
-  constructor(private userService: UserService, private utilsService: UtilsService, private router: Router, private matDialog: MatDialog)
-  {
+  constructor(private userService: UserService, 
+    private utilsService: UtilsService, 
+    private router: Router, 
+    private matDialog: MatDialog) {
     this.getAllCoaches()
   }
 
@@ -54,12 +55,13 @@ export class CoachesComponent
 
   goToCoachProfile(user: User)
   {
-    return this.matDialog.open(ProfilePopupComponent, {
-      width: "70%",
-      height: "80%",
-      enterAnimationDuration: "1000ms",
-      exitAnimationDuration: "1000ms",
-      data: { email: user.userEmail}
-    })
+    this.router.navigate(["coach-profile"], { queryParams: { userEmail: user.userEmail }  })
+    // return this.matDialog.open(ProfilePopupComponent, {
+    //   width: "70%",
+    //   height: "80%",
+    //   enterAnimationDuration: "1000ms",
+    //   exitAnimationDuration: "1000ms",
+    //   data: { email: user.userEmail}
+    // })
   }
 }

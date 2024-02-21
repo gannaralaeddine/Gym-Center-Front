@@ -1,75 +1,59 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
-import {UserService} from "../services/user.service";
-import {UtilsService} from "../utils/utils.service";
-import {ActivatedRoute} from "@angular/router";
-import {DomSanitizer} from "@angular/platform-browser";
-import {isPlatformBrowser, NgIf} from "@angular/common";
-import {User} from "../models/User";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { UserService } from "../services/user.service";
+import { UtilsService } from "../utils/utils.service";
+import { ActivatedRoute } from "@angular/router";
+import { DomSanitizer } from "@angular/platform-browser";
+import { NgFor, NgIf } from "@angular/common";
+import { User } from "../models/User";
+import { FileHandleModule } from '../models/file-handle.module';
+import { CardFlipComponent } from "../card-flip/card-flip.component";
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { AddImagesComponent } from '../add-images/add-images.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-profile-popup',
-  standalone: true,
-  imports: [
-    NgIf
-  ],
-  templateUrl: './profile-popup.component.html',
-  styleUrl: './profile-popup.component.css'
+    selector: 'app-profile-popup',
+    standalone: true,
+    templateUrl: './profile-popup.component.html',
+    styleUrl: './profile-popup.component.css',
+    imports: [
+      NgIf,
+      NgFor,
+      CardFlipComponent,
+      MatGridList,
+      MatGridTile
+    ]
 })
-export class ProfilePopupComponent
-{
 
-  user = new User()
+export class ProfilePopupComponent implements OnInit
+{
+  userImages: any
+  user: any
   accountType!: string
 
-  constructor(private userService: UserService, private utilsService: UtilsService, @Inject(PLATFORM_ID) private platformId: Object,
-              private router: ActivatedRoute, @Inject(MAT_DIALOG_DATA) public data: any)
-  {
-      if(data.email)
-      {
-        this.getUserByEmail(data.email)
-      }
-
-  }
+  constructor(private userService: UserService, 
+    private utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private dialogRef: MatDialog,
+    private router: ActivatedRoute) {}
 
   ngOnInit()
   {
-
+    this.router.queryParams.subscribe((params) => {
+      this.getUserByEmail(params["userEmail"])
+    })
   }
 
   getUserByEmail(email: string)
   {
-    this.userService.retrieveUserByEmail(email).subscribe(
-      {
-        next: (val) => this.populateUserData(val),
+    this.userService.retrieveUserByEmail(email).subscribe({
+      next: (val: any) => {
+        this.user = val as User
+        this.accountType = val.roles[0].roleName
+        this.userImages = this.utilsService.deleteItemFromArray(this.user.userImages, this.user.userPicture)
+      },
         error: (err) => console.error(err)
-      }
-    )
-  }
-
-  populateUserData(user: any)
-  {
-    this.accountType = user.roles[0].roleName
-
-    this.user.userId = user.userId
-    this.user.userEmail = user.userEmail
-    this.user.userFirstName = user.userFirstName
-    this.user.userLastName = user.userLastName
-    this.user.userDescription = user.userDescription
-    this.user.userPhoneNumber = user.userPhoneNumber
-    this.user.userCountry = user.userCountry
-    this.user.userState = user.userState
-    this.user.userCity = user.userCity
-    this.user.userGender = user.userGender
-    this.user.userHeight = user.userHeight
-    this.user.userWeight = user.userWeight
-    this.user.userZipCode = user.userZipCode
-    this.user.userBirthDate = user.userBirthDate
-    this.user.userPicture = user.userPicture
-    // this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture)
-
-    this.user.userSpeciality = user.userSpeciality
-
+    })
   }
 
   getImage(userPicture: any)
@@ -88,4 +72,96 @@ export class ProfilePopupComponent
   {
     this.utilsService.displayImages(imageName, isOneImage)
   }
+
+  onFileSelected(event: any)
+  {
+    this.user.userImages = []
+
+    if (event.target.files)
+    {
+      for (let i= 0 ; i < event.target.files.length ; i++)
+      {
+        const file = event.target.files[i]
+
+        const fileHandle: FileHandleModule = {
+          file: file,
+          url: this.sanitizer.bypassSecurityTrustUrl(
+            window.URL.createObjectURL(file)
+          )
+        }
+
+        this.user.userImages.push(fileHandle)
+
+      }
+    }
+
+    this.updateProfileImage()
+  }
+
+  updateProfileImage()
+  {
+    console.log(this.user.userImages, this.user.userImages.length)
+    const formData = this.prepareFormData(this.user)
+
+    this.userService.updateProfilePicture(formData).subscribe({
+      complete: () => {
+        this.ngOnInit()
+        this.utilsService.successDialog("Opération réussite", "Votre image a été éditée avec succès", true)
+      },
+      error:(err)=> this.utilsService.successDialog("Opération échouée", err.message, false)
+    })
+  }
+
+  prepareFormData(user: User): FormData
+  {
+    const formData = new FormData()
+
+    formData.append(
+      "user", new Blob( [ JSON.stringify(user) ], { type: "application/json" } )
+    )
+
+    for ( let i = 0 ; i < user.userImages.length ; i++ )
+    {
+      formData.append(
+        "imageFile",
+        user.userImages[i].file,
+        user.userImages[i].file.name
+      )
+    }
+
+    return formData
+  }
+
+  displayImages(images: any, isOneImage: boolean)
+  {
+    this.utilsService.displayImages(images, isOneImage)
+  }
+
+  addImages()
+  {
+    const popup = this.dialogRef.open(AddImagesComponent, {
+      width: "50%",
+      height: "80%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { imagesTag: "userProfile", id: this.user.userId }
+    })
+    popup.afterClosed().subscribe(() => {
+      this.ngOnInit()
+    })
+  }
+  
+  detectChanges(isDataChanges: boolean)
+  {
+    if (isDataChanges)
+    {
+      this.userService.getUserById(this.user.userId).subscribe(
+        {
+          next: (user) => this.userImages = this.utilsService.deleteItemFromArray(user.userImages, user.userPicture),
+          error: (err) => console.error(err)
+        }
+      )
+    }
+  }
+
 }

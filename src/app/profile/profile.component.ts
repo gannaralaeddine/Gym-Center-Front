@@ -41,8 +41,13 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
 
-  constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService, private dialogRef: MatDialog,
-    private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private userService: UserService, 
+    private utilsService: UtilsService, 
+    private authService: AuthService, 
+    private dialogRef: MatDialog,
+    private sanitizer: DomSanitizer, 
+    private profileFormBuilder: FormBuilder, 
+    @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit()
   {
