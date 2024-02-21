@@ -28,7 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ProfilePopupComponent implements OnInit
 {
   userImages: any
-  user: any
+  user = new User()
   accountType!: string
 
   constructor(private userService: UserService, 
