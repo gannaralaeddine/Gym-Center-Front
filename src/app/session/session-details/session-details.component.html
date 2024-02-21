@@ -10,7 +10,9 @@
         <div class="blog_item_coach">
             <h3> Coach: {{ session.sessionCoach.userFirstName }} {{ session.sessionCoach.userLastName }}</h3>
         </div>
-        <button class="btn-participate btn-hover blog_item_coach-btn" (click)="participateToSession(session)" *ngIf="userIsLoggedIn">Se participer</button>
+        <button class="btn-participate btn-hover blog_item_coach-btn" (click)="participateToSession(session)" *ngIf="userIsLoggedIn && !userIsParticipated">Se participer</button>
+        <button class="btn-participate btn-hover blog_item_coach-btn" (click)="cancelParticipationToSession(session)" *ngIf="userIsLoggedIn && userIsParticipated">Annuler ma participation</button>
+
       </div>
       <div class="details_blog" style="background-color: #0b0b0b">
         <h1 class="text-white" >{{ session.sessionName }}</h1>
