@@ -111,7 +111,7 @@ export class SessionComponent
       }
       else
       {
-        return "../assets/img/icons/ic_person.png"
+        return "../assets/img/icons/ic_person.svg"
       }
     }
 }

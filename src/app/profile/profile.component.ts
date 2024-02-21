@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit
     }
     else
     {
-      return "../assets/img/icons/ic_person.png"
+      return "../assets/img/icons/ic_person.svg"
     }
   }
 
@@ -168,7 +168,7 @@ export class ProfileComponent implements OnInit
   {
     console.log(this.user.userImages, this.user.userImages.length)
     const formData = this.prepareFormData(this.user)
-    
+
     this.userService.updateProfilePicture(formData).subscribe({
       complete: () => {
         this.getUserByEmail(this.authService.getEmailLS() as string)

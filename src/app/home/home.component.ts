@@ -8,6 +8,7 @@ import {RouterLink} from "@angular/router";
 import {User} from "../models/User";
 import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
 import {MatDialog} from "@angular/material/dialog";
+import {OptionModule} from "../models/option.module";
 
 @Component({
   selector: 'app-home',

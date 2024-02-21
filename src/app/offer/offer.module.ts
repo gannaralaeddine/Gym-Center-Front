@@ -1,4 +1,5 @@
 import {ActivityModule} from "../models/activity.module";
+import {OptionModule} from "../models/option.module";
 
 export class OfferModule
 {
@@ -7,4 +8,5 @@ export class OfferModule
   offerPeriod!: number
   offerPrice!: number
   offerActivity!: ActivityModule
+  offerOption!: OptionModule[]
 }
