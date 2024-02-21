@@ -21,6 +21,7 @@ import {SessionModule} from "../session.module";
 export class SessionDetailsComponent implements OnInit
 {
     userIsLoggedIn = false
+    userIsParticipated = false
     session: any
 
     constructor(private sessionService: SessionService, private utilsService: UtilsService, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,8 +51,24 @@ export class SessionDetailsComponent implements OnInit
     {
         this.sessionService.getSession(sessionId).subscribe({
           next: (session) => this.session = session,
+          complete: () =>  this.isParticipated(this.session.sessionId),
           error: (err)=> console.error(err)
         })
+    }
+
+
+    isParticipated(sessionId: number)
+    {
+        if (isPlatformBrowser(this.platformId))
+        {
+          if (this.authService.getEmailLS() != null)
+          {
+            this.sessionService.isMemberParticipatedToSession(this.authService.getEmailLS() as string, sessionId).subscribe({
+              next: (result) => this.userIsParticipated = result as boolean,
+              error: (err) => console.log("error: " + err.message)
+            })
+          }
+        }
     }
 
     participateToSession(session: SessionModule)
@@ -80,6 +97,33 @@ export class SessionDetailsComponent implements OnInit
         }
       }
     }
+
+
+    cancelParticipationToSession(session: SessionModule)
+    {
+      if (isPlatformBrowser(this.platformId))
+      {
+        if (this.authService.getEmailLS() != null)
+        {
+          this.sessionService.removeMemberFromSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
+            next: () => this.utilsService.successDialog("Opération réussite", "Participation annulée avec succès", true),
+            error: (err) => {
+              switch (err.status)
+              {
+                case 404:
+                { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
+                default:
+                { this.utilsService.successDialog("Opération échouée", err.message, false); break }
+
+              }
+            }
+          })
+        }
+      }
+    }
+
+
+
     getImage(imageName: string): string
     {
         return this.utilsService.getImage(imageName)
