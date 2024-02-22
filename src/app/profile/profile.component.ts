@@ -133,11 +133,6 @@ export class ProfileComponent implements OnInit
     }
   }
 
-  previewProfileImage(imageName: any, isOneImage: boolean)
-  {
-    this.utilsService.displayImages(imageName, isOneImage)
-  }
-
   detectChanges(isDataChanges: boolean)
   {
     if (isDataChanges)
@@ -306,6 +301,9 @@ export class ProfileComponent implements OnInit
       enterAnimationDuration: "1000ms",
       exitAnimationDuration: "1000ms",
       data: { sessionId: id }
+    })
+    .afterClosed().subscribe(() =>{
+      this.retrieveMemberSessions(this.authService.getEmailLS() as string)
     })
   }
 }

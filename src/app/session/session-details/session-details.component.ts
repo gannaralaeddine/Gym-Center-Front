@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogContent} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 import {SessionService} from "../../services/session.service";
 import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {UtilsService} from "../../utils/utils.service";
@@ -25,7 +25,7 @@ export class SessionDetailsComponent implements OnInit
     session: any
 
     constructor(private sessionService: SessionService, private utilsService: UtilsService, @Inject(MAT_DIALOG_DATA) public data: any,
-                private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object)
+                private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object, private dialogRef: MatDialogRef<SessionDetailsComponent>,)
     {  }
 
 
@@ -77,7 +77,10 @@ export class SessionDetailsComponent implements OnInit
         if (this.authService.getEmailLS() != null)
         {
           this.sessionService.assignMemberToSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
-            next: () => this.utilsService.successDialog("Opération réussite", "Vous avez participer avec succès", true),
+            next: () => {
+              this.dialogRef.close()
+              this.utilsService.successDialog("Opération réussite", "Vous avez participer avec succès", true)
+            },
             error: (err) => {
               switch (err.status)
               {
@@ -106,7 +109,10 @@ export class SessionDetailsComponent implements OnInit
         if (this.authService.getEmailLS() != null)
         {
           this.sessionService.removeMemberFromSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
-            next: () => this.utilsService.successDialog("Opération réussite", "Participation annulée avec succès", true),
+            next: () => {
+              this.dialogRef.close()
+              this.utilsService.successDialog("Opération réussite", "Participation annulée avec succès", true)
+            },
             error: (err) => {
               switch (err.status)
               {
