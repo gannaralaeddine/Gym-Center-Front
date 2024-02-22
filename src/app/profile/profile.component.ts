@@ -17,6 +17,9 @@ import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import { SessionDetailsComponent } from '../session/session-details/session-details.component';
 import { MatSelectModule } from '@angular/material/select';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { SessionModule } from '../session/session.module';
+
 
 @Component({
   selector: 'app-profile',
@@ -48,7 +51,7 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
   userSessionDataSource!: MatTableDataSource<any>
-  displayedColumns = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Gestion']
+  displayedColumns = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Date', 'Gestion']
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
   constructor(private userService: UserService,
@@ -56,6 +59,7 @@ export class ProfileComponent implements OnInit
     private authService: AuthService,
     private dialogRef: MatDialog,
     private sanitizer: DomSanitizer,
+    private liveAnnouncer: LiveAnnouncer,
     private profileFormBuilder: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object) { }
 
@@ -271,6 +275,21 @@ export class ProfileComponent implements OnInit
         next: (sessions) => {
           this.userSessionDataSource = new MatTableDataSource(sessions as any)
           this.userSessionDataSource.paginator = this.paginator
+          this.userSessionDataSource.data.sort((a: SessionModule,b: SessionModule): number => {
+
+            let result!: number
+
+            if (a.sessionDeadline > b.sessionDeadline)
+            {
+              result = 1
+            }
+            else if (a.sessionDeadline < b.sessionDeadline)
+            {
+              result = -1
+            }
+
+            return result
+          })
         },
         error: (err) => console.error(err)
       })
