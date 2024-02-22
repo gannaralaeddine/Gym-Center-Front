@@ -15,7 +15,6 @@ import {AddImagesComponent} from "../add-images/add-images.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
 import { SessionDetailsComponent } from '../session/session-details/session-details.component';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -48,11 +47,9 @@ export class ProfileComponent implements OnInit
   userImages: any
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
-  userSessions: any
-  dataSource!: MatTableDataSource<any>
+  userSessionDataSource!: MatTableDataSource<any>
   displayedColumns = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Gestion']
   @ViewChild(MatPaginator) paginator!: MatPaginator
-  pages = [5, 10, 25, 100]
 
   constructor(private userService: UserService,
     private utilsService: UtilsService,
@@ -272,8 +269,8 @@ export class ProfileComponent implements OnInit
   {
       this.userService.retrieveMemberSessions(email).subscribe({
         next: (sessions) => {
-          this.dataSource = new MatTableDataSource(sessions as any)
-          this.dataSource.paginator = this.paginator
+          this.userSessionDataSource = new MatTableDataSource(sessions as any)
+          this.userSessionDataSource.paginator = this.paginator
         },
         error: (err) => console.error(err)
       })

@@ -182,10 +182,14 @@ table
   height: 50%;
 }
 
-/* .mat-mdc-option, .mdc-list-item__primary-text
+.details-design
 {
-  font-size: small;
-} */
+  padding-top: 20%; 
+  color: red; 
+  font-size: 13pt; 
+  font-weight: 150; 
+  font-family: 'Times New Roman', 'Times', 'serif';
+}
 mat-option
 {
   font-size: large;
