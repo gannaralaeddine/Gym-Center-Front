@@ -11,23 +11,23 @@
                 </span>
                 <img [src]="getImage(user.userPicture)" (click)="previewProfileImage(user.userPicture, true)" alt="Avatar" width="100%" class="img-profile">
               </div>
-            
-            
+
+
               <div class="container-profile text-start">
                 <h3 class="profile-information mt-6"><strong>Nom & Prénom: {{ user.userLastName }} {{ user.userFirstName }}</strong></h3>
                 <h3 class="profile-information mt-3"><strong>Adresse e-mail: {{ user.userEmail }}</strong></h3>
-                <h3 class="profile-information mt-3"><strong>Num Téléphone: {{ user.userPhoneNumber }}</strong></h3> 
-                <h3 class="profile-information mt-3"><strong>Rôle: {{ accountType }}</strong></h3> 
+                <h3 class="profile-information mt-3"><strong>Num Téléphone: {{ user.userPhoneNumber }}</strong></h3>
+                <h3 class="profile-information mt-3"><strong>Rôle: {{ accountType }}</strong></h3>
               </div>
             </div>
-      
+
             <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden>
-        
+
 
             <div class="card h-100 mt-5">
               <div class="mb-5 ps-3">
-                
-      
+
+
                 <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; right: 0">
                   <div class="nav-wrapper position-relative end-0" >
                     <button type="button" class="border-btn ml-6" (click)="displayImages(userImages, false)" style="margin-left: 30%;">Aperçu les images</button>
@@ -40,18 +40,17 @@
                 </div>
               </div>
               <div class="images-list">
-      
+
                 <div class="d-flex justify-content-center" *ngIf="(!userImages) || (userImages.length === 0)">
                   <h2 class="text-center text-white">Vous n'avez pas encore des photos</h2>
                 </div>
-      
+
                 <mat-grid-list cols="4" rowHeight="2:1" *ngIf="(userImages) && (userImages.length != 0)">
                   <mat-grid-tile *ngFor="let image of userImages">
-                    <app-card-flip [imageName]=image.imageName [classId]=user.userId (onDataChange)="detectChanges($event)"></app-card-flip>
+                    <img [src]="getImage(image.imageName)" class="border-radius-10" alt="activity image" width="250px" height="150px" >
                   </mat-grid-tile>
                 </mat-grid-list>
-      
-      
+
               </div>
             </div>
     </div>

@@ -20,3 +20,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .cursor-pointer{
   cursor: pointer;
 }
+
+.border-radius-10{
+  border-radius: 10px;
+}

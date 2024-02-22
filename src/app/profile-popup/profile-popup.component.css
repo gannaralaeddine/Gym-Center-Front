@@ -20,15 +20,6 @@ body{
   border: 0;
   margin-bottom: 1rem;
 }
-  /* position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 0 solid rgba(0,0,0,.125);
-  border-radius: .25rem; */
 
 
 .card-body {
@@ -98,7 +89,7 @@ p{
   cursor: pointer;
 }
 
-.card-profile 
+.card-profile
 {
   box-shadow: 0 0 20px #dc3545;
   background-color: transparent;
@@ -109,7 +100,7 @@ p{
   padding-right: 0%;
 }
 
-.card-profile:hover 
+.card-profile:hover
 {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
@@ -132,7 +123,7 @@ p{
   width: 100%;
 }
 
-.topright 
+.topright
 {
   position: sticky;
   margin-left: 95.3%;
@@ -144,7 +135,7 @@ p{
 svg
 {
 	background-color: gray;
-  padding-left: 0.3%; 
+  padding-left: 0.3%;
   padding-right: 0.2%;
 }
 
@@ -153,39 +144,6 @@ svg
   color: white;
   text-transform: uppercase;
 }
-
-/*button
-{
-  cursor: pointer;
-  border: 0;
-  border-radius: 4px;
-  font-weight: 600;
-  margin-top: 15px;
-  padding: 10px;
-  box-shadow: 0 0 20px #dc3545;
-  transition: 0.4s;
-}
-
- button:hover
-{
-  font-size: 18px;
-  font-weight: 600;
-  border: 2px solid #fff;
-  color: #fff;
-  background: none;
-  border-radius: 0;
-  text-transform: uppercase;
-  padding: 14px 43px;
-  cursor: pointer;
-  display: inline-block;
-  letter-spacing: 1px;
-  margin-bottom: 0;
-  position: relative;
-  transition: color 0.4s linear;
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-} */
 
 .border-btn
 {
