@@ -159,3 +159,34 @@ svg
   color: white;
   text-transform: uppercase;
 }
+
+.activity-image
+{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    cursor: pointer;
+}
+
+th, td
+{
+  font-size: medium;
+}
+
+mat-paginator
+{
+  font-size: small;
+}
+
+table
+{
+  height: 50%;
+}
+
+/* .mat-mdc-option, .mdc-list-item__primary-text
+{
+  font-size: small;
+} */
+mat-option
+{
+  font-size: large;
+}

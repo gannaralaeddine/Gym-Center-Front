@@ -13,9 +13,11 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {AuthService} from "../auth/auth.service";
 import {AddImagesComponent} from "../add-images/add-images.component";
 import {MatDialog} from "@angular/material/dialog";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import { SessionDetailsComponent } from '../session/session-details/session-details.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-profile',
@@ -27,11 +29,14 @@ import {MatSort} from "@angular/material/sort";
     FullCalendarModule,
     MatGridList,
     MatGridTile,
+    MatPaginatorModule,
+    MatTableModule,
     NgForOf,
     RouterLink,
     CardFlipComponent,
     FormsModule,
-    NgIf
+    NgIf,
+    MatSelectModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
@@ -44,11 +49,10 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
   userSessions: any
-  dataSource!: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<any>
   displayedColumns = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Gestion']
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator
+  pages = [5, 10, 25, 100]
 
   constructor(private userService: UserService,
     private utilsService: UtilsService,
@@ -272,7 +276,10 @@ export class ProfileComponent implements OnInit
   retrieveMemberSessions(email: string)
   {
       this.userService.retrieveMemberSessions(email).subscribe({
-        next: (sessions) => this.userSessions = sessions,
+        next: (sessions) => {
+          this.dataSource = new MatTableDataSource(sessions as any)
+          this.dataSource.paginator = this.paginator
+        },
         error: (err) => console.error(err)
       })
   }
@@ -288,6 +295,17 @@ export class ProfileComponent implements OnInit
     })
     popup.afterClosed().subscribe(() =>{
       this.getUserByEmail(this.authService.getEmailLS() as string)
+    })
+  }
+
+  showSessionDetails(id: any)
+  {
+    this.dialogRef.open(SessionDetailsComponent, {
+      width: "70%",
+      height: "80%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { sessionId: id }
     })
   }
 }
