@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 import {SessionService} from "../../services/session.service";
 import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {UtilsService} from "../../utils/utils.service";
 import {AuthService} from "../../auth/auth.service";
 import {SessionModule} from "../session.module";
+import { AlertDeleteComponent } from '../../alert-delete/alert-delete.component';
 
 @Component({
   selector: 'app-session-details',
@@ -24,8 +25,14 @@ export class SessionDetailsComponent implements OnInit
     userIsParticipated = false
     session: any
 
-    constructor(private sessionService: SessionService, private utilsService: UtilsService, @Inject(MAT_DIALOG_DATA) public data: any,
-                private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object, private dialogRef: MatDialogRef<SessionDetailsComponent>,)
+    constructor(
+      private sessionService: SessionService, 
+      private utilsService: UtilsService, 
+      @Inject(MAT_DIALOG_DATA) public data: any,
+      private authService: AuthService, 
+      @Inject(PLATFORM_ID) private platformId: Object, 
+      private dialogRef: MatDialogRef<SessionDetailsComponent>,
+      private alertDialogRef: MatDialog)
     {  }
 
 
@@ -79,17 +86,17 @@ export class SessionDetailsComponent implements OnInit
           this.sessionService.assignMemberToSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
             next: () => {
               this.dialogRef.close()
-              this.utilsService.successDialog("Opération réussite", "Vous avez participer avec succès", true)
+              this.utilsService.successDialog("Opération réussite", "Vous avez participé avec succès", true)
             },
             error: (err) => {
               switch (err.status)
               {
                 case 302:
-                { this.utilsService.successDialog("Opération échouée", "Vous avez déja participer à ce classe", false); break }
+                { this.utilsService.successDialog("Opération échouée", "Vous avez déja participé à ce classe", false); break }
                 case 404:
                 { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
                 case 406:
-                { this.utilsService.successDialog("Opération échouée", "Il n'ya pas encore des places disponible dans ce classe !", false); break }
+                { this.utilsService.successDialog("Opération échouée", "Il n'y a pas encore des places disponible dans ce classe !", false); break }
                 default:
                 { this.utilsService.successDialog("Opération échouée", err.message, false); break }
 
@@ -106,25 +113,38 @@ export class SessionDetailsComponent implements OnInit
     {
       if (isPlatformBrowser(this.platformId))
       {
-        if (this.authService.getEmailLS() != null)
-        {
-          this.sessionService.removeMemberFromSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
-            next: () => {
-              this.dialogRef.close()
-              this.utilsService.successDialog("Opération réussite", "Participation annulée avec succès", true)
-            },
-            error: (err) => {
-              switch (err.status)
-              {
-                case 404:
-                { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
-                default:
-                { this.utilsService.successDialog("Opération échouée", err.message, false); break }
+        const popup = this.alertDialogRef.open(AlertDeleteComponent, {
+          width: "50%",
+          height: "40%",
+          enterAnimationDuration: "1000ms",
+          exitAnimationDuration: "1000ms",
+          data: { title: "Annuler participation",message: "voulez-vous vraiment annuler votre participation ?"}
+        })
+        popup.afterClosed().subscribe((isDeleteOperation) =>{
+          if (isDeleteOperation)
+          {
+            if (this.authService.getEmailLS() != null)
+            {
+              this.sessionService.removeMemberFromSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
+                next: () => {
+                  this.dialogRef.close()
+                  this.utilsService.successDialog("Opération réussite", "Participation annulée avec succès", true)
+                },
+                error: (err) => {
+                  switch (err.status)
+                  {
+                    case 404:
+                    { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
+                    default:
+                    { this.utilsService.successDialog("Opération échouée", err.message, false); break }
 
-              }
+                  }
+                }
+              })
             }
-          })
-        }
+          }
+        })
+     
       }
     }
 
