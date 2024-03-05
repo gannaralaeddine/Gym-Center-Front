@@ -180,3 +180,22 @@ svg
   margin-top: 50px;
   margin-left: -2.5%;
 }
+
+.speciality-name
+{
+  text-decoration: underline;
+  margin-top: -2%;
+}
+
+.speciality-images
+{
+  cursor: pointer;
+}
+
+.speciality-name:hover
+{
+  cursor: pointer;
+  text-decoration: none;
+}
+
+

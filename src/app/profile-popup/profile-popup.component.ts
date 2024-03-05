@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "../services/user.service";
 import { UtilsService } from "../utils/utils.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { NgFor, NgIf } from "@angular/common";
 import { User } from "../models/User";
@@ -10,6 +10,8 @@ import { CardFlipComponent } from "../card-flip/card-flip.component";
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { AddImagesComponent } from '../add-images/add-images.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list'
+import { AlertDeleteComponent } from '../alert-delete/alert-delete.component';
 
 @Component({
     selector: 'app-profile-popup',
@@ -21,21 +23,25 @@ import { MatDialog } from '@angular/material/dialog';
       NgFor,
       CardFlipComponent,
       MatGridList,
-      MatGridTile
+      MatGridTile,
+      MatListModule
     ]
 })
 
 export class ProfilePopupComponent implements OnInit
 {
   userImages: any
+  userSpecialities: any
   user = new User()
   accountType!: string
 
-  constructor(private userService: UserService, 
+  constructor(
+    private userService: UserService, 
     private utilsService: UtilsService,
     private sanitizer: DomSanitizer,
     private dialogRef: MatDialog,
-    private router: ActivatedRoute) {}
+    private router: ActivatedRoute,
+    private activityRouter: Router) {}
 
   ngOnInit()
   {
@@ -51,6 +57,10 @@ export class ProfilePopupComponent implements OnInit
         this.user = val as User
         this.accountType = val.roles[0].roleName
         this.userImages = this.utilsService.deleteItemFromArray(this.user.userImages, this.user.userPicture)
+        this.userService.retrieveCoachSpecialities(this.user.userId!).subscribe({
+          next: (specialities) => this.userSpecialities = specialities,
+          error: (err) => console.error(err)
+        })
       },
         error: (err) => console.error(err)
     })
@@ -164,4 +174,9 @@ export class ProfilePopupComponent implements OnInit
     }
   }
 
+  goToActivityDetails(activityId: any)
+  {
+    this.activityRouter.navigate(["activity-details"], { queryParams: { activityId: activityId }  })
+  }
+  
 }

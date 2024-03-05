@@ -23,8 +23,46 @@
 
             <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden>
 
-
             <div class="card h-100 mt-5">
+              <div class="mb-5 ps-3">
+
+
+                <!-- <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; right: 0">
+                  <div class="nav-wrapper position-relative end-0" >
+                    <button type="button" class="border-btn ml-6" (click)="displayImages(userImages, false)" style="margin-left: 30%;">Aperçu les images</button>
+                  </div>
+                </div> -->
+
+                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; left: 0; margin-bottom: -2%;">
+                  <div class="nav-wrapper position-relative end-0" >
+                    <h2 class="mt-5 ml-4 text-white">Mes spécialités</h2>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="images-list">
+
+                <div class="d-flex justify-content-center" *ngIf="(!userSpecialities) || (userSpecialities.length === 0)">
+                  <p class="text-center text-white">Vous n'avez pas encore des spécialités</p>
+                </div>
+
+                <mat-grid-list cols="4" rowHeight="22rem" *ngIf="(userSpecialities) && (userSpecialities.length != 0)">
+                    <mat-grid-tile *ngFor="let speciality of userSpecialities">
+                      <mat-list>
+                        <img [src]="getImage(speciality.actImage)" class="border-radius-10 speciality-images" alt="speciality image" width="250px" height="150px" (click)="goToActivityDetails(speciality.actId)">
+                        <mat-list-item>
+                          <h3 class="text-white text-center font-weight-bold text-uppercase speciality-name profile-information" (click)="goToActivityDetails(speciality.actId)">{{speciality.actName}}</h3>
+                        </mat-list-item>
+                      </mat-list> 
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+              </div>
+
+            </div>
+
+            <div class="card h-100 mt-2">
               <div class="mb-5 ps-3">
 
 
@@ -47,7 +85,7 @@
 
                 <mat-grid-list cols="4" rowHeight="2:1" *ngIf="(userImages) && (userImages.length != 0)">
                   <mat-grid-tile *ngFor="let image of userImages">
-                    <img [src]="getImage(image.imageName)" class="border-radius-10" alt="activity image" width="250px" height="150px" >
+                    <img [src]="getImage(image.imageName)" class="border-radius-10" alt="activity image" width="250px" height="150px" style="margin-top: 6%;">
                   </mat-grid-tile>
                 </mat-grid-list>
 
