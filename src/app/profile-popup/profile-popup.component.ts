@@ -11,7 +11,6 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { AddImagesComponent } from '../add-images/add-images.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list'
-import { AlertPromptComponent } from '../alert-prompt/alert-prompt.component';
 
 @Component({
     selector: 'app-profile-popup',

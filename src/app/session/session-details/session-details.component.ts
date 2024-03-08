@@ -5,7 +5,6 @@ import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {UtilsService} from "../../utils/utils.service";
 import {AuthService} from "../../auth/auth.service";
 import {SessionModule} from "../session.module";
-import { AlertPromptComponent } from '../../alert-prompt/alert-prompt.component';
 
 @Component({
   selector: 'app-session-details',
@@ -31,8 +30,7 @@ export class SessionDetailsComponent implements OnInit
       @Inject(MAT_DIALOG_DATA) public data: any,
       private authService: AuthService,
       @Inject(PLATFORM_ID) private platformId: Object,
-      private dialogRef: MatDialogRef<SessionDetailsComponent>,
-      private alertDialogRef: MatDialog)
+      private dialogRef: MatDialogRef<SessionDetailsComponent>)
     {  }
 
 
