@@ -83,26 +83,37 @@ export class SessionDetailsComponent implements OnInit
       if (isPlatformBrowser(this.platformId)) {
         if (this.authService.getEmailLS() != null)
         {
-          this.sessionService.assignMemberToSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
-            next: () => {
-              this.dialogRef.close()
-              this.utilsService.successDialog("Opération réussite", "Vous avez participé avec succès", true)
-            },
-            error: (err) => {
-              switch (err.status)
-              {
-                case 302:
-                { this.utilsService.successDialog("Opération échouée", "Vous avez déja participé à ce classe", false); break }
-                case 404:
-                { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
-                case 406:
-                { this.utilsService.successDialog("Opération échouée", "Il n'y a pas encore des places disponible dans ce classe !", false); break }
-                default:
-                { this.utilsService.successDialog("Opération échouée", err.message, false); break }
+          const popup = this.alertDialogRef.open(AlertDeleteComponent, {
+            width: "50%",
+            height: "40%",
+            enterAnimationDuration: "1000ms",
+            exitAnimationDuration: "1000ms",
+            data: { title: "Confirmer participation",message: "Êtes-vous sûr de confirmer votre participation ?", operationType: "confirmOperation"}
+          })
+          popup.afterClosed().subscribe((isDeleteOperation) =>{
+            if (isDeleteOperation)
+            {
+              this.sessionService.assignMemberToSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
+                next: () => {
+                  this.dialogRef.close()
+                  this.utilsService.successDialog("Opération réussite", "Vous avez participé avec succès", true)
+                },
+                error: (err) => {
+                  switch (err.status)
+                  {
+                    case 302:
+                    { this.utilsService.successDialog("Opération échouée", "Vous avez déja participé à ce classe", false); break }
+                    case 404:
+                    { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
+                    case 406:
+                    { this.utilsService.successDialog("Opération échouée", "Il n'y a pas encore des places disponible dans ce classe !", false); break }
+                    default:
+                    { this.utilsService.successDialog("Opération échouée", err.message, false); break }
 
-              }
+                  }
+                }
+              })
             }
-
           })
         }
       }
@@ -118,7 +129,7 @@ export class SessionDetailsComponent implements OnInit
           height: "40%",
           enterAnimationDuration: "1000ms",
           exitAnimationDuration: "1000ms",
-          data: { title: "Annuler participation",message: "voulez-vous vraiment annuler votre participation ?"}
+          data: { title: "Annuler participation",message: "voulez-vous vraiment annuler votre participation ?", operationType: "cancelOperation"}
         })
         popup.afterClosed().subscribe((isDeleteOperation) =>{
           if (isDeleteOperation)

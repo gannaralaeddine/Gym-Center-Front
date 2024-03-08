@@ -14,9 +14,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 export class AlertDeleteComponent
 {
 
-  operationType: string = ""
-  title: string = ""
-  message: string = ""
+  operationType = ""
+  title = ""
+  message = ""
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AlertDeleteComponent>) {
     this.operationType = data.operationType
