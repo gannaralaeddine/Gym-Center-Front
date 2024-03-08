@@ -8,17 +8,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   imports: [
     NgIf
   ],
-  templateUrl: './alert-delete.component.html',
-  styleUrl: './alert-delete.component.css'
+  templateUrl: './alert-prompt.component.html',
+  styleUrl: './alert-prompt.component.css'
 })
-export class AlertDeleteComponent
+export class AlertPromptComponent
 {
 
   operationType = ""
   title = ""
   message = ""
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AlertDeleteComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AlertPromptComponent>) {
     this.operationType = data.operationType
     this.title = data.title
     this.message = data.message

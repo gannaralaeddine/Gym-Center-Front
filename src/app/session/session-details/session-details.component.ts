@@ -5,7 +5,7 @@ import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {UtilsService} from "../../utils/utils.service";
 import {AuthService} from "../../auth/auth.service";
 import {SessionModule} from "../session.module";
-import { AlertDeleteComponent } from '../../alert-delete/alert-delete.component';
+import { AlertPromptComponent } from '../../alert-prompt/alert-prompt.component';
 
 @Component({
   selector: 'app-session-details',
@@ -26,11 +26,11 @@ export class SessionDetailsComponent implements OnInit
     session: any
 
     constructor(
-      private sessionService: SessionService, 
-      private utilsService: UtilsService, 
+      private sessionService: SessionService,
+      private utilsService: UtilsService,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private authService: AuthService, 
-      @Inject(PLATFORM_ID) private platformId: Object, 
+      private authService: AuthService,
+      @Inject(PLATFORM_ID) private platformId: Object,
       private dialogRef: MatDialogRef<SessionDetailsComponent>,
       private alertDialogRef: MatDialog)
     {  }
@@ -83,14 +83,8 @@ export class SessionDetailsComponent implements OnInit
       if (isPlatformBrowser(this.platformId)) {
         if (this.authService.getEmailLS() != null)
         {
-          const popup = this.alertDialogRef.open(AlertDeleteComponent, {
-            width: "50%",
-            height: "40%",
-            enterAnimationDuration: "1000ms",
-            exitAnimationDuration: "1000ms",
-            data: { title: "Confirmer participation",message: "Êtes-vous sûr de confirmer votre participation ?", operationType: "confirmOperation"}
-          })
-          popup.afterClosed().subscribe((isDeleteOperation) =>{
+          this.utilsService.alertPrompt("Confirmer participation", "Êtes-vous sûr de confirmer votre participation ?", "confirmOperation")
+          .afterClosed().subscribe((isDeleteOperation) =>{
             if (isDeleteOperation)
             {
               this.sessionService.assignMemberToSession(this.authService.getEmailLS() as string, session.sessionId).subscribe({
@@ -124,14 +118,8 @@ export class SessionDetailsComponent implements OnInit
     {
       if (isPlatformBrowser(this.platformId))
       {
-        const popup = this.alertDialogRef.open(AlertDeleteComponent, {
-          width: "50%",
-          height: "40%",
-          enterAnimationDuration: "1000ms",
-          exitAnimationDuration: "1000ms",
-          data: { title: "Annuler participation",message: "voulez-vous vraiment annuler votre participation ?", operationType: "cancelOperation"}
-        })
-        popup.afterClosed().subscribe((isDeleteOperation) =>{
+        this.utilsService.alertPrompt("Annuler participation", "voulez-vous vraiment annuler votre participation ?", "cancelOperation")
+          .afterClosed().subscribe((isDeleteOperation) =>{
           if (isDeleteOperation)
           {
             if (this.authService.getEmailLS() != null)
@@ -155,7 +143,6 @@ export class SessionDetailsComponent implements OnInit
             }
           }
         })
-     
       }
     }
 

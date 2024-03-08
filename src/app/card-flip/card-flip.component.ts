@@ -6,14 +6,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../services/user.service";
 import {SessionService} from "../services/session.service";
 import {UtilsService} from "../utils/utils.service";
-import {ImagesPopupComponent} from "../images-popup/images-popup.component";
-import {AlertDeleteComponent} from "../alert-delete/alert-delete.component";
 
 @Component({
-  imports: [
-    NgOptimizedImage,
-    NgIf
-  ],
+  imports: [ NgOptimizedImage, NgIf ],
   selector: 'app-card-flip',
   standalone: true,
   styleUrl: './card-flip.component.css',
@@ -57,12 +52,7 @@ export class CardFlipComponent
 
   deleteImage()
   {
-    this.matDialog.open(AlertDeleteComponent, {
-      width: "40%",
-      enterAnimationDuration: "1000ms",
-      exitAnimationDuration: "500ms",
-      data: { title:  "Supprimer image", message: "Voulez-vous vraiment supprimer cette image ?", operationType: "deleteOperation" }
-    })
+    this.utilsService.alertPrompt("Supprimer image", "Voulez-vous vraiment supprimer cette image ?", "deleteOperation")
       .afterClosed().subscribe(isYesOperation => {
       if (isYesOperation) {
         this.userService.deleteUserImage(this.classId, this.imageName).subscribe({

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {OwlOptions} from "ngx-owl-carousel-o";
 import {MatDialog} from "@angular/material/dialog";
 import {ImagesPopupComponent} from "../images-popup/images-popup.component";
-import {AlertDeleteComponent} from "../alert-delete/alert-delete.component";
 import {AlertSuccessComponent} from "../alert-success/alert-success.component";
+import {AlertPromptComponent} from "../alert-prompt/alert-prompt.component";
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class UtilsService
   public getImage(imageName: string): string { return this.API_GYM_CENTER + "/image/get-image/" + imageName }
 
 
-  displayImages(images: any, isOneImage: boolean)
+  public displayImages(images: any, isOneImage: boolean)
   {
     return this.matDialog.open(ImagesPopupComponent, {
       width: "60%",
@@ -65,12 +65,23 @@ export class UtilsService
     });
   }
 
-  successDialog(title: string, message: string, operationStatus: boolean){
+  public successDialog(title: string, message: string, operationStatus: boolean){
     this.matDialog.open(AlertSuccessComponent, {
       width: "40%",
       enterAnimationDuration: "1000ms",
       exitAnimationDuration: "1000ms",
       data: { title:  title, message: message, operationStatus: operationStatus }
+    })
+  }
+
+  public alertPrompt(title: string, message: string, operationType: string)
+  {
+    return this.matDialog.open(AlertPromptComponent, {
+      width: "50%",
+      height: "40%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { title: title, message: message, operationType: operationType}
     })
   }
 }

@@ -11,7 +11,7 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { AddImagesComponent } from '../add-images/add-images.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list'
-import { AlertDeleteComponent } from '../alert-delete/alert-delete.component';
+import { AlertPromptComponent } from '../alert-prompt/alert-prompt.component';
 
 @Component({
     selector: 'app-profile-popup',
@@ -36,7 +36,7 @@ export class ProfilePopupComponent implements OnInit
   accountType!: string
 
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private utilsService: UtilsService,
     private sanitizer: DomSanitizer,
     private dialogRef: MatDialog,
@@ -160,7 +160,7 @@ export class ProfilePopupComponent implements OnInit
       this.ngOnInit()
     })
   }
-  
+
   detectChanges(isDataChanges: boolean)
   {
     if (isDataChanges)
@@ -178,5 +178,5 @@ export class ProfilePopupComponent implements OnInit
   {
     this.activityRouter.navigate(["activity-details"], { queryParams: { activityId: activityId }  })
   }
-  
+
 }
