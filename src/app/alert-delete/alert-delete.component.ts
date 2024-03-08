@@ -11,18 +11,21 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   templateUrl: './alert-delete.component.html',
   styleUrl: './alert-delete.component.css'
 })
-export class AlertDeleteComponent {
+export class AlertDeleteComponent
+{
 
+  operationType: string = ""
   title: string = ""
   message: string = ""
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AlertDeleteComponent>) {
+    this.operationType = data.operationType
     this.title = data.title
     this.message = data.message
   }
 
-  closeDialog(isDeleteOperation: boolean)
+  closeDialog(isYesOperation: boolean)
   {
-    this.dialogRef.close(isDeleteOperation)
+    this.dialogRef.close(isYesOperation)
   }
 }

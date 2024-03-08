@@ -58,15 +58,6 @@ export class UtilsService
     })
   }
 
-  deletePopup(){
-    return  this.matDialog.open(AlertDeleteComponent, {
-      width: "40%",
-      enterAnimationDuration: "1000ms",
-      exitAnimationDuration: "500ms",
-      data: { title:  "Supprimer image", message: "Voulez-vous vraiment supprimer cette image ?" }
-    })
-  }
-
   public deleteItemFromArray(array: any, imageName: any)
   {
     return array.filter((element: any) => {

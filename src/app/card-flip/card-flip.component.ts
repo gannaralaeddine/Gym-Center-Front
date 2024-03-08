@@ -6,6 +6,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../services/user.service";
 import {SessionService} from "../services/session.service";
 import {UtilsService} from "../utils/utils.service";
+import {ImagesPopupComponent} from "../images-popup/images-popup.component";
+import {AlertDeleteComponent} from "../alert-delete/alert-delete.component";
 
 @Component({
   imports: [
@@ -55,19 +57,20 @@ export class CardFlipComponent
 
   deleteImage()
   {
-    this.utilsService.deletePopup()
-      .afterClosed().subscribe(isDeleteOperation =>{
-      if (isDeleteOperation) {
-        this.deleteProfileImage()
+    this.matDialog.open(AlertDeleteComponent, {
+      width: "40%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "500ms",
+      data: { title:  "Supprimer image", message: "Voulez-vous vraiment supprimer cette image ?", operationType: "deleteOperation" }
+    })
+      .afterClosed().subscribe(isYesOperation => {
+      if (isYesOperation) {
+        this.userService.deleteUserImage(this.classId, this.imageName).subscribe({
+          next: () => this.onDataChange.emit(true) ,
+          error: (err) => console.log("Error deleting user image" + err)
+        })
       }
     })
   }
 
-  deleteProfileImage()
-  {
-    this.userService.deleteUserImage(this.classId, this.imageName).subscribe({
-      next: () => this.onDataChange.emit(true) ,
-      error: (err) => console.log("Error deleting user image" + err)
-    })
-  }
 }
