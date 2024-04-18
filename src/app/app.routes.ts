@@ -11,6 +11,7 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { CategoryDetailsComponent } from './categories/category-details/category-details.component';
 import { ActivityDetailsComponent } from './activities/activity-details/activity-details.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 export const routes: Routes = [
 
@@ -26,5 +27,6 @@ export const routes: Routes = [
   {path: 'category-details', component: CategoryDetailsComponent},
   {path: 'activities', component: ActivitiesComponent},
   {path: 'activity-details', component: ActivityDetailsComponent},
-  {path: 'coach-profile', component: ProfilePopupComponent}
+  {path: 'coach-profile', component: ProfilePopupComponent},
+  {path: 'about-us', component: AboutUsComponent}
 ];

@@ -1,0 +1,11 @@
+.btnSubmit
+{
+    width: 15%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+input::placeholder 
+{
+    font: 1rem/3 sans-serif bold;
+}
