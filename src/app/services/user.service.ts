@@ -8,7 +8,7 @@ import {SessionModule} from "../session/session.module";
   providedIn: 'root'
 })
 
-export class UserService 
+export class UserService
 {
 
   constructor(private http: HttpClient, private utils: UtilsService) { }
@@ -17,7 +17,11 @@ export class UserService
 
   public getMemberByEmail(email: any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/member/retrieve-member/" + email) }
 
+  public getCoachByEmail(email: any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/coach/retrieve-coach-by-email/" + email) }
+
   public retrieveMemberSessions(email: any)  { return this.http.get<SessionModule>(this.utils.API_GYM_CENTER + "/member/retrieve-member-sessions/" + email) }
+
+  public retrieveCoachSessions(email: any)  { return this.http.get<SessionModule>(this.utils.API_GYM_CENTER + "/coach/retrieve-coach-sessions/" + email) }
 
   public getAllCoaches() {return this.http.get(this.utils.API_GYM_CENTER + "/coach/retrieve-all-coaches")}
 

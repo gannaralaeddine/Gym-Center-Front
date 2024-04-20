@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 import {SessionService} from "../../services/session.service";
 import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {UtilsService} from "../../utils/utils.service";
@@ -94,7 +94,7 @@ export class SessionDetailsComponent implements OnInit
                   switch (err.status)
                   {
                     case 302:
-                    { this.utilsService.successDialog("Opération échouée", "Vous avez déja participé à ce classe", false); break }
+                    { this.utilsService.successDialog("Opération échouée", "Vous avez déjà participé à cette classe", false); break }
                     case 404:
                     { this.utilsService.successDialog("Opération échouée", "Essayer plus tard", false); break }
                     case 406:

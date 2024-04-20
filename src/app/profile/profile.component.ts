@@ -80,24 +80,13 @@ export class ProfileComponent implements OnInit
       userBirthDate: ['',Validators.required],
       userPicture: ""
     })
-    if (isPlatformBrowser(this.platformId)) {
-      this.getUserByEmail(this.authService.getEmailLS() as string)
-      this.retrieveMemberSessions(this.authService.getEmailLS() as string)
+
+    if (isPlatformBrowser(this.platformId))
+    {
+        this.getUser(this.authService.getEmailLS() as string, this. authService.getRolesLS()[0].authority)
+
+        this.retrieveUserSessions(this.authService.getEmailLS() as string, this. authService.getRolesLS()[0].authority)
     }
-
-  }
-
-  getUserByEmail(email: string)
-  {
-    this.userService.getMemberByEmail(email).subscribe(
-      {
-        next: (user) => {
-          this.populateUserData(user)
-          this.populateForm(user)
-        },
-        error: (err) => console.error(err)
-      }
-    )
   }
 
   populateUserData(user: any)
@@ -184,7 +173,7 @@ export class ProfileComponent implements OnInit
 
     this.userService.updateProfilePicture(formData).subscribe({
       complete: () => {
-        this.getUserByEmail(this.authService.getEmailLS() as string)
+        this.getUser(this.authService.getEmailLS() as string, this. authService.getRolesLS()[0].authority )
         this.utilsService.successDialog("Opération réussite", "Votre image a été éditée avec succès", true)
       },
       error:(err)=> this.utilsService.successDialog("Opération échouée", err.message, false)
@@ -269,30 +258,52 @@ export class ProfileComponent implements OnInit
   }
 
 
-  retrieveMemberSessions(email: string)
+  retrieveUserSessions(email: string, role: string)
   {
-      this.userService.retrieveMemberSessions(email).subscribe({
-        next: (sessions) => {
-          this.userSessionDataSource = new MatTableDataSource(sessions as any)
-          this.userSessionDataSource.paginator = this.paginator
-          this.userSessionDataSource.data.sort((a: SessionModule,b: SessionModule): number => {
+      if (role === "ROLE_MEMBER")
+      {
+          this.userService.retrieveMemberSessions(email).subscribe({
+          next: (sessions) => {
+            this.userSessionDataSource = new MatTableDataSource(sessions as any)
+            this.userSessionDataSource.paginator = this.paginator
+            this.userSessionDataSource.data.sort((a: SessionModule, b: SessionModule): number => {
 
-            let result!: number
+              let result!: number
 
-            if (a.sessionDeadline > b.sessionDeadline)
-            {
-              result = 1
-            }
-            else if (a.sessionDeadline < b.sessionDeadline)
-            {
-              result = -1
-            }
+              if (a.sessionDeadline > b.sessionDeadline) {
+                result = 1
+              } else if (a.sessionDeadline < b.sessionDeadline) {
+                result = -1
+              }
 
-            return result
-          })
-        },
-        error: (err) => console.error(err)
-      })
+              return result
+            })
+          },
+          error: (err) => console.error(err)
+        })
+      }
+      else if (role === "ROLE_COACH")
+      {
+          this.userService.retrieveCoachSessions(email).subscribe({
+          next: (sessions) => {
+            this.userSessionDataSource = new MatTableDataSource(sessions as any)
+            this.userSessionDataSource.paginator = this.paginator
+            this.userSessionDataSource.data.sort((a: SessionModule, b: SessionModule): number => {
+
+              let result!: number
+
+              if (a.sessionDeadline > b.sessionDeadline) {
+                result = 1
+              } else if (a.sessionDeadline < b.sessionDeadline) {
+                result = -1
+              }
+
+              return result
+            })
+          },
+          error: (err) => console.error(err)
+        })
+      }
   }
 
   addImages()
@@ -305,7 +316,7 @@ export class ProfileComponent implements OnInit
       data: { imagesTag: "userProfile", id: this.user.userId }
     })
     popup.afterClosed().subscribe(() =>{
-      this.getUserByEmail(this.authService.getEmailLS() as string)
+      this.getUser(this.authService.getEmailLS() as string, this. authService.getRolesLS()[0].authority)
     })
   }
 
@@ -319,7 +330,42 @@ export class ProfileComponent implements OnInit
       data: { sessionId: id }
     })
     .afterClosed().subscribe(() =>{
-      this.retrieveMemberSessions(this.authService.getEmailLS() as string)
+      this.retrieveUserSessions(this.authService.getEmailLS() as string, this. authService.getRolesLS()[0].authority)
     })
+  }
+
+
+  getUser(email: string, role: string)
+  {
+
+      if (role === "ROLE_MEMBER")
+      {
+        this.userService.getMemberByEmail(email).subscribe(
+          {
+            next: (user) => {
+              this.populateUserData(user)
+              this.populateForm(user)
+            },
+            error: (err) => console.error(err)
+          })
+      }
+      else if (role === "ROLE_COACH")
+      {
+        console.log("_____________")
+
+        console.log(role)
+
+        this.userService.getCoachByEmail(email).subscribe(
+          {
+            next: (user) => {
+              this.populateUserData(user)
+              this.populateForm(user)
+            },
+            error: (err) => console.error(err)
+          }
+        )
+      }
+
+
   }
 }

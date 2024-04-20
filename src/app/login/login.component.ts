@@ -4,6 +4,8 @@ import { FormsModule, NgForm} from "@angular/forms";
 import {UtilsService} from "../utils/utils.service";
 import {Router} from "@angular/router";
 import {AuthService} from "../auth/auth.service";
+import {User} from "../models/User";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-login',
@@ -17,31 +19,44 @@ import {AuthService} from "../auth/auth.service";
 })
 export class LoginComponent
 {
-
+  isEnabled = false
   isPasswordVisible = false
 
-  constructor(private authService: AuthService, private router: Router, private utils: UtilsService) {  }
+  constructor(private authService: AuthService, private router: Router, private utils: UtilsService, private userService: UserService) {  }
 
   login(loginForm: NgForm)
   {
     this.authService.login(loginForm.value).subscribe({
       next: (response: any)  => {
 
-        if ( response.authorities[0].authority === "ROLE_MEMBER" )
-        {
-          console.log("You are connected as member !!!")
+        this.userService.retrieveUserByEmail(response.email).subscribe(
+          {
+            next: (val) => {
+              const user = val as User
+              this.isEnabled = user.userIsEnabled
 
-          this.authService.setRolesLS(response.authorities)
-          this.authService.setTokenLS(response.token)
-          this.authService.setEmailLS(response.email)
+              if (!user.userIsEnabled) {
+                this.utils.successDialog("Échec de connexion", "Vous devez valider votre compte en cliquant sur le lien envoyé par mail !", false)
+              }
+              else if ( response.authorities[0].authority === "ROLE_MEMBER" || response.authorities[0].authority === "ROLE_COACH" )
+              {
+                console.log("You are connected as member !!!")
 
-          this.router.navigate([""]).then(() => window.location.reload())
-        }
-        else
-        {
+                this.authService.setRolesLS(response.authorities)
+                this.authService.setTokenLS(response.token)
+                this.authService.setEmailLS(response.email)
 
-          this.utils.successDialog("Échec de connexion", "Vous n'avez pas les droit d'accès", false)
-        }
+                this.router.navigate([""]).then(() => window.location.reload())
+              }
+              else
+              {
+
+                this.utils.successDialog("Échec de connexion", "Vous n'avez pas les droit d'accès", false)
+              }
+
+
+            }
+          })
 
       },
       error: (err: any)  => {
