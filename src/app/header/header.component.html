@@ -1,26 +1,96 @@
 <header>
-  <!-- Header Start -->
-  <div class="header-area header-transparent">
-    <div class="main-header header-sticky">
-      <div class="container-fluid">
-        <div class="menu-wrapper d-flex align-items-center justify-content-between">
-          <!-- Logo -->
-          <div class="logo">
-            <a routerLink=""><img src="assets/img/logo/logo.png" alt=""></a>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #950101;">
+    
+    <div class="logo ml-3 mb-2">
+      <a routerLink=""><img src="assets/img/logo/logo.png" alt=""></a>
+    </div>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="width: auto; background-color: #950101;">
+      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0,0,256,256" style="fill:#000000;">
+        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M6,22h36v4h-36zM6,10h36v4h-36zM6,34h36v4h-36z"></path></g></g>
+      </svg>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end mr-3" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link menu-item text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Entraînement
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #950101;">
+            <a class="dropdown-item menu-item text-white" routerLink="sessions">Classes</a>
+            <a class="dropdown-item menu-item text-white" routerLink="coaches">Coaches</a>  
           </div>
-          <!-- Main-menu -->
-          <div class="main-menu f-right d-none d-lg-block">
-            <nav>
-              <ul id="navigation">
-                <li><a routerLink="">Accueil</a></li>
-                <li><a routerLink="sessions">Nos Classes</a></li>
-                <li><a routerLink="coaches">Nos Coaches</a></li>
-                <li><a routerLink="categories">Nos Catégories</a></li>
-                <li><a routerLink="activities">Nos Activités</a></li>
-                <li><a routerLink="offers">Nos Tarifs</a></li>
-                <li><a routerLink="about-us">Contactez-nous</a></li>
-                <li><a href="#">Album</a></li>
-                <li *ngIf="userIsLoggedIn">
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link menu-item text-white" routerLink="categories">Catégories</a>
+        </li>
+      
+       <li class="nav-item">
+          <a class="nav-link menu-item text-white" routerLink="activities">Activités</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link menu-item text-white" routerLink="offers">Tarifs</a>
+        </li>
+
+        <!-- <li class="nav-item" *ngIf="userIsLoggedIn">
+          <div class="account-settings">
+            <div class="user-profile">
+              <div class="user-avatar img-profile">
+                <img height="50" width="50" alt="profile picture" [src]="getImage(user.userPicture)" class="rounded-circle">
+                <span class="text-white text-bold text-uppercase ml-3" style="font-size: small;">{{ user.userFirstName }} {{ user.userLastName }}</span>
+              </div>
+              
+            </div>
+            
+          </div>
+          <ul class="submenu">
+            <li><a routerLink="profile">Profil</a></li>
+            <li><a (click)="logout()" class="cursor-pointer">Se déconnecter</a></li>
+          </ul>
+        </li> -->
+
+        <li class="nav-item dropdown" *ngIf="userIsLoggedIn">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="user-avatar img-profile">
+              <img height="30" width="30" alt="profile picture" [src]="getImage(user.userPicture)" class="rounded-circle">
+              <span class="text-white text-bold text-uppercase ml-3" style="font-size: small;">{{ user.userFirstName }} {{ user.userLastName }}</span>
+            </div>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #950101;">
+            <a class="dropdown-item menu-item text-white" routerLink="profile">Profil</a>
+            <a class="dropdown-item menu-item cursor-pointer text-white" (click)="logout()">Se déconnecter</a>
+          </div>
+        </li>
+
+        <li class="nav-item" *ngIf="!userIsLoggedIn"><button type="button" routerLink="login" class="border-btn" style=" width: 200px">Se Connecter</button></li>
+      </ul>
+    </div>
+</nav>
+</header>
+
+<!-- <header>
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #950101;">
+	   <div class="logo">
+        <a routerLink=""><img src="assets/img/logo/logo.png" alt=""></a>
+      </div>
+	   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	      <ul class="navbar-nav">
+		      <li class="nav-item">
+            <a>Entraînement</a>
+            <ul class="submenu">
+              <li><a routerLink="sessions">Classes</a></li>
+              <li><a routerLink="coaches">Coaches</a></li>
+            </ul>
+        	</li>
+		      <li><a routerLink="categories">Catégories</a></li>
+		      <li><a routerLink="activities">Activités</a></li>
+                 <li><a routerLink="offers">Tarifs</a></li>
+                 <li><a routerLink="about-us">Contactez-nous</a></li>
+		 <li *ngIf="userIsLoggedIn">
                   <div class="account-settings">
                     <div class="user-profile">
                       <div class="user-avatar img-profile">
@@ -37,13 +107,7 @@
                   </ul>
                 </li>
                 <li *ngIf="!userIsLoggedIn"><button type="button" routerLink="login" class="border-btn" style=" width: 200px">Se Connecter</button></li>
-              </ul>
-            </nav>
-          </div>
-
-        </div>
+	      </ul>
       </div>
-    </div>
-  </div>
-  <!-- Header End -->
-</header>
+	</nav>
+</header> -->
