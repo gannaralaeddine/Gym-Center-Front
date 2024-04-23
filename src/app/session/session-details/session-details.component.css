@@ -46,15 +46,78 @@
   border-radius: 5px;
 }
 
-.blog_item_coach-btn{
-  top: 20px;
-  right: 20px;
+.blog_item_coach-btn
+{
   padding: 13px 30px;
-  position: absolute;
   display: block;
   border-radius: 5px;
 }
 
 .text-size{
   font-size: 18px;
+}
+
+img
+{
+  height: auto;
+}
+
+.top-right 
+{
+  position: absolute;
+  top: 4%;
+  right: 4%;
+}
+
+.bottom-left 
+{
+  position: absolute;
+  bottom: -4%;
+  left: 4%;
+}
+
+.bottom-right 
+{
+  position: absolute;
+  bottom: -4%;
+  right: 4%;
+}
+
+@media (max-width: 682px)
+{
+  div.bottom-right
+  {
+    position: absolute;
+    max-width: fit-content;
+    margin-bottom: 2.75%;
+    padding: 10px 27px 10px 27px;
+  }
+  
+  div.bottom-left
+  {
+    position: static;
+    max-width: fit-content;
+    margin-top: 4%;
+    padding: 10px 25px 10px 25px;
+    margin-left: 2%;
+  }
+}
+
+@media (max-width: 630px)
+{
+  div.bottom-right
+  {
+    position: static;
+    max-width: 100%;
+    text-align: center;
+    margin: auto;
+  }
+
+  div.bottom-left
+  {
+    position: static;
+    max-width: 100%;
+    text-align: center;
+    margin: auto;
+  }
 }
