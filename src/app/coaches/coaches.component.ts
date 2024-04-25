@@ -24,6 +24,7 @@ export class CoachesComponent
 {
 
   coaches: any
+  colsNumberPerLine = 4
 
   constructor(private userService: UserService, 
     private utilsService: UtilsService, 
@@ -56,12 +57,10 @@ export class CoachesComponent
   goToCoachProfile(user: User)
   {
     this.router.navigate(["coach-profile"], { queryParams: { userEmail: user.userEmail }  })
-    // return this.matDialog.open(ProfilePopupComponent, {
-    //   width: "70%",
-    //   height: "80%",
-    //   enterAnimationDuration: "1000ms",
-    //   exitAnimationDuration: "1000ms",
-    //   data: { email: user.userEmail}
-    // })
+  }
+
+  onResize(event: any) 
+  {
+    this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
   }
 }

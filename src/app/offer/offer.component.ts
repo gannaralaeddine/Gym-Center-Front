@@ -16,6 +16,7 @@ export class OfferComponent
 {
 
   offers: any
+  colsNumberPerLine = 4
 
     constructor(private offerService: OfferService, private utilsService: UtilsService)
     {
@@ -41,5 +42,10 @@ export class OfferComponent
     {
       return "../assets/img/icons/ic_person.png"
     }
+  }
+
+  onResize(event: any) 
+  {
+    this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
   }
 }

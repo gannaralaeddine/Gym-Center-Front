@@ -22,7 +22,7 @@
 
     <div class="row">
 
-      <mat-grid-list cols="4" rowHeight="1:2" >
+      <mat-grid-list [cols]="colsNumberPerLine" rowHeight="1:2" (window:resize)="onResize($event)">
         <mat-grid-tile *ngFor="let offer of offers; let i = index">
 
 
