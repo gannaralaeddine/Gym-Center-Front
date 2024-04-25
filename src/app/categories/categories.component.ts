@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 export class CategoriesComponent 
 {
   categories: any
+  breakpoint = 4;
 
   constructor(private utilsService: UtilsService,
     private router: Router,
@@ -30,7 +31,6 @@ export class CategoriesComponent
       next: (categories) => this.categories = categories,
       error: (err) => console.error(err)
     })
-
   }
 
   getImage(imageName: string): string
@@ -49,6 +49,11 @@ export class CategoriesComponent
   {
     const params = { categoryId: categoryId }
     this.router.navigate(["category-details"], { queryParams: params  })
+  }
+
+  onResize(event: any) 
+  {
+    this.breakpoint = event.target.innerWidth <= 767 ? 1 : 4;
   }
 
 }
