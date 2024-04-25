@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 export class CategoriesComponent 
 {
   categories: any
-  breakpoint = 4;
+  colsNumberPerLine = 4
 
   constructor(private utilsService: UtilsService,
     private router: Router,
@@ -53,7 +53,7 @@ export class CategoriesComponent
 
   onResize(event: any) 
   {
-    this.breakpoint = event.target.innerWidth <= 767 ? 1 : 4;
+    this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
   }
 
 }

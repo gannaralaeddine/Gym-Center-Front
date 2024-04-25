@@ -16,7 +16,7 @@
     <div class="container">
       <div class="row">
   
-        <mat-grid-list cols="4" rowHeight="40rem" style="padding-right: 5%;">
+        <mat-grid-list [cols]="colsNumberPerLine" rowHeight="40rem" style="padding-right: 5%;" (window:resize)="onResize($event)">
           <mat-grid-tile *ngFor="let activity of activities">
   
             <div class="single-cat text-center wow fadeInUp mr-10" data-wow-duration="1s" data-wow-delay=".2s">

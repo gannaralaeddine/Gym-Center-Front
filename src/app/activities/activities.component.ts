@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 export class ActivitiesComponent 
 {
   activities: any
+  colsNumberPerLine = 4
 
   constructor(private utilsService: UtilsService,
     private activityService: ActivityService,
@@ -45,5 +46,10 @@ export class ActivitiesComponent
   goToActivityDetails(activityId: any)
   {
     this.router.navigate(["activity-details"], { queryParams: { activityId: activityId }  })
+  }
+
+  onResize(event: any) 
+  {
+    this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
   }
 }
