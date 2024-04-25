@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {UtilsService} from "../utils/utils.service";
 import {User} from "../models/User";
 import {SessionModule} from "../session/session.module";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,7 @@ export class UserService
   public deleteUserImage(userId: number, imageName: string){ return this.http.delete(this.utils.API_GYM_CENTER + "/user/delete-user-image/" + userId + "/" + imageName) }
 
   public retrieveCoachSpecialities(id: number) {return this.http.get(this.utils.API_GYM_CENTER + "/coach/retrieve-coach-specialities/"+ id)}
+
+  public sendContactUsEmail(email: any): Observable<Object> { return this.http.post<object>(this.utils.API_GYM_CENTER + "/user/send-contact-us-email", email) }
 
 }
