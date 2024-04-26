@@ -53,6 +53,7 @@ export class ProfileComponent implements OnInit
   userSessionDataSource!: MatTableDataSource<any>
   displayedColumns = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Date', 'Gestion']
   @ViewChild(MatPaginator) paginator!: MatPaginator
+  colsNumberPerLine = 4
 
   constructor(private userService: UserService,
     private utilsService: UtilsService,
@@ -365,7 +366,10 @@ export class ProfileComponent implements OnInit
           }
         )
       }
+  }
 
-
+  onResize(event: any) 
+  {
+    this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
   }
 }
