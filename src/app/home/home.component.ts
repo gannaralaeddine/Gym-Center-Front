@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {UserService} from "../services/user.service";
 import {NgForOf} from "@angular/common";
 import {UtilsService} from "../utils/utils.service";
@@ -68,7 +68,7 @@ export class HomeComponent
   {
     return this.matDialog.open(ProfilePopupComponent, {
       width: "70%",
-      height: "80%",
+      height: "100%",
       enterAnimationDuration: "1000ms",
       exitAnimationDuration: "1000ms",
       data: { email: user.userEmail}

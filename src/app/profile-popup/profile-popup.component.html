@@ -1,96 +1,91 @@
-<section class="pricing-area section-padding30 fix">
 
-  <div class="container">
-    <div class="row gutters">
+<div class="modal-scroll">
+  <section class="pricing-area section-padding30 fix" style="background-color: #0b0b0b" >
 
-          <h3 class="mb-6 ml-3 mt-3 text-white">Profil</h3>
-          <div class="d-flex justify-content-around">
-              <div class="card-profile">
-                <span class="topright">
-                  <svg xmlns="http://www.w3.org/2000/svg" (click)="inputFile.click()" class="rounded-circle" height="24.5" viewBox="0 -960 960 960" width="21.5"><path fill="white" d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>
-                </span>
-                <img [src]="getImage(user.userPicture)" (click)="previewProfileImage(user.userPicture, true)" alt="Avatar" width="100%" class="img-profile">
+    <div class="container">
+      <div class="row gutters">
+
+            <h1 class="mb-6 ml-3 mt-3 text-white">Profil</h1>
+            <div class="d-flex justify-content-around">
+                <div class="card-profile">
+                  <span class="topright">
+                    <svg xmlns="http://www.w3.org/2000/svg" (click)="inputFile.click()" class="rounded-circle" height="24.5" viewBox="0 -960 960 960" width="21.5"><path fill="white" d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Zm0-80h640v-480H638l-73-80H395l-73 80H160v480Zm320-240Z"/></svg>
+                  </span>
+                  <img [src]="getImage(user.userPicture)" (click)="previewProfileImage(user.userPicture, true)" alt="Avatar" width="100%" class="img-profile">
+                </div>
+
+
+                <div class="container-profile text-start">
+                  <h3 class="profile-information mt-6"><strong>Nom & Prénom: {{ user.userLastName }} {{ user.userFirstName }}</strong></h3>
+                  <h3 class="profile-information mt-3"><strong>Adresse e-mail: {{ user.userEmail }}</strong></h3>
+                  <h3 class="profile-information mt-3"><strong>Num Téléphone: {{ user.userPhoneNumber }}</strong></h3>
+                </div>
               </div>
 
+              <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden>
 
-              <div class="container-profile text-start">
-                <h3 class="profile-information mt-6"><strong>Nom & Prénom: {{ user.userLastName }} {{ user.userFirstName }}</strong></h3>
-                <h3 class="profile-information mt-3"><strong>Adresse e-mail: {{ user.userEmail }}</strong></h3>
-                <h3 class="profile-information mt-3"><strong>Num Téléphone: {{ user.userPhoneNumber }}</strong></h3>
-                <h3 class="profile-information mt-3"><strong>Rôle: {{ accountType }}</strong></h3>
-              </div>
-            </div>
+              <div class="card h-100 mt-5">
+                <div class="mb-5 ps-3">
 
-            <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden>
-
-            <div class="card h-100 mt-5">
-              <div class="mb-5 ps-3">
-
-
-                <!-- <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; right: 0">
-                  <div class="nav-wrapper position-relative end-0" >
-                    <button type="button" class="border-btn ml-6" (click)="displayImages(userImages, false)" style="margin-left: 30%;">Aperçu les images</button>
+                  <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; left: 0; margin-bottom: -2%;">
+                    <div class="nav-wrapper position-relative end-0" >
+                      <h2 class="mt-5 ml-4 text-white">Les spécialités</h2>
+                    </div>
                   </div>
-                </div> -->
 
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; left: 0; margin-bottom: -2%;">
-                  <div class="nav-wrapper position-relative end-0" >
-                    <h2 class="mt-5 ml-4 text-white">Mes spécialités</h2>
+                </div>
+
+                <div class="images-list">
+
+                  <div class="d-flex justify-content-center" *ngIf="(!userSpecialities) || (userSpecialities.length === 0)">
+                    <h2 class="text-center text-white">Il n'y a pas encore des spécialités</h2>
                   </div>
+
+                  <mat-grid-list cols="4" rowHeight="22rem" *ngIf="(userSpecialities) && (userSpecialities.length != 0)">
+                      <mat-grid-tile *ngFor="let speciality of userSpecialities">
+                        <mat-list>
+                          <img [src]="getImage(speciality.actImage)" class="border-radius-10 speciality-images" alt="speciality image" width="250px" height="150px" (click)="goToActivityDetails(speciality.actId)">
+                          <mat-list-item>
+                            <h3 class="text-white text-center font-weight-bold text-uppercase speciality-name profile-information" (click)="goToActivityDetails(speciality.actId)">{{speciality.actName}}</h3>
+                          </mat-list-item>
+                        </mat-list>
+                      </mat-grid-tile>
+                  </mat-grid-list>
+
                 </div>
 
               </div>
 
-              <div class="images-list">
+              <div class="card h-100 mt-2">
+                <div class="mb-5 ps-3">
 
-                <div class="d-flex justify-content-center" *ngIf="(!userSpecialities) || (userSpecialities.length === 0)">
-                  <p class="text-center text-white">Vous n'avez pas encore des spécialités</p>
+
+                  <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; right: 0">
+                    <div class="nav-wrapper position-relative end-0" >
+                      <button type="button" class="border-btn ml-6" *ngIf="userImages.length > 0" (click)="displayImages(userImages, false)" style="margin-left: 30%;">Aperçu les images</button>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; left: 0">
+                    <div class="nav-wrapper position-relative end-0" >
+                      <h2 class="mt-5 ml-4 text-white">Album</h2>
+                    </div>
+                  </div>
                 </div>
+                <div class="images-list">
 
-                <mat-grid-list cols="4" rowHeight="22rem" *ngIf="(userSpecialities) && (userSpecialities.length != 0)">
-                    <mat-grid-tile *ngFor="let speciality of userSpecialities">
-                      <mat-list>
-                        <img [src]="getImage(speciality.actImage)" class="border-radius-10 speciality-images" alt="speciality image" width="250px" height="150px" (click)="goToActivityDetails(speciality.actId)">
-                        <mat-list-item>
-                          <h3 class="text-white text-center font-weight-bold text-uppercase speciality-name profile-information" (click)="goToActivityDetails(speciality.actId)">{{speciality.actName}}</h3>
-                        </mat-list-item>
-                      </mat-list> 
+                  <div class="d-flex justify-content-center" *ngIf="(!userImages) || (userImages.length === 0)">
+                    <h2 class="text-center text-white">Il n'y a pas encore des photos</h2>
+                  </div>
+
+                  <mat-grid-list style="margin-top: 20px" cols="4" rowHeight="2:1" *ngIf="(userImages) && (userImages.length != 0)">
+                    <mat-grid-tile *ngFor="let image of userImages">
+                      <img [src]="getImage(image.imageName)" class="border-radius-10" alt="activity image" width="250px" height="150px" style="margin-top: 6%;">
                     </mat-grid-tile>
-                </mat-grid-list>
+                  </mat-grid-list>
 
-              </div>
-
-            </div>
-
-            <div class="card h-100 mt-2">
-              <div class="mb-5 ps-3">
-
-
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; right: 0">
-                  <div class="nav-wrapper position-relative end-0" >
-                    <button type="button" class="border-btn ml-6" (click)="displayImages(userImages, false)" style="margin-left: 30%;">Aperçu les images</button>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3" style="position: absolute; left: 0">
-                  <div class="nav-wrapper position-relative end-0" >
-                    <h2 class="mt-5 ml-4 text-white">Mon album</h2>
-                  </div>
                 </div>
               </div>
-              <div class="images-list">
-
-                <div class="d-flex justify-content-center" *ngIf="(!userImages) || (userImages.length === 0)">
-                  <h2 class="text-center text-white">Vous n'avez pas encore des photos</h2>
-                </div>
-
-                <mat-grid-list cols="4" rowHeight="2:1" *ngIf="(userImages) && (userImages.length != 0)">
-                  <mat-grid-tile *ngFor="let image of userImages">
-                    <img [src]="getImage(image.imageName)" class="border-radius-10" alt="activity image" width="250px" height="150px" style="margin-top: 6%;">
-                  </mat-grid-tile>
-                </mat-grid-list>
-
-              </div>
-            </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import {AuthService} from "../auth/auth.service";
 import {User} from "../models/User";
 import {UserService} from "../services/user.service";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {ForgotPasswordComponent} from "../forgot-password/forgot-password.component";
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,7 @@ export class LoginComponent
   isEnabled = false
   isPasswordVisible = false
 
-  constructor(private authService: AuthService, private router: Router, private utils: UtilsService, private userService: UserService) {  }
+  constructor(private authService: AuthService, private router: Router, private utils: UtilsService, private userService: UserService, private dialog: MatDialog) {  }
 
   login(loginForm: NgForm)
   {
@@ -85,5 +87,12 @@ export class LoginComponent
   }
 
 
+  forgotPassword()
+  {
+      const dialogConfig = new MatDialogConfig()
+      dialogConfig.width= "40%"
+      dialogConfig.height = "70%"
+      this.dialog.open(ForgotPasswordComponent, dialogConfig)
+  }
 
 }

@@ -40,4 +40,10 @@ export class UserService
 
   public sendContactUsEmail(email: any): Observable<Object> { return this.http.post<object>(this.utils.API_GYM_CENTER + "/user/send-contact-us-email", email) }
 
+  public sendVerificationCode(email: any): Observable<Object> { return this.http.post(this.utils.API_GYM_CENTER + "/user/send-verification-code/" + email, email) }
+
+  public checkVerificationCode(code: any): Observable<Object> { return this.http.post<object>(this.utils.API_GYM_CENTER + "/user/check-verification-code/"+ code, code) }
+
+  public changePassword(email: string, password: string) { return this.http.put(this.utils.API_GYM_CENTER + "/user/change-password/" + email + "/" + password, email) }
+
 }

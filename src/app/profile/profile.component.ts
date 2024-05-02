@@ -83,9 +83,9 @@ export class ProfileComponent implements OnInit
 
     if (isPlatformBrowser(this.platformId))
     {
-        this.getUser(this.authService.getEmailLS() as string, this. authService.getRolesLS()[0].authority)
+        this.getUser(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
 
-        this.retrieveUserSessions(this.authService.getEmailLS() as string, this. authService.getRolesLS()[0].authority)
+        this.retrieveUserSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
     }
   }
 

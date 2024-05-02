@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { UserService } from "../services/user.service";
 import { UtilsService } from "../utils/utils.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -9,7 +9,7 @@ import { FileHandleModule } from '../models/file-handle.module';
 import { CardFlipComponent } from "../card-flip/card-flip.component";
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { AddImagesComponent } from '../add-images/add-images.component';
-import { MatDialog } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogContent} from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list'
 
 @Component({
@@ -17,14 +17,15 @@ import { MatListModule } from '@angular/material/list'
     standalone: true,
     templateUrl: './profile-popup.component.html',
     styleUrl: './profile-popup.component.css',
-    imports: [
-      NgIf,
-      NgFor,
-      CardFlipComponent,
-      MatGridList,
-      MatGridTile,
-      MatListModule
-    ]
+  imports: [
+    NgIf,
+    NgFor,
+    CardFlipComponent,
+    MatGridList,
+    MatGridTile,
+    MatListModule,
+    MatDialogContent
+  ]
 })
 
 export class ProfilePopupComponent implements OnInit
@@ -35,6 +36,7 @@ export class ProfilePopupComponent implements OnInit
   accountType!: string
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UserService,
     private utilsService: UtilsService,
     private sanitizer: DomSanitizer,
@@ -44,9 +46,15 @@ export class ProfilePopupComponent implements OnInit
 
   ngOnInit()
   {
-    this.router.queryParams.subscribe((params) => {
-      this.getUserByEmail(params["userEmail"])
-    })
+    console.log("_______________________________")
+    console.log(this.data.email)
+    this.getUserByEmail(this.data.email)
+
+    // this.router.queryParams.subscribe((params) => {
+    //   console.log(params["email"])
+    //   this.getUserByEmail(params["email"])
+    // })
+
   }
 
   getUserByEmail(email: string)
@@ -60,6 +68,8 @@ export class ProfilePopupComponent implements OnInit
           next: (specialities) => this.userSpecialities = specialities,
           error: (err) => console.error(err)
         })
+        console.log("___________________________________________")
+        console.log(val)
       },
         error: (err) => console.error(err)
     })

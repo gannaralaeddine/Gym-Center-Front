@@ -19,7 +19,7 @@
     <div class="shape"></div>
     <div class="shape"></div>
   </div>
-  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="padding-bottom: 33.5%;">
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="padding-bottom: 40%;">
     <h3>Identifiez-vous</h3>
 
     <label for="email">E-Mail</label>
@@ -38,7 +38,8 @@
 
     <br>
     <input type="checkbox" id="showPassword" name="showPassword" width="20px" height="110px" class="accent-color checkbox" (click)="togglePasswordVisibility()"/>
-    <span> Afficher le mot de passe</span>
+    <span> Afficher le mot de passe</span><br><br>
+    <span> <a (click)="forgotPassword()"> Mot de passe oublié </a> </span>
 
       <button type="submit" [disabled]="loginForm.invalid || (!password.errors?.['required'] && password.value.length < 6)">Se Connecter</button>
 
