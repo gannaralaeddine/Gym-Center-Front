@@ -194,3 +194,13 @@ mat-option
 {
   font-size: large;
 }
+
+@media (max-width: 767px) 
+{
+  div.col-lg-4
+  {
+    position: static !important; 
+    text-align: center;
+  }
+}
+

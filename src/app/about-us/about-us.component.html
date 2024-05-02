@@ -8,34 +8,42 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <h2 class="contact-title text-white">Get in Touch</h2>
+                <h2 class="contact-title text-white">Restant en contact</h2>
             </div>
             <div class="col-lg-8">
-                <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                <form [formGroup]="aboutUsFormValue" class="form-contact contact_form" id="contactForm" novalidate="novalidate">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" placeholder="Enter Message"></textarea>
+                                <textarea class="form-control w-100" id="message" cols="30" rows="9" placeholder="Saisir votre message" formControlName="aboutUsMessage"></textarea>
                             </div>
+                            <h5 class="text-danger text-bold ml-2" style="margin-top: -3%; margin-bottom: 1%;" *ngIf="aboutUsFormValue.controls['aboutUsMessage'].invalid && aboutUsFormValue.controls['aboutUsMessage'].touched">Merci de saisir un message valide</h5>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input class="form-control valid" name="name" id="name" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'" placeholder="Enter your name">
+                                <input class="form-control valid" id="aboutUsFullName" type="text" pattern="^[A-Za-zéèçïîô ]*[A-Za-zéèçïîô ][A-Za-zéèçïîô ]*$" placeholder="Saisir votre nom" formControlName="aboutUsFullName">
                             </div>
+                            <h5 class="text-danger text-bold ml-2 form-validation-error-message" *ngIf="aboutUsFormValue.controls['aboutUsFullName'].invalid && aboutUsFormValue.controls['aboutUsFullName'].touched">Merci de saisir un nom valide</h5>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input class="form-control valid" name="email" id="email" type="email" placeholder="Email">
+                                <input class="form-control valid" id="email" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Saisir votre adresse e-mail" formControlName="aboutUsEmailAddress">
                             </div>
+                            <h5 class="text-danger text-bold ml-2 form-validation-error-message" *ngIf="aboutUsFormValue.controls['aboutUsEmailAddress'].invalid && aboutUsFormValue.controls['aboutUsEmailAddress'].touched">Merci de saisir une adresse e-mail valide</h5>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <input class="form-control" name="subject" id="subject" type="text" placeholder="Enter Subject">
+                                <input class="form-control" id="subject" type="text" pattern="^[A-Za-z0-9éèçïîôù ]*[A-Za-z0-9éèçïîôù ]" placeholder="Saisir votre sujet" formControlName="aboutUsEmailSubject">
                             </div>
+                            <h5 class="text-danger text-bold ml-2" *ngIf="aboutUsFormValue.controls['aboutUsEmailSubject'].invalid && aboutUsFormValue.controls['aboutUsEmailSubject'].touched" style="margin-top: -3%;">Merci de saisir un sujet valide</h5>
                         </div>
                     </div>
                     <div class="form-group mt-3">
-                        <button type="submit" class="btn btn-danger btnSubmit"><span class="font-weight-bold text-white h5">Send</span></button>
+                        <button class="btn btn-danger btnSubmit" [disabled]="
+                            (aboutUsFormValue.controls['aboutUsEmailSubject'].value.trim().length > 0 && aboutUsFormValue.controls['aboutUsEmailSubject'].valid) && 
+                            (aboutUsFormValue.controls['aboutUsMessage'].valid && aboutUsFormValue.controls['aboutUsMessage'].value.trim().length > 0) &&
+                            (aboutUsFormValue.controls['aboutUsFullName'].valid && aboutUsFormValue.controls['aboutUsFullName'].value.trim().length > 0) &&
+                            (aboutUsFormValue.controls['aboutUsEmailAddress'].valid && aboutUsFormValue.controls['aboutUsEmailAddress'].value.trim().length > 0) ? false : true" (click)="sendContactUsEmail()"><span class="font-weight-bold text-white h5">Envoyer</span></button>
                     </div>
                 </form>
             </div>
