@@ -96,8 +96,8 @@ p{
   transition: 0.3s;
   width: 33%;
   border-radius: 5%;
-  padding-left: 0%;
-  padding-right: 0%;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .card-profile:hover
@@ -157,15 +157,11 @@ svg
   cursor: pointer;
   display: inline-block;
   letter-spacing: 1px;
-  margin-bottom: 0;
   position: relative;
   transition: color 0.4s linear;
-  position: relative;
   overflow: hidden;
   margin: 0;
-  border-color: transparent;
   box-shadow: 0 0 20px #dc3545;
-  transition: 0.4s;
 }
 
 .border-btn:hover

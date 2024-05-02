@@ -28,11 +28,9 @@ export class ForgotPasswordComponent {
 
   sendVerificationCode(loginForm: NgForm)
   {
-      const email = document.getElementById("email") as HTMLInputElement
-
       this.userService.sendVerificationCode(loginForm.value.email).subscribe(
         {
-        next: (val) => {
+        next: () => {
           this.utils.successDialog("Opération réussite", "Un e-mail contenant votre code de vérification a été envoyé avec succès!", true)
           this.isSendingEmailOperation = false
           this.isSendingCodeOperation = true
@@ -45,7 +43,7 @@ export class ForgotPasswordComponent {
   {
     this.userService.checkVerificationCode(loginForm.value.code).subscribe(
       {
-        next: (val) => {
+        next: () => {
           this.utils.successDialog("Code est valide", "Veuillez saisir votre nouveau mot de passe !", true)
           this.isSendingCodeOperation = false
           this.isSendingPasswordOperation = true
@@ -63,7 +61,7 @@ export class ForgotPasswordComponent {
   {
     this.userService.changePassword(loginForm.value.email, loginForm.value.password).subscribe(
       {
-        next: (val) => {
+        next: () => {
           this.utils.successDialog("Opération réussite", "Votre mot de passe a été changer avec succès !", true)
           this.matDialog.close()
         },
