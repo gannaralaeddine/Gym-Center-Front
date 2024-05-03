@@ -22,6 +22,10 @@ export class ForgotPasswordComponent {
   isSendingEmailOperation = true
   isSendingCodeOperation = false
   isSendingPasswordOperation = false
+  passwordValue!: string
+  confirmPasswordValue!: string
+  confirmationCode!: number
+  userEmail!: string
 
   constructor(private userService: UserService, private utils: UtilsService, private matDialog: MatDialogRef<ForgotPasswordComponent>) {
   }
@@ -31,6 +35,7 @@ export class ForgotPasswordComponent {
       this.userService.sendVerificationCode(loginForm.value.email).subscribe(
         {
         next: () => {
+          this.userEmail = loginForm.value.email
           this.utils.successDialog("Opération réussite", "Un e-mail contenant votre code de vérification a été envoyé avec succès!", true)
           this.isSendingEmailOperation = false
           this.isSendingCodeOperation = true
@@ -59,7 +64,7 @@ export class ForgotPasswordComponent {
 
   changePassword(loginForm: NgForm)
   {
-    this.userService.changePassword(loginForm.value.email, loginForm.value.password).subscribe(
+    this.userService.changePassword(this.userEmail, loginForm.value.password).subscribe(
       {
         next: () => {
           this.utils.successDialog("Opération réussite", "Votre mot de passe a été changer avec succès !", true)
@@ -84,5 +89,30 @@ export class ForgotPasswordComponent {
     {
       this.isPasswordVisible = showPass.checked
     }
+  }
+
+  isDigit()
+  {
+    let result = true
+
+    if (isNaN(this.confirmationCode) || this.confirmationCode.toString().indexOf('-') != -1 || this.confirmationCode.toString().indexOf('.') != -1)
+    {
+      result = false
+    }
+
+   return result
+   
+  }
+
+  isIdenticalPasswords()
+  {
+    let result = true
+
+    if (this.passwordValue != this.confirmPasswordValue)
+    {
+      result = false
+    }
+
+    return result
   }
 }
