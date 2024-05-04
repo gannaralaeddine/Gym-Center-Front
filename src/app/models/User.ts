@@ -25,5 +25,6 @@ export class User
   userIsEnabled!: boolean
   userSpeciality?: string
   memberSessions!: SessionModule[]
-
+  memberCoaches!: User[]
+  coachMembers!: User[]
 }

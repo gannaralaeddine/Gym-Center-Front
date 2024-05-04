@@ -19,6 +19,7 @@ import { SessionDetailsComponent } from '../session/session-details/session-deta
 import { MatSelectModule } from '@angular/material/select';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SessionModule } from '../session/session.module';
+import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
 
 
 @Component({
@@ -51,43 +52,54 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
   userSessionDataSource!: MatTableDataSource<any>
-  displayedColumns = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Date', 'Gestion']
-  @ViewChild(MatPaginator) paginator!: MatPaginator
+  memberCoachesDataSource!: MatTableDataSource<any>
+  coachMembersDataSource!: MatTableDataSource<any>
+
+  displayedColumnsSession = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Date', 'Gestion']
+  displayedColumnsCoaches = ['Image', 'Nom & Prénom', 'E-mail', 'Activité', 'Gestion']
+
+  @ViewChild('paginator') paginator!: MatPaginator
+  @ViewChild('memberCoachesPaginator') memberCoachesPaginator!: MatPaginator
+  @ViewChild('coachMembersPaginator') coachMembersPaginator!: MatPaginator
+
   colsNumberPerLine = 4
 
-  constructor(private userService: UserService,
-    private utilsService: UtilsService,
-    private authService: AuthService,
-    private dialogRef: MatDialog,
-    private sanitizer: DomSanitizer,
-    private liveAnnouncer: LiveAnnouncer,
-    private profileFormBuilder: FormBuilder,
-    @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService, private dialogRef: MatDialog,
+    private sanitizer: DomSanitizer, private liveAnnouncer: LiveAnnouncer, private profileFormBuilder: FormBuilder, private matDialog: MatDialog,
+              @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit()
   {
-    this.profileFormValue = this.profileFormBuilder.group({
-      userFirstName : ['',Validators.required],
-      userLastName : ['',Validators.required],
-      userDescription : ['',Validators.required],
-      userPhoneNumber:['',Validators.required],
-      userCountry:['',Validators.required],
-      userCity:['',Validators.required],
-      userState:['',Validators.required],
-      userZipCode:['',Validators.required],
-      userHeight:['',Validators.required],
-      userWeight:['',Validators.required],
-      userGender: ['Merci de choisir sexe',Validators.required],
-      userBirthDate: ['',Validators.required],
-      userPicture: ""
-    })
+        this.profileFormValue = this.profileFormBuilder.group({
+          userFirstName: ['', Validators.required],
+          userLastName: ['', Validators.required],
+          userDescription: ['', Validators.required],
+          userPhoneNumber: ['', Validators.required],
+          userCountry: ['', Validators.required],
+          userCity: ['', Validators.required],
+          userState: ['', Validators.required],
+          userZipCode: ['', Validators.required],
+          userHeight: ['', Validators.required],
+          userWeight: ['', Validators.required],
+          userGender: ['Merci de choisir sexe', Validators.required],
+          userBirthDate: ['', Validators.required],
+          userPicture: ""
+        })
 
-    if (isPlatformBrowser(this.platformId))
-    {
-        this.getUser(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
+        if (isPlatformBrowser(this.platformId))
+        {
+            this.getUser(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
 
-        this.retrieveUserSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
-    }
+            this.retrieveUserSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
+
+            if (this.authService.getRolesLS()[0].authority === "ROLE_MEMBER") {
+              this.retrieveMemberCoaches(this.authService.getEmailLS() as string)
+            }
+
+            if (this.authService.getRolesLS()[0].authority === "ROLE_COACH") {
+              this.retrieveCoachMembers("gannaraladin@gmail.com")
+            }
+        }
   }
 
   populateUserData(user: any)
@@ -266,7 +278,7 @@ export class ProfileComponent implements OnInit
           this.userService.retrieveMemberSessions(email).subscribe({
           next: (sessions) => {
             this.userSessionDataSource = new MatTableDataSource(sessions as any)
-            this.userSessionDataSource.paginator = this.paginator
+            setTimeout(() => this.userSessionDataSource.paginator = this.paginator)
             this.userSessionDataSource.data.sort((a: SessionModule, b: SessionModule): number => {
 
               let result!: number
@@ -288,7 +300,7 @@ export class ProfileComponent implements OnInit
           this.userService.retrieveCoachSessions(email).subscribe({
           next: (sessions) => {
             this.userSessionDataSource = new MatTableDataSource(sessions as any)
-            this.userSessionDataSource.paginator = this.paginator
+            setTimeout(() => this.userSessionDataSource.paginator = this.paginator)
             this.userSessionDataSource.data.sort((a: SessionModule, b: SessionModule): number => {
 
               let result!: number
@@ -368,8 +380,42 @@ export class ProfileComponent implements OnInit
       }
   }
 
-  onResize(event: any) 
+  onResize(event: any)
   {
     this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
+  }
+
+  retrieveMemberCoaches(memberEmail: string)
+  {
+        this.userService.retrieveMemberCoaches(memberEmail).subscribe({
+          next: (memberCoaches) => {
+            this.memberCoachesDataSource = new MatTableDataSource(memberCoaches as any)
+            setTimeout(() => this.memberCoachesDataSource.paginator = this.memberCoachesPaginator)
+          },
+          error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
+        })
+  }
+
+  retrieveCoachMembers(coachEmail: string)
+  {
+        this.userService.retrieveCoachMembers(coachEmail).subscribe({
+          next: (coachMembers) => {
+            this.coachMembersDataSource = new MatTableDataSource(coachMembers as any)
+            setTimeout(() => this.coachMembersDataSource.paginator = this.coachMembersPaginator)
+          },
+          error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
+        })
+  }
+
+
+  coachDetailsPopup(user: User)
+  {
+    return this.matDialog.open(ProfilePopupComponent, {
+      width: "70%",
+      height: "100%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { email: user.userEmail}
+    })
   }
 }

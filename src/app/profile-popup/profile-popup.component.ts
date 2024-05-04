@@ -1,9 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { UserService } from "../services/user.service";
 import { UtilsService } from "../utils/utils.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import { NgFor, NgIf } from "@angular/common";
+import {isPlatformBrowser, NgFor, NgIf} from "@angular/common";
 import { User } from "../models/User";
 import { FileHandleModule } from '../models/file-handle.module';
 import { CardFlipComponent } from "../card-flip/card-flip.component";
@@ -11,6 +11,7 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { AddImagesComponent } from '../add-images/add-images.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogContent} from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list'
+import {AuthService} from "../auth/auth.service";
 
 @Component({
     selector: 'app-profile-popup',
@@ -34,27 +35,20 @@ export class ProfilePopupComponent implements OnInit
   userSpecialities: any
   user = new User()
   accountType!: string
+  connectedUserEmail!: string
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private userService: UserService,
-    private utilsService: UtilsService,
-    private sanitizer: DomSanitizer,
-    private dialogRef: MatDialog,
-    private router: ActivatedRoute,
-    private activityRouter: Router) {}
+    @Inject(MAT_DIALOG_DATA) public data: any, private authService: AuthService, private userService: UserService,
+    private utilsService: UtilsService, private sanitizer: DomSanitizer, private dialogRef: MatDialog, private router: ActivatedRoute,
+    private activityRouter: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit()
   {
-    console.log("_______________________________")
-    console.log(this.data.email)
+    if (isPlatformBrowser(this.platformId))
+    {
+      this.connectedUserEmail = this.authService.getEmailLS() as string
+    }
     this.getUserByEmail(this.data.email)
-
-    // this.router.queryParams.subscribe((params) => {
-    //   console.log(params["email"])
-    //   this.getUserByEmail(params["email"])
-    // })
-
   }
 
   getUserByEmail(email: string)
@@ -68,8 +62,6 @@ export class ProfilePopupComponent implements OnInit
           next: (specialities) => this.userSpecialities = specialities,
           error: (err) => console.error(err)
         })
-        console.log("___________________________________________")
-        console.log(val)
       },
         error: (err) => console.error(err)
     })
@@ -119,7 +111,6 @@ export class ProfilePopupComponent implements OnInit
 
   updateProfileImage()
   {
-    console.log(this.user.userImages, this.user.userImages.length)
     const formData = this.prepareFormData(this.user)
 
     this.userService.updateProfilePicture(formData).subscribe({
@@ -186,6 +177,21 @@ export class ProfilePopupComponent implements OnInit
   goToActivityDetails(activityId: any)
   {
     this.activityRouter.navigate(["activity-details"], { queryParams: { activityId: activityId }  })
+  }
+
+  coachBooking()
+  {
+      if (this.connectedUserEmail && this.data.email)
+      {
+          this.userService.coachBooking(this.connectedUserEmail, this.data.email).subscribe({
+            next: () => this.utilsService.successDialog("Opération réussite", "Votre demande a été envoyer avec succès", true),
+            error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
+          })
+      }
+      else
+      {
+        this.utilsService.successDialog("Opération échouée", "Merci de se connecter pour pouvoir réserver ce coach !", false)
+      }
   }
 
 }
