@@ -64,14 +64,14 @@ export class HomeComponent
       }
     }
 
-  goToCoachProfile(user: User)
-  {
-    return this.matDialog.open(ProfilePopupComponent, {
-      width: "70%",
-      height: "100%",
-      enterAnimationDuration: "1000ms",
-      exitAnimationDuration: "1000ms",
-      data: { email: user.userEmail}
-    })
-  }
+    goToCoachProfile(user: User)
+    {
+      return this.matDialog.open(ProfilePopupComponent, {
+        width: "70%",
+        height: "100%",
+        enterAnimationDuration: "1000ms",
+        exitAnimationDuration: "1000ms",
+        data: { email: user.userEmail}
+      })
+    }
 }

@@ -17,10 +17,7 @@ import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import { SessionDetailsComponent } from '../session/session-details/session-details.component';
 import { MatSelectModule } from '@angular/material/select';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SessionModule } from '../session/session.module';
-import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
-
 
 @Component({
   selector: 'app-profile',
@@ -52,20 +49,15 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
   userSessionDataSource!: MatTableDataSource<any>
-  memberCoachesDataSource!: MatTableDataSource<any>
-  coachMembersDataSource!: MatTableDataSource<any>
 
   displayedColumnsSession = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Date', 'Gestion']
-  displayedColumnsCoaches = ['Image', 'Nom & Prénom', 'E-mail', 'Activité', 'Gestion']
 
   @ViewChild('paginator') paginator!: MatPaginator
-  @ViewChild('memberCoachesPaginator') memberCoachesPaginator!: MatPaginator
-  @ViewChild('coachMembersPaginator') coachMembersPaginator!: MatPaginator
 
   colsNumberPerLine = 4
 
   constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService, private dialogRef: MatDialog,
-    private sanitizer: DomSanitizer, private liveAnnouncer: LiveAnnouncer, private profileFormBuilder: FormBuilder, private matDialog: MatDialog,
+    private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder, private matDialog: MatDialog,
               @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit()
@@ -91,14 +83,6 @@ export class ProfileComponent implements OnInit
             this.getUser(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
 
             this.retrieveUserSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
-
-            if (this.authService.getRolesLS()[0].authority === "ROLE_MEMBER") {
-              this.retrieveMemberCoaches(this.authService.getEmailLS() as string)
-            }
-
-            if (this.authService.getRolesLS()[0].authority === "ROLE_COACH") {
-              this.retrieveCoachMembers("gannaraladin@gmail.com")
-            }
         }
   }
 
@@ -385,37 +369,4 @@ export class ProfileComponent implements OnInit
     this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
   }
 
-  retrieveMemberCoaches(memberEmail: string)
-  {
-        this.userService.retrieveMemberCoaches(memberEmail).subscribe({
-          next: (memberCoaches) => {
-            this.memberCoachesDataSource = new MatTableDataSource(memberCoaches as any)
-            setTimeout(() => this.memberCoachesDataSource.paginator = this.memberCoachesPaginator)
-          },
-          error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
-        })
-  }
-
-  retrieveCoachMembers(coachEmail: string)
-  {
-        this.userService.retrieveCoachMembers(coachEmail).subscribe({
-          next: (coachMembers) => {
-            this.coachMembersDataSource = new MatTableDataSource(coachMembers as any)
-            setTimeout(() => this.coachMembersDataSource.paginator = this.coachMembersPaginator)
-          },
-          error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
-        })
-  }
-
-
-  coachDetailsPopup(user: User)
-  {
-    return this.matDialog.open(ProfilePopupComponent, {
-      width: "70%",
-      height: "100%",
-      enterAnimationDuration: "1000ms",
-      exitAnimationDuration: "1000ms",
-      data: { email: user.userEmail}
-    })
-  }
 }

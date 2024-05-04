@@ -7,7 +7,7 @@
         <div class="blog_item_date bottom-left">
           <h3>{{ session.sessionDeadline | date:"dd MMM yyyy à hh:mm" }}</h3>
         </div>
-        <div class="blog_item_coach bottom-right">
+        <div class="blog_item_coach bottom-right cursor-pointer" (click)="goToCoachProfile(session.sessionCoach)">
             <h3> Coach: {{ session.sessionCoach.userFirstName }} {{ session.sessionCoach.userLastName }}</h3>
         </div>
         <button class="btn-participate btn-hover blog_item_coach-btn top-right" (click)="participateToSession(session)" *ngIf="userIsLoggedIn && !userIsParticipated">Se participer</button>
@@ -18,4 +18,62 @@
         <h1 class="text-white" >{{ session.sessionName }}</h1>
         <p class="text-white text-size">{{ session.sessionDescription }}</p>
       </div>
+
+      <!-- Mes Membres -->
+      <div class="card h-100 mt-5" *ngIf="userRole === 'ROLE_COACH'">
+        <div class="mb-5 ps-3">
+          <h2 class="mb-1 text-white">Mes membres</h2>
+
+          <div class="mt-50" >
+            <div class="d-flex justify-content-center" *ngIf="!membersDataSource || membersDataSource.data.length === 0">
+              <h2 class="text-center text-white">Vous n'avez pas encore un entraîneur personnel</h2>
+            </div>
+
+            <div class="main-body" >
+              <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="membersDataSource">
+
+                  <!-- Image Column -->
+                  <ng-container matColumnDef="Image">
+                    <th mat-header-cell *matHeaderCellDef>Image</th>
+                    <td mat-cell *matCellDef="let user">
+                      <img [src]="getImage(user.userPicture)" class="avatar avatar-sm me-3 border-radius-lg activity-image cursor-pointer" alt="User Image" (click)="displayImages(user.userPicture, true)">
+                    </td>
+                  </ng-container>
+
+                  <!-- Nom & Prénom Column -->
+                  <ng-container matColumnDef="Nom & Prénom">
+                    <th mat-header-cell *matHeaderCellDef  class="text-center">Nom & Prénom</th>
+                    <td mat-cell *matCellDef="let user" class="text-center">{{user.userFirstName}} {{ user.userLastName }}</td>
+                  </ng-container>
+
+                  <!-- E-mail Column -->
+                  <ng-container matColumnDef="E-mail">
+                    <th mat-header-cell *matHeaderCellDef  class="text-center">E-mail</th>
+                    <td mat-cell *matCellDef="let user" class="text-center">{{user.userEmail}}</td>
+                  </ng-container>
+
+                  <!-- Activity Column -->
+                  <ng-container matColumnDef="Numéro de Téléphone">
+                    <th mat-header-cell *matHeaderCellDef  class="text-center">Numéro de Téléphone</th>
+                    <td mat-cell *matCellDef="let user" class="text-center">{{user.userPhoneNumber}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsMembers"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsMembers;"></tr>
+                </table>
+
+                <mat-paginator #membersPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div >
+      <!-- Mes Membres END -->
+
     </div>
+
+
+

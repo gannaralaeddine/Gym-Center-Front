@@ -1,10 +1,15 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
+import {Component, Inject, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 import {SessionService} from "../../services/session.service";
 import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
 import {UtilsService} from "../../utils/utils.service";
 import {AuthService} from "../../auth/auth.service";
 import {SessionModule} from "../session.module";
+import {MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {UserService} from "../../services/user.service";
+import {MatPaginator} from "@angular/material/paginator";
+import {User} from "../../models/User";
+import {ProfilePopupComponent} from "../../profile-popup/profile-popup.component";
 
 @Component({
   selector: 'app-session-details',
@@ -13,7 +18,18 @@ import {SessionModule} from "../session.module";
     DatePipe,
     NgForOf,
     NgIf,
-    MatDialogContent
+    MatDialogContent,
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatPaginator,
+    MatRow,
+    MatRowDef,
+    MatTableModule,
+    MatTable
   ],
   templateUrl: './session-details.component.html',
   styleUrl: './session-details.component.css'
@@ -24,19 +40,26 @@ export class SessionDetailsComponent implements OnInit
     userIsParticipated = false
     session: any
 
+    userRole!: string
+
+    membersDataSource!: MatTableDataSource<any>
+    displayedColumnsMembers = ['Image', 'Nom & Prénom', 'E-mail', 'Numéro de Téléphone']
+    @ViewChild('membersPaginator') membersPaginator!: MatPaginator
+
     constructor(
-      private sessionService: SessionService,
-      private utilsService: UtilsService,
-      @Inject(MAT_DIALOG_DATA) public data: any,
-      private authService: AuthService,
-      @Inject(PLATFORM_ID) private platformId: Object,
+      private sessionService: SessionService, private utilsService: UtilsService, @Inject(MAT_DIALOG_DATA) public data: any,
+      private authService: AuthService, @Inject(PLATFORM_ID) private platformId: Object, private userService: UserService, private matDialog: MatDialog,
       private dialogRef: MatDialogRef<SessionDetailsComponent>)
     {  }
 
 
     ngOnInit() {
 
-        this.userIsLoggedIn = !!(this.isLoggedIn() && this.authService.getEmailLS());
+        if (isPlatformBrowser(this.platformId))
+        {
+            this.userRole = this.authService.getRolesLS()[0].authority
+            this.userIsLoggedIn = !!(this.isLoggedIn() && this.authService.getEmailLS());
+        }
 
         if (this.data.sessionId) {
             this.getSessionById(this.data.sessionId)
@@ -55,7 +78,14 @@ export class SessionDetailsComponent implements OnInit
     getSessionById(sessionId: any)
     {
         this.sessionService.getSession(sessionId).subscribe({
-          next: (session) => this.session = session,
+          next: (session) => {
+            this.session = session
+            if (this.userRole === "ROLE_COACH")
+            {
+              this.membersDataSource = new MatTableDataSource(session.sessionMembers)
+              setTimeout( () =>this.membersDataSource.paginator = this.membersPaginator)
+            }
+          },
           complete: () =>  this.isParticipated(this.session.sessionId),
           error: (err)=> console.error(err)
         })
@@ -145,9 +175,24 @@ export class SessionDetailsComponent implements OnInit
     }
 
 
-
     getImage(imageName: string): string
     {
         return this.utilsService.getImage(imageName)
+    }
+
+    displayImages(images: any, isOneImage: boolean)
+    {
+    this.utilsService.displayImages(images, isOneImage)
+  }
+
+    goToCoachProfile(user: User)
+    {
+      return this.matDialog.open(ProfilePopupComponent, {
+        width: "70%",
+        height: "100%",
+        enterAnimationDuration: "1000ms",
+        exitAnimationDuration: "1000ms",
+        data: { email: user.userEmail}
+      })
     }
 }
