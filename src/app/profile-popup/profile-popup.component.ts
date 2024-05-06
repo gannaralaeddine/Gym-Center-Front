@@ -31,6 +31,7 @@ import {AuthService} from "../auth/auth.service";
 
 export class ProfilePopupComponent implements OnInit
 {
+  isMyPrivateCoach = false
   userImages: any
   userSpecialities: any
   user = new User()
@@ -63,7 +64,8 @@ export class ProfilePopupComponent implements OnInit
           error: (err) => console.error(err)
         })
       },
-        error: (err) => console.error(err)
+      complete: () => this.isMyPrivateCoachCheck(this.connectedUserEmail, email),
+      error: (err) => console.error(err)
     })
   }
 
@@ -181,12 +183,30 @@ export class ProfilePopupComponent implements OnInit
 
   coachBooking()
   {
+
       if (this.connectedUserEmail && this.data.email)
       {
-          this.userService.coachBooking(this.connectedUserEmail, this.data.email).subscribe({
-            next: () => this.utilsService.successDialog("Opération réussite", "Votre demande a été envoyer avec succès", true),
-            error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
-          })
+        this.utilsService.alertPrompt("Réservation coach", "Êtes-vous sûr de vouloir envoyé une invitation à ce coach ?", "confirmOperation")
+          .afterClosed().subscribe((confirmOperation) => {
+          if (confirmOperation)
+          {
+            this.userService.coachBooking(this.connectedUserEmail, this.data.email).subscribe({
+              next: () => this.utilsService.successDialog("Opération réussite", "Votre demande a été envoyer avec succès", true),
+              error: (err) => {
+
+                switch (err.status)
+                {
+                  case 302:
+                    { this.utilsService.successDialog("Opération échouée", "Vous avez déja réserver ce coach !", false); break }
+                  case 401:
+                    { this.utilsService.successDialog("Opération échouée", "Une erreur est survenue veuillez essayer plus tard !", false); break }
+                  default:
+                    { this.utilsService.successDialog("Opération échouée", err.message, false); break }
+                }
+              }
+            })
+          }
+        })
       }
       else
       {
@@ -194,4 +214,18 @@ export class ProfilePopupComponent implements OnInit
       }
   }
 
+
+    isMyPrivateCoachCheck(memberEmail: string, coachEmail: string)
+    {
+      if (isPlatformBrowser(this.platformId))
+      {
+        if (this.authService.getEmailLS() != null)
+        {
+          this.userService.isMyPrivateCoach(memberEmail, coachEmail).subscribe({
+            next: (result) => this.isMyPrivateCoach = result as boolean,
+            error: (err) => console.log("error: " + err.message)
+          })
+        }
+      }
+    }
 }

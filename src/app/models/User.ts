@@ -1,6 +1,7 @@
 import {FileHandleModule} from "./file-handle.module";
 import {Role} from "./role.module";
 import {SessionModule} from "../session/session.module";
+import {NotificationMemberCoachModule} from "./notificationMemberCoach.module";
 
 export class User
 {
@@ -27,4 +28,5 @@ export class User
   memberSessions!: SessionModule[]
   memberCoaches!: User[]
   coachMembers!: User[]
+  userNotifications!: NotificationMemberCoachModule[]
 }

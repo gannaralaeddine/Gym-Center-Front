@@ -1,10 +1,10 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #950101;">
-    
+
     <div class="logo ml-3 mb-2">
       <a routerLink=""><img src="assets/img/logo/logo.png" alt=""></a>
     </div>
-    
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="width: auto; background-color: #950101;">
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0,0,256,256" style="fill:#000000;">
         <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M6,22h36v4h-36zM6,10h36v4h-36zM6,34h36v4h-36z"></path></g></g>
@@ -20,14 +20,14 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #950101;">
             <a class="dropdown-item menu-item text-white" routerLink="sessions">Classes</a>
-            <a class="dropdown-item menu-item text-white" routerLink="coaches">Coaches</a>  
+            <a class="dropdown-item menu-item text-white" routerLink="coaches">Coaches</a>
           </div>
         </li>
 
         <li class="nav-item">
           <a class="nav-link menu-item text-white" routerLink="categories">Catégories</a>
         </li>
-      
+
        <li class="nav-item">
           <a class="nav-link menu-item text-white" routerLink="activities">Activités</a>
         </li>
@@ -36,8 +36,27 @@
           <a class="nav-link menu-item text-white" routerLink="offers">Tarifs</a>
         </li>
 
+
         <li class="nav-item dropdown" *ngIf="userIsLoggedIn">
-          <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="position_relative mr-3 ml-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 448 512"><path fill="#fff" d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v25.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm0 96c61.9 0 112 50.1 112 112v25.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V208c0-61.9 50.1-112 112-112zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"/></svg>
+              <span class="top_right" *ngIf="userIsLoggedIn && userNotifications">{{ userNotifications.length }}</span>
+            </div>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-item dropdown-items" *ngFor="let notification of userNotifications">
+              <p class="dropdown-items" >{{ notification.notificationTitle }}</p><br>
+              <p class="dropdown-items" >{{ notification.notificationContent }}</p><br>
+              <span (click)="acceptInvitation()">Accept</span> <span (click)="cancelInvitation()">Refuse</span>
+
+            </div>
+
+          </div>
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="userIsLoggedIn">
+          <a class="nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="user-avatar img-profile">
               <img height="30" width="30" alt="profile picture" [src]="getImage(user.userPicture)" class="rounded-circle">
               <span class="text-white text-bold text-uppercase ml-3" style="font-size: small;">{{ user.userFirstName }} {{ user.userLastName }}</span>

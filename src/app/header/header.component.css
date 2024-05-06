@@ -39,3 +39,36 @@ button:hover {
   background-color: #950101;
   color: white;
 }
+
+.button__badge {
+  background-color: #fa3e3e;
+  border-radius: 2px;
+  color: white;
+  padding: 1px 3px;
+  font-size: 10px;
+
+  position: absolute; /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0;
+}
+
+.position_relative{
+  position: relative;
+}
+
+.top_right
+{
+  position: absolute;
+  cursor: pointer;
+  border-radius: 2px;
+  color: white;
+  font-size: 10px;
+}
+
+.dropdown-items
+{
+  background-color: white;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}

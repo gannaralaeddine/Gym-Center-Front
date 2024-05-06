@@ -46,10 +46,20 @@ export class UserService
 
   public changePassword(email: string, password: string) { return this.http.put(this.utils.API_GYM_CENTER + "/user/change-password/" + email + "/" + password, email) }
 
-  public coachBooking(memberEmail: string, coachEmail: string) { return this.http.put(this.utils.API_GYM_CENTER + "/member/coach-booking/" + memberEmail + "/" + coachEmail, memberEmail ) }
+  public coachBooking(memberEmail: string, coachEmail: string) { return this.http.put(this.utils.API_GYM_CENTER + "/member/private-coach-booking/" + memberEmail + "/" + coachEmail, memberEmail ) }
 
-  public retrieveMemberCoaches(memberEmail: any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/member/retrieve-member-coaches/" + memberEmail) }
+  public retrieveMemberPrivateCoaches(memberEmail: any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/member/retrieve-private-coaches/" + memberEmail) }
 
-  public retrieveCoachMembers(coachEmail: any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/coach/retrieve-coach-members/" + coachEmail) }
+  public retrieveCoachPrivateMembers(coachEmail: any)  { return this.http.get<User>(this.utils.API_GYM_CENTER + "/coach/retrieve-private-members/" + coachEmail) }
+
+  public isMyPrivateCoach(memberEmail: string, coachEmail: string) { return this.http.get<boolean>(this.utils.API_GYM_CENTER + "/member/is-my-private-coach/" + memberEmail + "/" + coachEmail ) }
+
+
+  public terminateCoachMemberRelation(memberEmail: string, coachEmail: string) { return this.http.get<string>(this.utils.API_GYM_CENTER + "/coach/terminate-coach-member-relation/" + memberEmail + "/" + coachEmail ) }
+
+  public getMemberNotifications(memberEmail: string) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/member/getMemberNotifications/" + memberEmail ) }
+
+  public getCoachNotifications(coachEmail: string) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/coach/getCoachNotifications/" + coachEmail ) }
+
 
 }
