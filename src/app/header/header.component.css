@@ -34,10 +34,17 @@ button:hover {
   font-size: 16px;
 }
 
+.dropdown-item
+{
+  margin-right: 5px;
+  margin-left: 5px;
+  justify-content: center;
+}
 .dropdown-item:hover
 {
-  background-color: #950101;
-  color: white;
+  background-color: silver;
+  border-radius: 0.5rem;
+  width: fit-content;
 }
 
 .button__badge {
@@ -65,10 +72,29 @@ button:hover {
   font-size: 10px;
 }
 
-.dropdown-items
+/* .dropdown-items
 {
-  background-color: white;
+  background-color: #F8FAE5;
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
+} */
+
+.notification-title
+{
+	color: #aa3333;
+	font-size: 15px;
+	/* margin-top: px; */
 }
+
+.notification-content
+{
+  font-size: 13px; 
+  color:#1d0000;
+}
+
+/* .notification-title:hover, .notification-content:hover
+{
+  background-color: #680000;
+  color: #FFFFFF;
+} */

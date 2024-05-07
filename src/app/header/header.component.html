@@ -36,6 +36,10 @@
           <a class="nav-link menu-item text-white" routerLink="offers">Tarifs</a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link menu-item text-white" routerLink="about-us">Contactez-nous</a>
+        </li>
+
 
         <li class="nav-item dropdown" *ngIf="userIsLoggedIn">
           <a class="nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,14 +48,13 @@
               <span class="top_right" *ngIf="userIsLoggedIn && userNotifications">{{ userNotifications.length }}</span>
             </div>
           </a>
+
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="dropdown-item dropdown-items" *ngFor="let notification of userNotifications">
-              <p class="dropdown-items" >{{ notification.notificationTitle }}</p><br>
-              <p class="dropdown-items" >{{ notification.notificationContent }}</p><br>
-              <span (click)="acceptInvitation()">Accept</span> <span (click)="cancelInvitation()">Refuse</span>
-
+            <div class="dropdown-item" *ngFor="let notification of userNotifications">
+              <h4 class="notification-title">{{notification.notificationTitle}}</h4>
+              <h5 class="notification-content">{{notification.notificationContent}}</h5>
+              <!-- <hr class="horizontal light mt-0 mb-2"> -->
             </div>
-
           </div>
         </li>
 

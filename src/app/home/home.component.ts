@@ -26,8 +26,11 @@ export class HomeComponent
     offers: any
     customOptions: any
 
-    constructor(private userService: UserService, private offerService: OfferService, private utilsService: UtilsService,
-                private matDialog: MatDialog)
+    constructor(
+      private userService: UserService, 
+      private offerService: OfferService, 
+      private utilsService: UtilsService,
+      private matDialog: MatDialog)
     {
         this.customOptions = utilsService.customOptions
         this.getAllCoaches()
