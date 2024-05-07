@@ -23,7 +23,6 @@ button {
 
 button:hover {
   color: white;
-  /*width:;*/
   box-shadow: 0 0 20px #dc3545;
   background-color: red;
 }
@@ -40,6 +39,7 @@ button:hover {
   margin-left: 5px;
   justify-content: center;
 }
+
 .dropdown-item:hover
 {
   background-color: silver;
@@ -53,8 +53,7 @@ button:hover {
   color: white;
   padding: 1px 3px;
   font-size: 10px;
-
-  position: absolute; /* Position the badge within the relatively positioned button */
+  position: absolute; 
   top: 0;
   right: 0;
 }
@@ -72,19 +71,10 @@ button:hover {
   font-size: 10px;
 }
 
-/* .dropdown-items
-{
-  background-color: #F8FAE5;
-  color: black;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-} */
-
 .notification-title
 {
 	color: #aa3333;
 	font-size: 15px;
-	/* margin-top: px; */
 }
 
 .notification-content
@@ -92,9 +82,3 @@ button:hover {
   font-size: 13px; 
   color:#1d0000;
 }
-
-/* .notification-title:hover, .notification-content:hover
-{
-  background-color: #680000;
-  color: #FFFFFF;
-} */
