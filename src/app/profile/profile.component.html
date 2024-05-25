@@ -18,11 +18,10 @@
             <h3 class="profile-information mt-6"><strong>Nom & Prénom: {{ user.userLastName }} {{ user.userFirstName }}</strong></h3>
             <h3 class="profile-information mt-3"><strong>Rôle: {{ accountType }}</strong></h3>
           </div>
-        </div>
+      </div>
 
 
       <input type="file" id="profilePicture" #inputFile (change)="onFileSelected($event)" hidden>
-
 
       <form [formGroup]="profileFormValue" class="mt-5">
 
@@ -141,6 +140,78 @@
       </form>
 
 
+<!-- Mes classes privées -->
+      <div class="card h-100 mt-5">
+        <div class="mb-5 ps-3">
+          <h2 class="mb-1 text-white">Mes Classes privées</h2>
+
+          <div class="mt-50" >
+            <div class="d-flex justify-content-center" *ngIf="!privateSessionsDataSource || privateSessionsDataSource.data.length === 0">
+              <h2 class="text-center text-white">Vous n'avez des cours privées</h2>
+            </div>
+
+            <div class="main-body" *ngIf="privateSessionsDataSource && privateSessionsDataSource.data.length !== 0">
+              <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="privateSessionsDataSource">
+
+                  <!-- Title Column -->
+                  <ng-container matColumnDef="Titre">
+                    <th mat-header-cell *matHeaderCellDef  class="text-center">Titre</th>
+                    <td mat-cell *matCellDef="let privateSession" class="text-center">{{privateSession.privateSessionTitle}}</td>
+                  </ng-container>
+
+                  <!-- Date Column -->
+                  <ng-container matColumnDef="Date">
+                    <th mat-header-cell *matHeaderCellDef  class="text-center">Date</th>
+                    <td mat-cell *matCellDef="let privateSession" class="text-center">{{ privateSession.privateSessionStartDateTime | date: 'd MMM y': 'fr' }}</td>
+                  </ng-container>
+
+                  <!-- Time Column -->
+                  <ng-container matColumnDef="Heure">
+                    <th mat-header-cell *matHeaderCellDef  class="text-center">Heure</th>
+                    <td mat-cell *matCellDef="let privateSession" class="text-center">{{ privateSession.privateSessionStartDateTime | date: 'H:mm' }} - {{ privateSession.privateSessionEndDateTime | date: 'H:mm' }}</td>
+                  </ng-container>
+
+                  <!-- Member Column -->
+                  <ng-container matColumnDef="Coach">
+                    <th mat-header-cell *matHeaderCellDef class="text-center">Coach</th>
+                    <td mat-cell *matCellDef="let privateSession" class="text-center" >
+                      <ng-container *ngIf="privateSession.privateSessionCoach">{{ privateSession.privateSessionCoach.userFirstName}} {{privateSession.privateSessionCoach.userLastName}}</ng-container>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Membre">
+                    <th mat-header-cell *matHeaderCellDef class="text-center">Membre</th>
+                    <td mat-cell *matCellDef="let privateSession" class="text-center" >
+                      <ng-container *ngIf="!privateSession.privateSessionMember">En attente</ng-container>
+                      <ng-container *ngIf="privateSession.privateSessionMember">{{ privateSession.privateSessionMember.userFirstName}} {{privateSession.privateSessionMember.userLastName}}</ng-container>
+                    </td>
+                  </ng-container>
+
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="Gestion">
+                    <th mat-header-cell *matHeaderCellDef  class="text-center" style="margin-left: -5%;">Gestion</th>
+                    <td mat-cell *matCellDef="let privateSession" class="text-center">
+                      <span class="activity-image" *ngIf="privateSession.privateSessionMember" (click)="cancelBooking(privateSession.privateSessionMember.userEmail, privateSession.privateSessionId)"><img src="assets/img/icons/ic_cancel_red.svg" height="21" width="21" class="mr-3 mb-1" alt="Session details icon"><span class="details-design">Annuler Réservation</span></span>
+                      <span class="cancel-icon" *ngIf="!privateSession.privateSessionMember"><img src="assets/img/icons/ic_cancel.svg" class="mr-3 mb-1" width="21" height="21" alt="icon"/><span class="details-design-disable">Annuler Réservation</span></span></td>
+                  </ng-container>
+
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsPrivateSession"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsPrivateSession;"></tr>
+                </table>
+
+                <mat-paginator #privateSessionsPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+<!-- Mes classes privées END -->
+
 <!-- Mes classes -->
       <div class="card h-100 mt-5">
         <div class="mb-5 ps-3">
@@ -198,7 +269,7 @@
                     <ng-container matColumnDef="Gestion">
                       <th mat-header-cell *matHeaderCellDef  class="text-center" style="margin-left: -5%;">Gestion</th>
                       <td mat-cell *matCellDef="let session" class="text-center">
-                        <span class="activity-image" (click)="showSessionDetails(session.sessionId)"><img src="assets/img/icon/details-icon.png" height="21" width="20" class="mr-3 mb-1" alt="Session details icon"><span class="details-design">Détails</span></span>
+                        <span class="activity-image" (click)="showSessionDetails(session.sessionId)"><img src="assets/img/icon/details-icon.png" height="21" width="21" class="mr-3 mb-1" alt="Session details icon"><span class="details-design">Détails</span></span>
                       </td>
                     </ng-container>
 

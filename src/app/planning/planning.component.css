@@ -1,0 +1,18 @@
+.fc-event-title {
+  font-size: 14px; /* Change to your desired font size */
+}
+
+.fc-event-title {
+  font-weight: bold; /* Change to your desired font weight */
+}
+
+.select-container{
+  display: flex;
+}
+
+.box {
+  width: 50%; /* Each div takes 50% of the container width */
+  border: 1px solid black;
+  box-sizing: border-box; /* Include border in width calculation */
+  padding: 20px;
+}

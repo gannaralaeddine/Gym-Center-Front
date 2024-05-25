@@ -12,6 +12,7 @@ import { CategoryDetailsComponent } from './categories/category-details/category
 import { ActivityDetailsComponent } from './activities/activity-details/activity-details.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import {PlanningComponent} from "./planning/planning.component";
 
 export const routes: Routes = [
 
@@ -28,5 +29,6 @@ export const routes: Routes = [
   {path: 'activities', component: ActivitiesComponent},
   {path: 'activity-details', component: ActivityDetailsComponent},
   {path: 'coach-profile', component: ProfilePopupComponent},
-  {path: 'about-us', component: AboutUsComponent}
+  {path: 'about-us', component: AboutUsComponent},
+  {path: 'planning', component: PlanningComponent}
 ];
