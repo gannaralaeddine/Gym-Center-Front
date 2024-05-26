@@ -34,7 +34,7 @@ export class PlanningComponent implements OnInit
 {
   connectedUserEmail!: string
   accountType!: string
-  privateSessions: any
+  privateSessions = [PrivateSessionModule]
   allPrivateSessions: any
   coaches: any
 
@@ -145,18 +145,30 @@ export class PlanningComponent implements OnInit
 
   filterByCoach()
   {
-    const coachSelect = document.getElementById("filterByCoachSelect") as HTMLSelectElement
+    if (document)
+    {
+        const coachSelect = document.getElementById("filterByCoachSelect") as HTMLSelectElement
 
+        this.privateSessions = []
 
-    // @ts-ignore
-    this.allPrivateSessions.forEach(privateSession => {
+        if (coachSelect.value == "-1")
+        {
+          this.calendarEvents(this.allPrivateSessions)
+        }
+        else
+        {
+            // @ts-ignore
+            this.allPrivateSessions.forEach(privateSession => {
 
-      if (privateSession.privateSessionCoach.userId == coachSelect.value)
-      {
-          console.log(privateSession.privateSessionCoach.userEmail)
-      }
-
-    })
-    console.log(coachSelect.value)
+              if (privateSession.privateSessionCoach.userId == coachSelect.value)
+              {
+                this.privateSessions.push(privateSession)
+                console.log(privateSession.privateSessionCoach.userSpeciality)
+                console.log(privateSession.privateSessionCoach.userId)
+              }
+            })
+            this.calendarEvents(this.privateSessions)
+        }
+    }
   }
 }

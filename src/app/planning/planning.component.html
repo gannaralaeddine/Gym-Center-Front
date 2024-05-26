@@ -18,17 +18,17 @@
     <button type="button" class="border-btn mb-5" (click)="addPrivateSession()" *ngIf="accountType === 'ROLE_COACH'">Ajouter une séance</button>
 
     <div class="select-container">
-      <select class="form-control mb-5 box mr-1" style="font-size: 20px" id="filterByCoachSelect" name="filterByCoachSelect" (change)="filterByCoach()">
-        <option value="-1">Tous les coach</option>
+      <select class="form-control mb-5  mr-1" style="font-size: 20px" id="filterByCoachSelect" name="filterByCoachSelect" (change)="filterByCoach()">
+        <option value="-1" >Tous les coach</option>
         <option *ngFor="let coach of coaches" [value]="coach.userId">{{ coach.userFirstName }} {{ coach.userLastName }}</option>
       </select>
 
-      <select class="form-control mb-5 box ml-1" style="font-size: 20px" id="filterBySpecialitySelect" name="filterBySpecialitySelect"  >
-        <option >Tous les utilisateurs</option>
-        <option >MEMBRE</option>
-        <option >COACH</option>
-        <option >ADMIN</option>
-      </select>
+<!--      <select class="form-control mb-5  ml-1 text-fonts text-input text-black" style="font-size: 20px" id="filterBySpecialitySelect" name="filterBySpecialitySelect"  >-->
+<!--        <option >Tous les utilisateurs</option>-->
+<!--        <option >MEMBRE</option>-->
+<!--        <option >COACH</option>-->
+<!--        <option >ADMIN</option>-->
+<!--      </select>-->
     </div>
 
 
