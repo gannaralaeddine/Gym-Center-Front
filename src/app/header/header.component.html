@@ -114,7 +114,7 @@
                 <div class="main-menu f-right d-none d-lg-block">
                   <a routerLink="login" class="btn" *ngIf="!userIsLoggedIn">se connecter</a>
                   
-                  <div class="dropdown">
+                  <div class="dropdown" *ngIf="userIsLoggedIn">
                     <a class="nav-link dropbtn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <div class="user-avatar img-profile">
                         <img height="30" width="30" alt="profile picture" [src]="getImage(user.userPicture)" class="rounded-circle">
@@ -122,11 +122,13 @@
                       </div>
                     </a>
 
-                    <div class="dropdown-content" *ngIf="userIsLoggedIn">
+                    <div class="dropdown-content">
                       <a routerLink="profile">Profil</a>
                       <a (click)="logout()">Se déconnecter</a>
                     </div>
-                  </div>                 
+
+                  </div>    
+
                 </div>
 
                  <!-- Mobile Menu -->
@@ -145,7 +147,7 @@
                                   <li><a routerLink="/">Accueil</a></li>
                                   <li class="slicknav_parent slicknav_collapsed">
                                     <a role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item slicknav_row" style="outline: none;">
-                                        <a tabindex="-1" (click)="openOrCloseMenu('blogMenu')">Blog</a>
+                                        <a tabindex="-1" (click)="openOrCloseMenu('blogMenu')">Entraînement</a>
                                         <span class="slicknav_arrow" (click)="openOrCloseMenu('blogMenu')">+</span>
                                     </a>
                                     <ul class="submenu slicknav_hidden" role="menu" aria-hidden="true" style="display: none;" id="blogMenu">
