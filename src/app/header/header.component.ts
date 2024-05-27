@@ -108,13 +108,41 @@ export class HeaderComponent implements OnInit
       }
   }
 
-  acceptInvitation()
+  openOrCloseMenu(HTMLTagId?: string)
   {
+    let humbergerMenu = document.getElementById("humbergerMenu")
+    let blogMenu = document.getElementById("blogMenu")
 
+    switch (HTMLTagId) 
+    {
+      case "blogMenu":
+        if (blogMenu?.getAttribute("style") === "display: none;")
+        {
+          blogMenu?.setAttribute("style", "display: block;")
+          document.getElementsByClassName("slicknav_arrow")[0].innerHTML = "-"
+        }
+        else
+        {
+          blogMenu?.setAttribute("style", "display: none;")
+          document.getElementsByClassName("slicknav_arrow")[0].innerHTML = "+"
+        }
+
+        break
+    
+      default:
+        if (humbergerMenu?.getAttribute("style") === "display: none;")
+        {
+          humbergerMenu?.setAttribute("style", "display: block;")
+        }
+        else
+        {
+          humbergerMenu?.setAttribute("style", "display: none;")
+        }
+
+        break
+    }
+
+   
   }
 
-  cancelInvitation()
-  {
-
-  }
 }
