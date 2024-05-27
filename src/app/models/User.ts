@@ -9,7 +9,7 @@ export class User
   userEmail?: string
   userFirstName!: string
   userLastName!: string
-  userBirthDate? : Date
+    userBirthDate? : Date
   userPhoneNumber? : string
   userDescription?: string
   userGender? : string

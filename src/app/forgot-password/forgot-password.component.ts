@@ -3,7 +3,6 @@ import {FormsModule, NgForm, ReactiveFormsModule} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
 import {UserService} from "../services/user.service";
 import {UtilsService} from "../utils/utils.service";
-import {MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {LoadingSpinnerComponent} from "../loading-spinner/loading-spinner.component";
 

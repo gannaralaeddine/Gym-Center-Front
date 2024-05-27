@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import {User} from "../models/User";
 import {UtilsService} from "../utils/utils.service";
-import {DatePipe, isPlatformBrowser, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, isPlatformBrowser, NgForOf, NgIf, registerLocaleData} from "@angular/common";
 import {UserService} from "../services/user.service";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
@@ -18,6 +18,10 @@ import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import { SessionDetailsComponent } from '../session/session-details/session-details.component';
 import { MatSelectModule } from '@angular/material/select';
 import { SessionModule } from '../session/session.module';
+import localeFr from '@angular/common/locales/fr';
+import {PlanningService} from "../services/planning.service";
+
+registerLocaleData(localeFr);
 
 @Component({
   selector: 'app-profile',
@@ -38,6 +42,7 @@ import { SessionModule } from '../session/session.module';
     NgIf,
     MatSelectModule
   ],
+  providers: [{provide: LOCALE_ID, useValue: 'fr'} ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -49,16 +54,19 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
   userSessionDataSource!: MatTableDataSource<any>
+  privateSessionsDataSource!: MatTableDataSource<any>
 
   displayedColumnsSession = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Date', 'Gestion']
+  displayedColumnsPrivateSession!: string[]
 
   @ViewChild('paginator') paginator!: MatPaginator
+  @ViewChild('privateSessionsPaginator') privateSessionsPaginator!: MatPaginator
 
   colsNumberPerLine = 4
 
   constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService, private dialogRef: MatDialog,
     private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder, private matDialog: MatDialog,
-              @Inject(PLATFORM_ID) private platformId: Object) { }
+              @Inject(PLATFORM_ID) private platformId: Object, private planningService: PlanningService) { }
 
   ngOnInit()
   {
@@ -80,9 +88,20 @@ export class ProfileComponent implements OnInit
 
         if (isPlatformBrowser(this.platformId))
         {
+            this.accountType = this.authService.getRolesLS()[0].authority
+            if(this.accountType === "ROLE_MEMBER")
+            {
+              this.displayedColumnsPrivateSession = ['Titre', 'Date', 'Heure', 'Coach']
+            }
+            if(this.accountType === "ROLE_COACH")
+            {
+              this.displayedColumnsPrivateSession = ['Titre', 'Date', 'Heure', 'Membre', 'Gestion']
+            }
             this.getUser(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
 
             this.retrieveUserSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
+
+            this.getPrivateSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
         }
   }
 
@@ -175,7 +194,6 @@ export class ProfileComponent implements OnInit
       },
       error:(err)=> this.utilsService.successDialog("Opération échouée", err.message, false)
     })
-
   }
 
   updateProfile()
@@ -348,10 +366,6 @@ export class ProfileComponent implements OnInit
       }
       else if (role === "ROLE_COACH")
       {
-        console.log("_____________")
-
-        console.log(role)
-
         this.userService.getCoachByEmail(email).subscribe(
           {
             next: (user) => {
@@ -367,6 +381,45 @@ export class ProfileComponent implements OnInit
   onResize(event: any)
   {
     this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
+  }
+
+
+  getPrivateSessions(email: string, role: string)
+  {
+
+    if (role === "ROLE_COACH")
+    {
+        this.userService.getCoachPrivateSessions(email).subscribe({
+          next: (privateSessions) => {
+            this.privateSessionsDataSource = new MatTableDataSource(privateSessions as any)
+            setTimeout(() => this.privateSessionsDataSource.paginator = this.privateSessionsPaginator)
+          },
+          error: (err) => console.error(err)
+        })
+    }
+    else if(role === "ROLE_MEMBER")
+    {
+        this.userService.getMemberPrivateSessions(email).subscribe({
+          next: (privateSessions) => {
+            this.privateSessionsDataSource = new MatTableDataSource(privateSessions as any)
+            setTimeout(() => this.privateSessionsDataSource.paginator = this.privateSessionsPaginator)
+          },
+          error: (err) => console.error(err)
+        })
+    }
+  }
+
+  cancelBooking(memberEmail: string, privateSessionId: number)
+  {
+    this.utilsService.alertPrompt("Annuler réservation", "Êtes-vous sûr de vouloir annuler cette réservation ?", "confirmOperation")
+      .afterClosed().subscribe((confirmOperation) => {
+      if (confirmOperation) {
+        this.planningService.cancelPrivateSession(memberEmail, privateSessionId).subscribe({
+          next: () => this.utilsService.successDialog("Opération réussite", "Cette séance à été annuler avec succès", true),
+          error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
+        })
+      }
+    })
   }
 
 }

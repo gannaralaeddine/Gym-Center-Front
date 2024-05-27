@@ -12,6 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {SessionDetailsComponent} from "./session-details/session-details.component";
 import {CalendarModule, CalendarWeekModule} from "angular-calendar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import timeGridPlugin from "@fullcalendar/timegrid";
 
 
 @Component({
@@ -35,16 +36,23 @@ export class SessionComponent
 {
     sessions: any
 
-    calendarOptions: CalendarOptions = {
-      initialView: 'dayGridMonth',
-      plugins: [dayGridPlugin, interactionPlugin],
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: '',
-      },
-      eventClick: this.eventClick.bind(this)
-    };
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+    plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
+    locale: 'fr',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay',
+    },
+    buttonText: {
+      day: 'Jour',
+      week: 'Semaine',
+      month: 'Mois',
+      today: "Aujourd'hui"
+    },
+    eventClick: this.eventClick.bind(this)
+  } as CalendarOptions;
 
     constructor(private sessionService: SessionService, private utilsService: UtilsService, private router: Router,
                 private dialogRef: MatDialog)
@@ -61,7 +69,7 @@ export class SessionComponent
 
           this.sessions.forEach( (session:any) => {
                 events.push( { id: session.sessionId, title: session.sessionName, date: session.sessionDeadline,
-                  backgroundColor: this.generateRandomColor()
+                  backgroundColor: this.generateRandomColor(), className: "fc-event-style"
                   } )
           })
 

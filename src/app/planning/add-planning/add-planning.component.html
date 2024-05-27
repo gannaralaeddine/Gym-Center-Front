@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+
+      <form [formGroup]="privateSessionFormValue" class="mt-5">
+
+        <div class="row">
+          <div class="text-center"> <!-- class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" -->
+            <h1 class="mb-2">Ajouter une séance</h1>
+          </div>
+
+            <div class="form-group form-control-lg col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <label for="privateSessionTitle" class="text-fonts">Titre</label>
+              <input type="text" class="form-control text-input" id="privateSessionTitle" formControlName="privateSessionTitle">
+<!--               <h5 class="text-danger text-bold ml-2" *ngIf="privateSessionFormValue.controls['userBirthDate'].invalid && privateSessionFormValue.controls['userBirthDate'].touched">Merci de choisir une date de naissance</h5>-->
+            </div>
+
+            <div class="form-group form-control-lg col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-4" >
+              <label for="privateSessionStart" class="text-fonts">Date de début</label>
+              <input type="datetime-local" class="form-control text-input" id="privateSessionStart" formControlName="privateSessionStartDateTime" [min]="minDateInput">
+              <!-- <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userBirthDate'].invalid && profileFormValue.controls['userBirthDate'].touched">Merci de choisir une date de naissance</h5>-->
+            </div>
+
+
+
+            <div class="form-group form-control-lg col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-4"> <!-- class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" -->
+              <label for="privateSessionEnd" class="text-fonts">Date de fin</label>
+              <input type="datetime-local" class="form-control text-input" id="privateSessionEnd" formControlName="privateSessionEndDateTime" [min]="minDateInput">
+              <!--<h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userBirthDate'].invalid && profileFormValue.controls['userBirthDate'].touched">Merci de choisir une date de naissance</h5>-->
+            </div>
+
+        </div>
+
+        <div class="mt-6 text-center">
+          <button type="button" (click)="addPrivateSession()" class="border-btn mb-5" style="background-color: #0b0b0b" >Ajouter Séance</button>
+        </div>
+<!--        <div class="card h-100">-->
+<!--          <div class="card-body">-->
+<!--            -->
+<!--          </div>-->
+<!--        </div>-->
+
+      </form>
+
+    </div>
+</div>

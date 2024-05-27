@@ -1,0 +1,45 @@
+<div class="slider-area2">
+  <div class="slider-height2 d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="hero-cap hero-cap2 pt-70">
+            <h2>Réservez votre coach </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="team-area fix mt-4">
+  <div class="container">
+
+    <button type="button" class="border-btn mb-5" (click)="addPrivateSession()" *ngIf="accountType === 'ROLE_COACH'">Ajouter une séance</button>
+
+    <div class="select-container">
+      <select class="form-control mb-5  mr-1" style="font-size: 20px" id="filterByCoachSelect" name="filterByCoachSelect" (change)="filterByCoach()">
+        <option value="-1" >Tous les coach</option>
+        <option *ngFor="let coach of coaches" [value]="coach.userId">{{ coach.userFirstName }} {{ coach.userLastName }}</option>
+      </select>
+
+<!--      <select class="form-control mb-5  ml-1 text-fonts text-input text-black" style="font-size: 20px" id="filterBySpecialitySelect" name="filterBySpecialitySelect"  >-->
+<!--        <option >Tous les utilisateurs</option>-->
+<!--        <option >MEMBRE</option>-->
+<!--        <option >COACH</option>-->
+<!--        <option >ADMIN</option>-->
+<!--      </select>-->
+    </div>
+
+
+
+    <div class="row">
+
+      <full-calendar [options]="calendarOptions" style="background-color: white" [style.font-size.px]="15"></full-calendar>
+
+    </div>
+  </div>
+</section>
+
+
+

@@ -27,6 +27,7 @@
     "@fullcalendar/core": "^6.1.10",
     "@fullcalendar/daygrid": "^6.1.10",
     "@fullcalendar/interaction": "^6.1.10",
+    "@fullcalendar/timegrid": "^6.1.11",
     "@material/grid-list": "^4.0.0",
     "angular-calendar": "^0.31.0",
     "angular-material-event-calendar": "^0.1.4",

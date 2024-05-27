@@ -104,7 +104,7 @@ button {
   width: 100%;
 }
 
-.card-profile 
+.card-profile
 {
   box-shadow: 0 0 20px #dc3545;
   background-color: transparent;
@@ -115,7 +115,7 @@ button {
   padding-right: 0%;
 }
 
-.card-profile:hover 
+.card-profile:hover
 {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
@@ -138,7 +138,7 @@ button {
   width: 100%;
 }
 
-.topright 
+.topright
 {
   position: sticky;
   margin-left: 95.3%;
@@ -150,7 +150,7 @@ button {
 svg
 {
 	background-color: gray;
-  padding-left: 0.3%; 
+  padding-left: 0.3%;
   padding-right: 0.2%;
 }
 
@@ -167,6 +167,15 @@ svg
     cursor: pointer;
 }
 
+.cancel-icon
+{
+  margin-top: 5%;
+  margin-bottom: 5%;
+  cursor: none;
+  background-color: white;
+}
+
+
 th, td
 {
   font-size: medium;
@@ -182,12 +191,22 @@ table
   height: 50%;
 }
 
+.details-design-disable
+{
+  cursor: none;
+  padding-top: 20%;
+  color: #979aa1;
+  font-size: 13pt;
+  font-weight: 150;
+  font-family: 'Times New Roman', 'Times', 'serif';
+}
+
 .details-design
 {
-  padding-top: 20%; 
-  color: red; 
-  font-size: 13pt; 
-  font-weight: 150; 
+  padding-top: 20%;
+  color: red;
+  font-size: 13pt;
+  font-weight: 150;
   font-family: 'Times New Roman', 'Times', 'serif';
 }
 mat-option
@@ -195,11 +214,11 @@ mat-option
   font-size: large;
 }
 
-@media (max-width: 767px) 
+@media (max-width: 767px)
 {
   div.col-lg-4
   {
-    position: static !important; 
+    position: static !important;
     text-align: center;
   }
 }
