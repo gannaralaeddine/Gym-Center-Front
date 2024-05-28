@@ -7,6 +7,7 @@ import {UtilsService} from "../utils/utils.service";
 import {User} from "../models/User";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
+import {ProfilePopupComponent} from "../profile-popup/profile-popup.component";
 
 @Component({
   selector: 'app-coaches',
@@ -26,9 +27,9 @@ export class CoachesComponent
   coaches: any
   colsNumberPerLine = 4
 
-  constructor(private userService: UserService, 
-    private utilsService: UtilsService, 
-    private router: Router, 
+  constructor(private userService: UserService,
+    private utilsService: UtilsService,
+    private router: Router,
     private matDialog: MatDialog) {
     this.getAllCoaches()
   }
@@ -56,10 +57,16 @@ export class CoachesComponent
 
   goToCoachProfile(user: User)
   {
-    this.router.navigate(["coach-profile"], { queryParams: { userEmail: user.userEmail }  })
+    return this.matDialog.open(ProfilePopupComponent, {
+      width: "70%",
+      height: "100%",
+      enterAnimationDuration: "1000ms",
+      exitAnimationDuration: "1000ms",
+      data: { email: user.userEmail}
+    })
   }
 
-  onResize(event: any) 
+  onResize(event: any)
   {
     this.colsNumberPerLine = event.target.innerWidth <= 767 ? 1 : 4;
   }

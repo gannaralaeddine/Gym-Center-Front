@@ -6,7 +6,6 @@ import {UtilsService} from "../../utils/utils.service";
 import {UserService} from "../../services/user.service";
 import {AuthService} from "../../auth/auth.service";
 import {DialogRef} from "@angular/cdk/dialog";
-import {SessionService} from "../../services/session.service";
 import {PrivateSessionModule} from "../../models/privateSession.module";
 import {PlanningService} from "../../services/planning.service";
 
