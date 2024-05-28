@@ -18,6 +18,7 @@
                                 <ul class="submenu">
                                     <li><a routerLink="sessions">Séances</a></li>
                                     <li><a routerLink="coaches">Coaches</a></li>
+                                    <li><a routerLink="planning">Planification</a></li>
                                 </ul>
                               </li>
                               <li><a routerLink="categories">Catégories</a></li>
@@ -35,8 +36,8 @@
                   <div class="dropdown" *ngIf="userIsLoggedIn">
                     <a class="nav-link dropbtn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <div class="user-avatar img-profile">
-                        <img height="30" width="30" alt="profile picture" [src]="getImage(user.userPicture)" class="rounded-circle">
-                        <span class="text-white text-bold text-uppercase ml-3" style="font-size: small;">{{ user.userFirstName }} {{ user.userLastName }}</span>
+                        <img height="50" width="50" alt="profile picture" [src]="getImage(user.userPicture)" class="rounded-circle">
+                        <span class="text-white text-bold text-uppercase ml-3" style="font-size: medium;">{{ user.userFirstName }} {{ user.userLastName }}</span>
                       </div>
                     </a>
 
@@ -71,12 +72,15 @@
                                     <ul class="submenu slicknav_hidden" role="menu" aria-hidden="true" style="display: none;" id="blogMenu">
                                         <li><a role="menuitem" tabindex="-1" routerLink="sessions">Séances</a></li>
                                         <li><a role="menuitem" tabindex="-1" routerLink="coaches">Coaches</a></li>
+                                        <li><a role="menuitem" tabindex="-1" routerLink="planning">Planification</a></li>
                                     </ul>
                                 </li>
                                   <li><a routerLink="categories" role="menuitem" tabindex="-1">Catégories</a></li>
                                   <li><a routerLink="activities" role="menuitem" tabindex="-1">Activités</a></li>
                                   <li><a routerLink="offers" role="menuitem" tabindex="-1">Offres</a></li>
                                   <li><a routerLink="about-us" role="menuitem" tabindex="-1">Contactez-nous</a></li>
+                                  <li><a routerLink="profile" role="menuitem" tabindex="-1">Profil</a></li>
+                                  <li><a class="text-black" role="menuitem" tabindex="-1" (click)="logout()">Se déconnecter</a></li>
                               </ul>
                           </div>
                       </div>
