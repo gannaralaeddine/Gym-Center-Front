@@ -41,8 +41,7 @@ export class DetailsPlanningComponent implements OnInit
       }
       if (this.data)
       {
-        console.log("id")
-        console.log(this.data.id)
+        this.privateSessionId = this.data.id
         this.populateData(this.data.id)
       }
   }
@@ -59,9 +58,14 @@ export class DetailsPlanningComponent implements OnInit
             this.utilsService.successDialog("Opération réussite", "Réservation réussite", true)
           },
           error: (err) => {
+            this.dialogRef.close()
             if (err.status == 404)
             {
               this.utilsService.successDialog("Opération échouée", "Une erreur est survenue veuillez essayer plus tard !", false);
+            }
+            else
+            {
+              this.utilsService.successDialog("Opération échouée", err.message, false);
             }
           }
         })

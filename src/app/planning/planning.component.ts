@@ -13,7 +13,6 @@ import {PlanningService} from "../services/planning.service";
 import {PrivateSessionModule} from "../models/privateSession.module";
 import {DetailsPlanningComponent} from "./details-planning/details-planning.component";
 import {UserService} from "../services/user.service";
-import {User} from "../models/User";
 import {FormsModule} from "@angular/forms";
 
 @Component({

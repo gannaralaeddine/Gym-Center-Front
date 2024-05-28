@@ -1,11 +1,11 @@
 
 <div class="m-5">
-  <h1 style="font-weight: bold; text-align: center"> {{ session.privateSessionTitle }} </h1>
-  <h2> Date: {{ session.privateSessionStartDateTime | date: 'd MMM y': 'fr' }} </h2>
-  <h2> Heure: {{ session.privateSessionStartDateTime | date: 'H:mm' }} - {{ session.privateSessionEndDateTime | date: 'H:mm' }} </h2>
-  <h2> Coach: {{ session.privateSessionCoach.userFirstName }} {{ session.privateSessionCoach.userLastName }} </h2>
+  <h1 style="font-weight: bold; text-align: center" *ngIf="session"> {{ session.privateSessionTitle }} </h1>
+  <h2 *ngIf="session"> Date: {{ session.privateSessionStartDateTime | date: 'd MMM y': 'fr' }} </h2>
+  <h2 *ngIf="session"> Heure: {{ session.privateSessionStartDateTime | date: 'H:mm' }} - {{ session.privateSessionEndDateTime | date: 'H:mm' }} </h2>
+  <h2 *ngIf="session"> Coach: {{ session.privateSessionCoach.userFirstName }} {{ session.privateSessionCoach.userLastName }} </h2>
 
-  <div class="mt-6 text-center" *ngIf="session.privateSessionCoach.userEmail !== connectedUserEmail">
+  <div class="mt-6 text-center" *ngIf=" session && session.privateSessionCoach.userEmail !== connectedUserEmail">
     <button type="button"  class="border-btn mb-5" style="background-color: #0b0b0b"  (click)="bookingCoach()">Réserver coach</button>
   </div>
 </div>
