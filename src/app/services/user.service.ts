@@ -63,9 +63,9 @@ export class UserService
 
   public privateCoachBooking(memberEmail: string, privateSessionId: number) { return this.http.put(this.utils.API_GYM_CENTER + "/member/coach-booking/" + memberEmail + "/" + privateSessionId, memberEmail ) }
 
-  public getCoachPrivateSessions(coachEmail: string) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/coach/getCoachPrivateSessions/" + coachEmail ) }
+  public getCoachPrivateSessions(coachEmail: string) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/coach/get-coach-private-sessions/" + coachEmail ) }
 
-  public getMemberPrivateSessions(memberEmail: string) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/member/getMemberPrivateSessions/" + memberEmail ) }
+  public getMemberPrivateSessions(memberEmail: string) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/member/get-member-private-sessions/" + memberEmail ) }
 
 
 }
