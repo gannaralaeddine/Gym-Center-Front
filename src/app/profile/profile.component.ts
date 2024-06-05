@@ -360,6 +360,7 @@ export class ProfileComponent implements OnInit
             next: (user) => {
               this.populateUserData(user)
               this.populateForm(user)
+              this.user.privateSessionsNumber = user.privateSessionsNumber
             },
             error: (err) => console.error(err)
           })

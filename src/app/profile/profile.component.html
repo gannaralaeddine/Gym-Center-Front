@@ -17,6 +17,8 @@
           <div class="container-profile col-6 ml-3">
             <h3 class="profile-information mt-6"><strong>Nom & Prénom: {{ user.userLastName }} {{ user.userFirstName }}</strong></h3>
             <h3 class="profile-information mt-3"><strong>Rôle: {{ accountType }}</strong></h3>
+            <h3 class="profile-information mt-3"><strong>E-mail: {{ user.userEmail }}</strong></h3>
+            <h3 class="profile-information mt-3" *ngIf="accountType === 'MEMBER'"><strong>Séances Privées Restantes: <span style="color: #f33434;">{{ user.privateSessionsNumber }}  Séance(s)</span></strong></h3>
           </div>
       </div>
 
