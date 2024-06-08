@@ -290,6 +290,65 @@
       </div>
 <!-- Mes classes END -->
 
+<!-- Member Subscriptions Table START -->
+<div class="card h-100 mt-5" *ngIf="accountType === 'MEMBER'">
+  <div class="mb-5 ps-3">
+    <h2 class="mb-1 text-white">Mes abonnements</h2>
+
+    <div class="mt-50" >
+      <div class="d-flex justify-content-center" *ngIf="!memberSubscriptionsDataSource || memberSubscriptionsDataSource.data.length === 0">
+        <h2 class="text-center text-white">Vous n'avez des abonnements</h2>
+      </div>
+
+      <div class="main-body" *ngIf="memberSubscriptionsDataSource && memberSubscriptionsDataSource.data.length !== 0">
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="memberSubscriptionsDataSource">
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="Image">
+              <th mat-header-cell *matHeaderCellDef  class="text-center">Image</th>
+              <td mat-cell *matCellDef="let subscription">
+                <img [src]="getImage(subscription.subscriptionActivity.actImage)" class="avatar avatar-sm me-3 border-radius-lg activity-image" alt="Session Image">
+              </td>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="Activité">
+              <th mat-header-cell *matHeaderCellDef  class="text-center">Activité</th>
+              <td mat-cell *matCellDef="let subscription" class="text-center"> {{subscription.subscriptionActivity.actName}} </td>
+            </ng-container>
+
+            <!-- Time Column -->
+            <ng-container matColumnDef="Tarif">
+              <th mat-header-cell *matHeaderCellDef  class="text-center">Tarif</th>
+              <td mat-cell *matCellDef="let subscription" class="text-center"> {{subscription.subscriptionPrice}} dinars</td>
+            </ng-container>
+
+            <!-- Member Column -->
+            <ng-container matColumnDef="Date Début">
+              <th mat-header-cell *matHeaderCellDef class="text-center">Date Début</th>
+              <td mat-cell *matCellDef="let subscription" class="text-center"> {{subscription.subscriptionStartDate | date: 'd MMM y': 'fr' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Date Fin">
+              <th mat-header-cell *matHeaderCellDef class="text-center">Date Fin</th>
+              <td mat-cell *matCellDef="let subscription" class="text-center"> {{subscription.subscriptionEndDate | date: 'd MMM y': 'fr' }}</td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsMemberSubscriptions"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMemberSubscriptions;"></tr>
+          </table>
+
+          <mat-paginator #paginatorMemberSubscriptions [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Member Subscriptions Table END -->
+
 <!-- Album -->
       <div class="card h-100 mt-5">
         <div class="mb-5 ps-3">

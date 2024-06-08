@@ -54,19 +54,28 @@ export class ProfileComponent implements OnInit
   profileFormValue !: FormGroup
   maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
   userSessionDataSource!: MatTableDataSource<any>
+  memberSubscriptionsDataSource!: MatTableDataSource<any>
   privateSessionsDataSource!: MatTableDataSource<any>
 
   displayedColumnsSession = ['Image', 'Titre', 'Activité', 'Coach', 'Places Réservées', 'Date', 'Gestion']
+  displayedColumnsMemberSubscriptions = ['Image', 'Activité', 'Tarif' , 'Date Début', 'Date Fin']
   displayedColumnsPrivateSession!: string[]
 
   @ViewChild('paginator') paginator!: MatPaginator
   @ViewChild('privateSessionsPaginator') privateSessionsPaginator!: MatPaginator
+  @ViewChild('paginatorMemberSubscriptions') paginatorMemberSubscriptions!: MatPaginator
 
   colsNumberPerLine = 4
 
-  constructor(private userService: UserService, private utilsService: UtilsService, private authService: AuthService, private dialogRef: MatDialog,
-    private sanitizer: DomSanitizer, private profileFormBuilder: FormBuilder, private matDialog: MatDialog,
-              @Inject(PLATFORM_ID) private platformId: Object, private planningService: PlanningService) { }
+  constructor(private userService: UserService, 
+    private utilsService: UtilsService, 
+    private authService: AuthService, 
+    private dialogRef: MatDialog,
+    private sanitizer: DomSanitizer, 
+    private profileFormBuilder: FormBuilder, 
+    private matDialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object, 
+    private planningService: PlanningService) { }
 
   ngOnInit()
   {
@@ -89,19 +98,24 @@ export class ProfileComponent implements OnInit
         if (isPlatformBrowser(this.platformId))
         {
             this.accountType = this.authService.getRolesLS()[0].authority
+
             if(this.accountType === "ROLE_MEMBER")
             {
               this.displayedColumnsPrivateSession = ['Titre', 'Date', 'Heure', 'Coach']
             }
+
             if(this.accountType === "ROLE_COACH")
             {
               this.displayedColumnsPrivateSession = ['Titre', 'Date', 'Heure', 'Membre', 'Gestion']
             }
+
             this.getUser(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
 
             this.retrieveUserSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
 
             this.getPrivateSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
+
+            this.retrieveMemberSubscriptions()
         }
   }
 
@@ -423,4 +437,14 @@ export class ProfileComponent implements OnInit
     })
   }
 
+  retrieveMemberSubscriptions()
+  {
+    this.userService.retrieveMemberSubscriptions(this.authService.getEmailLS() as string).subscribe({
+      next: (subscriptions: any) => {
+        this.memberSubscriptionsDataSource = new MatTableDataSource(subscriptions)
+        this.memberSubscriptionsDataSource.paginator = this.paginatorMemberSubscriptions
+      },
+      error: (err) => console.error(err)
+    })
+  }
 }

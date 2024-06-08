@@ -22,6 +22,8 @@ export class UserService
 
   public retrieveMemberSessions(email: any)  { return this.http.get<SessionModule>(this.utils.API_GYM_CENTER + "/member/retrieve-member-sessions/" + email) }
 
+  public retrieveMemberSubscriptions(email: any)  { return this.http.get(this.utils.API_GYM_CENTER + "/member/get-member-subscriptions/" + email) }
+
   public retrieveCoachSessions(email: any)  { return this.http.get<SessionModule>(this.utils.API_GYM_CENTER + "/coach/retrieve-coach-sessions/" + email) }
 
   public getAllCoaches() {return this.http.get(this.utils.API_GYM_CENTER + "/coach/retrieve-all-coaches")}
