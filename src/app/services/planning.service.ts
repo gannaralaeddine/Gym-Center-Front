@@ -15,6 +15,6 @@ export class PlanningService {
 
   public retrievePrivateSession(id: any) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/private-session/retrieve-private-session/" + id) }
 
-  public cancelPrivateSession(memberEmail: string, privateSessionId: number) { return this.http.put(this.utils.API_GYM_CENTER + "/private-session/cancelPrivateSession/" + memberEmail + "/" + privateSessionId, memberEmail ) }
+  public cancelPrivateSession(memberEmail: string, privateSessionId: number) { return this.http.put(this.utils.API_GYM_CENTER + "/private-session/cancel-private-session/" + memberEmail + "/" + privateSessionId, null) }
 
 }
