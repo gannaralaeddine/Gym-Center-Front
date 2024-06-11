@@ -37,6 +37,30 @@
 <section class="team-area fix">
   <div class="container">
     <div class="row">
+      <owl-carousel-o [options]="customOptions">
+
+        <ng-container *ngFor="let coach of coaches">
+          <ng-template carouselSlide >
+
+              <div class="single-cat text-center mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s"  >
+                <div class="cat-icon">
+                  <img [src]="getImage(coach.userPicture)" width="320" height="430" alt="">
+                </div>
+                <div class="cat-cap">
+                  <h5><a href="#">{{ coach.userFirstName }} {{ coach.userLastName }}</a></h5>
+                  <p>{{ coach.userDescription }}</p>
+                </div>
+                <button class="border-btn border-btn2 mt-10" (click)="goToCoachProfile(coach)">Voir profil</button>
+              </div>
+
+          </ng-template>
+        </ng-container>
+
+      </owl-carousel-o>
+    </div>
+  </div>
+  <!-- <div class="container">
+    <div class="row">
 
       <mat-grid-list [cols]="colsNumberPerLine" rowHeight="1:2" (window:resize)="onResize($event)">
         <mat-grid-tile *ngFor="let coach of coaches">
@@ -54,7 +78,7 @@
         </mat-grid-tile>
       </mat-grid-list>
     </div>
-  </div>
+  </div> -->
 </section>
 <!-- Trainers -->
 

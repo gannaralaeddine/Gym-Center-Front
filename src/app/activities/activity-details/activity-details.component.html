@@ -44,7 +44,12 @@
         </div>
 
         <h2 style="color: #2d2d2d; margin-left: 3%; margin-bottom: 3%;">Coaches:</h2>
-        <mat-grid-list cols="4" rowHeight="40rem" style="margin-left: 3%;">
+
+        <div class="d-flex justify-content-center" *ngIf="!activity.actCoaches || activity.actCoaches.length == 0">
+            <h2 class="text-center">Il n'y a pas encore des coaches disponibles</h2>
+        </div>
+
+        <mat-grid-list cols="4" rowHeight="40rem" style="margin-left: 3%;" *ngIf="activity.actCoaches">
             <mat-grid-tile *ngFor="let coach of activity.actCoaches">
               <div class="single-cat text-center wow fadeInUp mr-10" data-wow-duration="1s" data-wow-delay=".2s">
                 <div class="cat-icon" style="padding-left: 2%;">

@@ -26,11 +26,13 @@ export class CoachesComponent
 
   coaches: any
   colsNumberPerLine = 4
+  customOptions: any
 
   constructor(private userService: UserService,
     private utilsService: UtilsService,
     private router: Router,
     private matDialog: MatDialog) {
+    this.customOptions = utilsService.customOptions
     this.getAllCoaches()
   }
 

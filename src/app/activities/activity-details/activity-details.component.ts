@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService } from '../../services/activity.service';
 import { UtilsService } from '../../utils/utils.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { ProfilePopupComponent } from '../../profile-popup/profile-popup.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
   imports: [
     MatGridList,
     MatGridTile,
-    NgFor
+    NgFor,
+    NgIf
   ],
   templateUrl: './activity-details.component.html',
   styleUrl: './activity-details.component.css'
