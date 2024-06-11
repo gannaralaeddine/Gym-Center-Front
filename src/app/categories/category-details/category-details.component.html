@@ -38,7 +38,7 @@
         <mat-grid-list cols="4" rowHeight="40rem">
               <mat-grid-tile *ngFor="let activity of categoryActivities">
                 <div class="single-cat text-center wow fadeInUp mr-10" data-wow-duration="1s" data-wow-delay=".2s">
-                  <div class="cat-icon" style="padding-left: 2%;">
+                  <div class="cat-icon" style="padding-left: 2%; cursor: pointer;" (click)="goToActivityDetails(activity.actId)">
                     <img [src]="getImage(activity.actImage)" width="430" height="320" alt="">
                   </div>
                   <div class="cat-cap" style="padding-bottom: 5%;">

@@ -20,7 +20,7 @@
           <mat-grid-tile *ngFor="let category of categories">
   
             <div class="single-cat text-center wow fadeInUp mr-10" data-wow-duration="1s" data-wow-delay=".2s">
-              <div class="cat-icon" style="padding-left: 2%;">
+              <div class="cat-icon" style="padding-left: 2%; cursor: pointer;" (click)="goToCategoryDetails(category.catId)">
                 <img [src]="getImage(category.catImage)" width="430" height="320" alt="">
               </div>
               <div class="cat-cap" style="padding-bottom: 5%;">
