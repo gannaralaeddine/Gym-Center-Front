@@ -13,9 +13,8 @@
                 <div class="container-profile text-start">
                   <h3 class="profile-information mt-6"><strong>Nom & Prénom: {{ user.userLastName }} {{ user.userFirstName }}</strong></h3>
                   <h3 class="profile-information mt-3"><strong>Adresse e-mail: {{ user.userEmail }}</strong></h3>
-                  <h3 class="profile-information mt-3"><strong>Num Téléphone: {{ user.userPhoneNumber }}</strong></h3>
-                  <h3 class="profile-information mt-3" *ngIf="isMyPrivateCoach"><strong>Vous avez déjà réservé ce coach</strong></h3>
-                  <button type="button" class="border-btn ml-6 mt-50" (click)="coachBooking()" *ngIf="!isMyPrivateCoach">Réserver coach</button>
+                  <h3 class="profile-information mt-3 text-success text-bold" *ngIf="isMyPrivateCoach"><strong>Vous avez déjà réservé ce coach</strong></h3>
+                  <button type="button" class="border-btn ml-6 mt-50" (click)="coachBooking()" *ngIf="!isMyPrivateCoach && accountType == 'MEMBER'">Réserver coach</button>
                 </div>
               </div>
 
