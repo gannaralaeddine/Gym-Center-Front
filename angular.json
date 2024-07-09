@@ -26,7 +26,7 @@
             ],
             "styles": [
               "src/custom-theme.scss",
-              "src/assets/css/owl.carousel.min.css", 
+              "src/assets/css/owl.carousel.min.css",
               "src/assets/css/slicknav.css",
               "src/assets/css/flaticon.css",
               "src/assets/css/gijgo.css",
@@ -78,8 +78,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -107,7 +107,10 @@
               "buildTarget": "Gym-Center-Front:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4500
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
