@@ -89,7 +89,7 @@ export class PlanningComponent implements OnInit
   {
     this.dialogRef.open(AddPlanningComponent, {
       width: "35%",
-      height: "60%",
+      height: "65%",
       enterAnimationDuration: "1000ms",
       exitAnimationDuration: "1000ms",
     }).afterClosed().subscribe(() =>{

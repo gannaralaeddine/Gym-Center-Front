@@ -67,7 +67,8 @@ export class ProfileComponent implements OnInit
 
   colsNumberPerLine = 4
 
-  constructor(private userService: UserService, 
+  constructor(
+    private userService: UserService, 
     private utilsService: UtilsService, 
     private authService: AuthService, 
     private dialogRef: MatDialog,
@@ -445,6 +446,22 @@ export class ProfileComponent implements OnInit
         this.memberSubscriptionsDataSource.paginator = this.paginatorMemberSubscriptions
       },
       error: (err) => console.error(err)
+    })
+  }
+
+  removePrivateSession(id: any) 
+  {
+    this.utilsService.alertPrompt("Supprimer Session", "Êtes-vous sûr de supprimer cette session ?", "deleteOperation")
+    .afterClosed().subscribe((deleteOperation) => {
+      if (deleteOperation) {
+        this.userService.removePrivateSession(id).subscribe({
+          next: () =>{
+            this.utilsService.successDialog("Opération réussite", "Cette session à été supprimée avec succès", true)
+            this.getPrivateSessions(this.authService.getEmailLS() as string, this.authService.getRolesLS()[0].authority)
+          },
+          error: (err) => this.utilsService.successDialog("Opération échouée", err.message, false)
+        })
+      }
     })
   }
 }

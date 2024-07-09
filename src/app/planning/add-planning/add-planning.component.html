@@ -4,40 +4,47 @@
       <form [formGroup]="privateSessionFormValue" class="mt-5">
 
         <div class="row">
-          <div class="text-center"> <!-- class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" -->
+          <div class="text-center">
             <h1 class="mb-2">Ajouter une séance</h1>
           </div>
 
             <div class="form-group form-control-lg col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <label for="privateSessionTitle" class="text-fonts">Titre</label>
-              <input type="text" class="form-control text-input" id="privateSessionTitle" formControlName="privateSessionTitle">
-<!--               <h5 class="text-danger text-bold ml-2" *ngIf="privateSessionFormValue.controls['userBirthDate'].invalid && privateSessionFormValue.controls['userBirthDate'].touched">Merci de choisir une date de naissance</h5>-->
+              <input type="text" class="form-control text-input" pattern="^[A-Za-zéèçïîô _]*[A-Za-zéèçïîô][A-Za-zéèçïîô _]*$" id="privateSessionTitle" formControlName="privateSessionTitle" (blur)="checkValidityForm()" (keyup)="checkValidityForm()" (click)="showDatePicker()">
+              <h5 class="text-danger text-bold ml-2" *ngIf="privateSessionFormValue.controls['privateSessionTitle'].invalid && privateSessionFormValue.controls['privateSessionTitle'].touched">Merci de saisir un nom valide</h5>
             </div>
 
-            <div class="form-group form-control-lg col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-4" >
-              <label for="privateSessionStart" class="text-fonts">Date de début</label>
-              <input type="datetime-local" class="form-control text-input" id="privateSessionStart" formControlName="privateSessionStartDateTime" [min]="minDateInput">
-              <!-- <h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userBirthDate'].invalid && profileFormValue.controls['userBirthDate'].touched">Merci de choisir une date de naissance</h5>-->
-            </div>
+            <table class="mt-6 ml-3">
+              <tr>
+                <td><label for="privateSessionDate" class="text-fonts">Date de début</label></td>
+                <td>
+                  <input type="date" class="text-input" id="privateSessionDate" formControlName="privateSessionDate" (change)="checkValidityForm()" (blur)="checkValidityForm()" (keyup)="checkValidityForm()" style="width: 95%;">
+                  <h5 class="text-danger text-bold ml-2" *ngIf="privateSessionFormValue.controls['privateSessionDate'].invalid && privateSessionFormValue.controls['privateSessionDate'].touched">Merci de choisir une date</h5>
+                </td>
+              </tr>
 
+              <tr>
+                <td><label for="privateSessionStartTime" class="text-fonts">Heure de début</label></td>
+                <td>
+                  <input type="time"  id="privateSessionStartTime" formControlName="privateSessionStartTime" (change)="startTime = privateSessionFormValue.controls['privateSessionStartTime'].getRawValue().split(':');checkValidityForm();compareBetweenStartAndEndDate()" (blur)="checkValidityForm()" (keyup)="checkValidityForm()" style="width: 95%;">
+                  <h5 class="text-danger text-bold ml-2" *ngIf="privateSessionFormValue.controls['privateSessionStartTime'].invalid && privateSessionFormValue.controls['privateSessionStartTime'].touched">Merci de choisir un temps de début</h5>
+                </td>
+              </tr>
 
-
-            <div class="form-group form-control-lg col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-4"> <!-- class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" -->
-              <label for="privateSessionEnd" class="text-fonts">Date de fin</label>
-              <input type="datetime-local" class="form-control text-input" id="privateSessionEnd" formControlName="privateSessionEndDateTime" [min]="minDateInput">
-              <!--<h5 class="text-danger text-bold ml-2" *ngIf="profileFormValue.controls['userBirthDate'].invalid && profileFormValue.controls['userBirthDate'].touched">Merci de choisir une date de naissance</h5>-->
-            </div>
-
+              <tr>
+                <td><label for="privateSessionEndTime" class="text-fonts">Heure de fin</label></td>
+                <td>
+                  <input type="time" class=" text-input" id="privateSessionEndTime" formControlName="privateSessionEndTime" (change)="endTime = privateSessionFormValue.controls['privateSessionEndTime'].getRawValue().split(':');checkValidityForm();compareBetweenStartAndEndDate()" (blur)="checkValidityForm()" (keyup)="checkValidityForm()" style="width: 95%;">
+                  <h5 class="text-danger text-bold ml-2" *ngIf="privateSessionFormValue.controls['privateSessionEndTime'].invalid && privateSessionFormValue.controls['privateSessionEndTime'].touched">Merci de choisir un temps de fin</h5>
+                  <h5 class="text-danger text-bold ml-2" *ngIf="!isGreaterThan">Merci de choisir un temps valide avec en minimum 1 heure<br>de différence</h5>
+                </td>
+              </tr>
+            </table>
         </div>
 
         <div class="mt-6 text-center">
-          <button type="button" (click)="addPrivateSession()" class="border-btn mb-5" style="background-color: #0b0b0b" >Ajouter Séance</button>
+          <button type="button" (click)="addPrivateSession()" class="border-btn" style="background-color: #0b0b0b;" id="addButton" disabled>Ajouter Séance</button>
         </div>
-<!--        <div class="card h-100">-->
-<!--          <div class="card-body">-->
-<!--            -->
-<!--          </div>-->
-<!--        </div>-->
 
       </form>
 

@@ -195,8 +195,8 @@
                   <ng-container matColumnDef="Gestion">
                     <th mat-header-cell *matHeaderCellDef  class="text-center" style="margin-left: -5%;">Gestion</th>
                     <td mat-cell *matCellDef="let privateSession" class="text-center">
-                      <span class="activity-image" *ngIf="privateSession.privateSessionMember" (click)="cancelBooking(privateSession.privateSessionMember.userEmail, privateSession.privateSessionId)"><img src="assets/img/icons/ic_cancel_red.svg" height="21" width="21" class="mr-3 mb-1" alt="Session details icon"><span class="details-design">Annuler Réservation</span></span>
-                      <span class="cancel-icon" *ngIf="!privateSession.privateSessionMember"><img src="assets/img/icons/ic_cancel.svg" class="mr-3 mb-1" width="21" height="21" alt="icon"/><span class="details-design-disable">Annuler Réservation</span></span></td>
+                      <span class="activity-image" *ngIf="privateSession.privateSessionMember" (click)="cancelBooking(privateSession.privateSessionMember.userEmail, privateSession.privateSessionId)"><img src="assets/img/icons/ic_cancel_red.svg" height="22" width="22" class="mr-3 mb-1" alt="Session details icon"><span class="details-design">Annuler Réservation</span></span>
+                      <span class="activity-image" *ngIf="!privateSession.privateSessionMember" style="margin-left: -3%;" (click)="removePrivateSession(privateSession.privateSessionId)"><img src="assets/img/icons/ic_delete.png" height="22" width="22" class="mr-3 mb-1" alt="Session details icon"><span class="details-design">Supprimer Session</span></span>
                   </ng-container>
 
 

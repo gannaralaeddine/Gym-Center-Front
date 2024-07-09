@@ -3,3 +3,22 @@
   background-color: red;
   color: white;
 }
+
+input
+{
+  height: 170%;
+  font-size: 14px;
+}
+
+label
+{
+  font-weight: 100;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: small;
+  color: black;
+}
+
+button:disabled
+{
+  cursor: not-allowed;
+}

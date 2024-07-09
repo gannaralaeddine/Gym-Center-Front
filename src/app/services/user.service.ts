@@ -69,5 +69,5 @@ export class UserService
 
   public getMemberPrivateSessions(memberEmail: string) { return this.http.get<any>(this.utils.API_GYM_CENTER + "/member/get-member-private-sessions/" + memberEmail ) }
 
-
+  public removePrivateSession(privateSessionId: any) { return this.http.delete(this.utils.API_GYM_CENTER + "/private-session/remove-private-session/" + privateSessionId ) }
 }

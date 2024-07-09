@@ -7,6 +7,7 @@ import {isPlatformBrowser, NgIf} from "@angular/common";
 import {AuthService} from "../../auth/auth.service";
 import {User} from "../../models/User";
 import {UserService} from "../../services/user.service";
+import { MOMENT } from 'angular-calendar';
 
 @Component({
   selector: 'app-add-planning',
@@ -21,15 +22,20 @@ import {UserService} from "../../services/user.service";
 export class AddPlanningComponent implements OnInit
 {
   accountType!: string
-  //maxDateInput = new Date(new Date().getTime() - new Date(315569260000).getTime()).toISOString().split('T')[0]
-  minDateInput = new Date(new Date().getTime() + 86400000).toString().substring(0, new Date().toString().lastIndexOf(":")+3)
+  startTime!: String[]
+  endTime!: String[]
+  isGreaterThan = true
   privateSessionFormValue !: FormGroup
   privateSession =  new PrivateSessionModule()
   user = new User()
 
-  constructor(private planningService: PlanningService, private privateSessionFormBuilder: FormBuilder, private utilsService: UtilsService,
-              @Inject(PLATFORM_ID) private platformId: Object, private authService: AuthService, private userService: UserService) {
-  }
+  constructor(
+    private planningService: PlanningService, 
+    private privateSessionFormBuilder: FormBuilder, 
+    private utilsService: UtilsService,
+    @Inject(PLATFORM_ID) private platformId: Object, 
+    private authService: AuthService, 
+    private userService: UserService) {}
 
   ngOnInit()
   {
@@ -40,20 +46,17 @@ export class AddPlanningComponent implements OnInit
       }
       this.privateSessionFormValue = this.privateSessionFormBuilder.group({
         privateSessionTitle: ['', Validators.required],
-        privateSessionStartDateTime: ['', Validators.required],
-        privateSessionEndDateTime: ['', Validators.required]
+        privateSessionDate: ['', Validators.required],
+        privateSessionStartTime: ['', Validators.required],
+        privateSessionEndTime: ['', Validators.required]
       })
-      console.log("minInputDate: " + this.minDateInput)
   }
 
   addPrivateSession()
   {
-
-    console.log("minInputDate: " + this.privateSessionFormValue.value.privateSessionStartDateTime.toString().substring(0, this.privateSessionFormValue.value.privateSessionStartDateTime.toString().lastIndexOf(":")+3))
-
       this.privateSession.privateSessionTitle =  this.privateSessionFormValue.value.privateSessionTitle
-      this.privateSession.privateSessionStartDateTime =  this.privateSessionFormValue.value.privateSessionStartDateTime
-      this.privateSession.privateSessionEndDateTime =  this.privateSessionFormValue.value.privateSessionEndDateTime
+      this.privateSession.privateSessionStartDateTime =  this.privateSessionFormValue.value.privateSessionDate + "T" + this.privateSessionFormValue.value.privateSessionStartTime
+      this.privateSession.privateSessionEndDateTime =  this.privateSessionFormValue.value.privateSessionDate + "T" + this.privateSessionFormValue.value.privateSessionEndTime
       this.privateSession.privateSessionCoach = this.user
 
       this.planningService.addPrivateSession(this.privateSession).subscribe({
@@ -70,5 +73,90 @@ export class AddPlanningComponent implements OnInit
       },
       error: (err) => console.error(err)
     })
+  }
+
+  checkValidityForm()
+  {
+    if (this.privateSessionFormValue.controls['privateSessionTitle'].invalid && this.privateSessionFormValue.controls['privateSessionTitle'].touched)
+    {
+      document.getElementById('privateSessionTitle')!.className = "form-control border border-danger pl-2 round"
+    }
+    else
+    {
+      document.getElementById('privateSessionTitle')!.className = "form-control border border-dark pl-2 round"
+    }
+
+    if (this.privateSessionFormValue.controls['privateSessionDate'].invalid && this.privateSessionFormValue.controls['privateSessionDate'].touched)
+    {
+      document.getElementById('privateSessionDate')!.className = "form-control border border-danger pl-2 round"
+    }
+    else
+    {
+      document.getElementById('privateSessionDate')!.className = "form-control border border-dark pl-2 round"
+    }
+
+    if (this.privateSessionFormValue.controls['privateSessionStartTime'].invalid && this.privateSessionFormValue.controls['privateSessionStartTime'].touched)
+    {
+      document.getElementById('privateSessionStartTime')!.className = "form-control border border-danger pl-2 round"
+    }
+    else
+    {
+      document.getElementById('privateSessionStartTime')!.className = "form-control border border-dark pl-2 round"
+    }
+
+    if (this.privateSessionFormValue.controls['privateSessionEndTime'].invalid && this.privateSessionFormValue.controls['privateSessionEndTime'].touched)
+    {
+      document.getElementById('privateSessionEndTime')!.className = "form-control border border-danger pl-2 round"
+    }
+    else
+    {
+      document.getElementById('privateSessionEndTime')!.className = "form-control border border-dark pl-2 round"
+    }
+
+    //enabke or disable add button
+    if (this.privateSessionFormValue.controls['privateSessionTitle'].valid && this.privateSessionFormValue.controls['privateSessionStartTime'].valid && this.privateSessionFormValue.controls['privateSessionEndTime'].valid && this.privateSessionFormValue.controls['privateSessionDate'].valid && this.isGreaterThan)
+    {
+     
+      document.getElementById("addButton")?.removeAttribute("disabled")
+    }
+    else
+    {
+      document.getElementById("addButton")?.setAttribute("disabled","")
+    }
+  }
+
+  compareBetweenStartAndEndDate()
+  {
+    if (this.startTime && this.endTime)
+    {
+      if (Number(this.startTime[0]) >= Number(this.endTime[0]))
+      {
+        this.isGreaterThan = false
+      }
+      else
+      {
+        this.isGreaterThan = true
+      }
+    }
+  }
+
+  showDatePicker()
+  {
+    //const dateInput = document.getElementById('privateSessionDate')
+    // this.privateSessionFormValue.controls['privateSessionDate'].f
+    
+    // const dateInput = document.getElementById('privateSessionDate')
+    // dateInput?.addEventListener("click", (event: any) => {
+    //   const input = event.srcElement.previousElementSibling;
+    //   try 
+    //   {
+    //     input.showPicker();
+    //   } 
+    //   catch (error) 
+    //   {
+    //     window.alert(error);
+    //   }
+    // });
+    
   }
 }
