@@ -55,15 +55,17 @@ export class SessionDetailsComponent implements OnInit
 
     ngOnInit() {
 
+        if (this.data.sessionId) {
+          this.getSessionById(this.data.sessionId)
+        }
+
         if (isPlatformBrowser(this.platformId))
         {
             this.userRole = this.authService.getRolesLS()[0].authority
             this.userIsLoggedIn = !!(this.isLoggedIn() && this.authService.getEmailLS());
         }
 
-        if (this.data.sessionId) {
-            this.getSessionById(this.data.sessionId)
-        }
+
     }
 
     isLoggedIn(): boolean
